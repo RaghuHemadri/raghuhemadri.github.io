@@ -1,0 +1,74 @@
+body{
+  margin :0;
+  padding: 0;
+  background: url() no-repeat;
+  background-size:cover;
+
+}
+.box{
+  width: 900px;
+  padding: 40px;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+.box-img{
+ border-radius: 50%;
+}
+.box h1{
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+.box h5{
+  font-weight: 100;
+}
+.box ul{
+  margin: 0;
+  padding: 0;
+  font-size: 34px;
+}
+.box li{
+  display: inline-block;
+  margin: 6px;
+}
+.project-sec{
+
+  text-align: center;
+}
+.exp{
+  text-align: left;
+  font-size: 20px;
+}
+span{
+  font-size: 25px;
+  font-style: italic;
+}
+.inner-width{
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px;
+}
+.project-sec h1 {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 40px;
+  text-transform: uppercase;
+  display: inline-block;
+  border-bottom: 4px solid;
+  padding-bottom: 10px;
+}
+.pro{
+  float: left;
+  width: calc(100% /3);
+  overflow: hidden;
+  padding: 40px 0;
+}
+.pro img{
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+}
+.p-name{
+  margin: 16px 0;
+  font-weight: bolder;
+  text-transform: uppercase;
+}
