@@ -1,0 +1,235 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+	<style>
+		body{
+			margin:0;
+			background: linear-gradient(to bottom, #333333 0%,#333333 350px,#EDEDED 350px,#EDEDED 100%);
+			font-family:georgia,garamond,serif;font-size:14px;
+		}
+		.onHoverDark:hover { background-color: #222222 !important; color: #BABABA !important;}
+		.hrefWithoutDecoration {text-decoration: none !important; color:black !important;}
+		.activeCustom {color:#FFF}
+		.inactiveCustom {color:#A9A9A9}
+	</style>
+
+	<link rel="shortcut icon" type="image/png" href="/static/Images/Profile/profileCircular.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Raghu Vamshi's Home Page">
+	<meta name="author" content="Raghu vamshi"
+	<meta charset="UTF-8">
+	<meta name="keywords" content="machine learning, artificial intelligence, coding">
+
+	<meta property="og:title" content="Raghu's HomePage">
+	<meta property="og:image" content="/static/Images/Propic.jpg">
+	<meta property="og:description" content="Raghu Vamshi's Home Page">
+
+	<title>Raghu Hemadri</title>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110954752-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-110954752-1');
+	</script>
+
+
+</head>
+<body>
+
+<div class="container pt-5 pb-3">
+	<div class="row">
+		<div class="col-lg-8">
+			<div class="row pb-3">
+				<div class="col">
+					<h3 class="text-white">Raghu Vamshi Hemadri</h3>
+				</div>
+			</div>
+
+			<div class="row mt-3 mb-4 text-center">
+				<div class="col-xl-6">
+					<div class="row">
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/">Home</a>
+						</div>
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/profile">Profile</a>
+						</div>
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/research">Research</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6">
+					<div class="row">
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/latest">Latest</a>
+						</div>
+						<div class="col">
+							<a class="nav-link onHoverDark activeCustom" href="/projects">Project</a>
+						</div>
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/publications">Publication</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8">
+
+			<div class="shadow row bg-light mb-5 mt-4 mx-1">
+				<div class="px-4 pt-3 pb-4">
+					<h2>End-to-End Automatic Speech Recognition based on Hybrid CTC/Attention mechanism</h2>
+					<a target="_blank" href="https://github.com/mayank-git-hub/ETE-Speech-Recognition"><img class="px-4 pt-4 mb-4" src="images/Projects/ETE/ETE.png" width="100%"></a>
+					<p>Last Updated: 5th May</p>
+					<p>Reimplemented the paper <a target="_blank" href="https://ieeexplore.ieee.org/document/8068205">Hybrid CTC/Attention Architecture for End-to-End Speech Recognition</a> in pure python and PyTorch. Earlier implementation existed on <a target="_blank" href="https://github.com/espnet/espnet">ESPNET</a> but the pre-processing step uses Kaldi which is written in C++. Also the pipeline seemed complicated for people looking for just training and implementing the ASR. The code is available on github.</p>
+					<a target="_blank" href="https://github.com/mayank-git-hub/ETE-Speech-Recognition"><button type="button" class="btn btn-light btn-outline-dark">GitHub Implementation</button></a>
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<a target="_blank" href="https://www.primeacademypune.com"><img class="px-4 pt-4" src="images/Projects/PrimeAcademy/PrimeAcademy.png" width="100%"></a>
+				<div class="px-4 pt-3 pb-4">
+					<h2>Web Development</h2>
+					<p>Last Updated: 26th April</p>
+					<p>The website <a target="_blank" href="https://www.primeacademypune.com">https://www.primeacademypune.com <i class="fa fa-external-link"></i></a> was created by me using pure html, css and javascript for the client side and Django for the server side. The server was deployed on Amazon Web Services. I also deployed moodle on AWS and hosted it on <a target="_blank" href="https://online.primeacademypune.com">https://online.primeacademypune.com <i class="fa fa-external-link"></i></a></p>
+
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<img class="px-4 pt-4" src="images/Projects/HyperSpectral/joined.jpg" width="100%">
+				<div class="px-4 pt-3 pb-4">
+					<h2>Hyperspectral Tissue Image Segmentation and classification</h2>
+					<p>Last Updated: 26th April</p>
+					<p>Given a tissue Hyperspectral image it is very time consuming for the doctors to annotate the epithilium, stromal and goblet cells. So we tried to automate this process. We used Non Negative Matrix Factorisation (NMF) and Semi Supervised NMF (SSNMF) for dimentionality reduction because the spectra contained too much redundant data. Then using different classifiers like SVM, NN, and Random Forest we tried to classify each and every pixel. Then we moved on to using spatial information by taking windows of different length. This improved the accuracy by 2-3 percent. Using Regularisation in NN we could further increase the accuracy by 2-3 percent. </p>
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<img class="px-4 pt-4" src="images/Projects/IDRiD/IDRiD.png" width="100%">
+				<div class="px-4 pt-3 pb-4">
+					<h2>Diabetic Retinopathy Lesion Segmentation</h2>
+					<p>Last Updated: 26th April</p>
+					<p>Due to the advances in Medical science it has become possible to detect Diabetic Retinopathy at an early stage. But due to unavailability of the humongous number of doctors required for reliable diagnosis, and the increasing number of Diabetes affected people, there is a high requirement for automation. We tried to approach the challenge of automating the segmentation of different type of lesions like Microaneurysms, Haemorrhage, Soft and Hard Exudates using a new novel architecture of Fusion Net.</p>
+					<a target="_blank" href="/static/pdf/ISBI2018.pdf"><button type="button" class="btn btn-light btn-outline-dark">Read the paper</button></a>
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<img class="px-4 pt-4" src="images/Projects/TextDetectionCRAFT/craft_example.gif" width="100%">
+				<div class="px-4 pt-3 pb-4">
+					<h2>CRAFT Text-Detection</h2>
+					<p>Last Updated: 26th April</p>
+					<p>Traditional Text Detection methods have used word-level bounding boxes for target and getting true positives. Character-Region Awareness For Text-Detection (CRAFT) uses weak-supervision for predicting character level predictions using word-level annotation. This is achieved by first training the model on a Synthetic Dataset and then fine-tuning it on a real dataset and using the transcriptions to get the character predictions.<br> The full method can be understood in <a href="https://arxiv.org/abs/1904.01941"> the original paper </a>. I reimplemented the training of CRAFT on github.</p>
+					<a target="_blank" href="http://github.com/autonise/craft-remade.git"><button type="button" class="btn btn-light btn-outline-dark">GitHub Implementation</button></a>
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<img class="px-4 pt-4" src="images/Projects/TextDetectionPixelLink/Pixel-Link.png" width="100%">
+				<div class="px-4 pt-3 pb-4">
+					<h2>Pixel-Link Text Detection</h2>
+					<p>Last Updated: 26th April</p>
+					<p>Traditional Text-Detection methods have focused on bounding box regression to detect text in real images. This inherently has many problems like curved text, aspect-ratio sensitivity of regression models, density of predictions and so on. Pixel-Link treats text-detection as a pixel level instance segmentation problem with each pixel being clubbed to its neighbouring pixel if joined by a "link" which is also predicted by the model. For more in-depth analysis you can read the paper on <a href="https://arxiv.org/pdf/1801.01315.pdf">Link to Paper</a>. I reimplemented Pixel-Link on github.</p>
+					<a target="_blank" href="http://github.com/autonise/Text-Recognition.git"><button type="button" class="btn btn-light btn-outline-dark">GitHub Implementation</button></a>
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<img class="px-4 pt-4" src="images/Projects/PingPong/ping_pong.png" width="100%">
+				<div class="px-4 pt-3 pb-4">
+					<h2>Ping - Pong</h2>
+					<p>Last Updated: 26th April</p>
+					<p>I thought of implementing the basics of reinforcement learning and convolutional neural networks for training a neural network to predict the movement of the bat to reflect back the ball. I implemented the entire graphical interface using basic python and numpy array and the code for the same has been uploaded on git-hub for reference. </p>
+					<a target="_blank" href="https://github.com/mayank-git-hub/Ping_pong"><button type="button" class="btn btn-light btn-outline-dark">GitHub Implementation</button></a>
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<img class="px-4 pt-4" src="images/Projects/ImageStitching/imagestitch.jpg" width="100%">
+				<div class="px-4 pt-3 pb-4">
+					<h2>Image Stitching</h2>
+					<p>Last Updated: 26th April</p>
+					<p>The task was to stitch a heavily blurred frames of a video to get the entire image of the tissue because the microscope can only see a limited part of it at a time. The project is really challenging in the aspect that there is some random noise, some smudge on the lens of the microscope, the image is heavily blurred and also the brightness has been autoadjusted in input. A challenging but a fruitfull process for applying the things I have learnt in signals and systems.</p>
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<img class="px-4 pt-4" src="images/Projects/Socket/socket.jpg" width="100%">
+				<div class="px-4 pt-3 pb-4">
+					<h2>Socket Programming</h2>
+					<p>Last Updated: 26th April</p>
+					<p>Due to severe lack of funds (Well I spent all the money on eating :p) I wanted to use the inbuilt camera in my laptop for my Real Time Face detection project. Also having learnt socket programming recently in my CS 224 minor, I thought why not implement it. So Using python I made a server and client program to send the images as bytes and to reconstruct those images on my PC. I sent the data using UDP as I needed fast response rather than reliability. For increasing the transfer speed and using less bandwidth, I first convert the images to JPEG format and then send the bytes and decode on the other side as a numpy image which saves the bandwidth upto 40 times. The implementation has been uploaded on github.</p>
+					<a target="_blank" href="https://github.com/mayank-git-hub/VideoTransfer"><button type="button" class="btn btn-light btn-outline-dark">GitHub Implementation</button></a>
+				</div>
+			</div>
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<img class="px-4 pt-4" src="images/Projects/RSA/encry.jpg" width="100%">
+				<div class="px-4 pt-3 pb-4">
+					<h2>RSA key encryption</h2>
+					<p>Last Updated: 26th April</p>
+					<p>
+						Wouldn't it be ideal if nobody stole anything in this world nor had any malicious intent? Well we do not live in such an idealized world. So to Save my projects from all those trying to steal it, I made an RSA file encryption program. The basics are simple, the implementation not so.
+					</p>
+					<p> How it works??</p>
+					<p>
+					   So suppose Cooper wants to send a message to Murph from some other Galaxy. But there are some aliens trying to intercept this message. So first Cooper tells Murph, "Hey I want to send a message to you". Then Murph sends a public key to Cooper. But these aliens in between also intercept this key. They are like "Haha, whatever you send will be recieved by us. Even if you send a way to change code, we will understand it" Obviously Cooper does not know whether the key has been seen by the aliens or not. He used the public key and encodes the entire message and sends it to Murph. And alas the aliens get the message. But wait, it is gibberish. And even though they are giving it their all, they can't seem to use the public key to decode the message.
+					</p>
+					<p>
+					   The message goes to Murph and Murph too recieves some gibberish message. Now how will she decode this message?? Well she has an advantage over the aliens. She has a private key which enables her to decode the message easily. This is how any encryption works in principle.<br>
+					</p>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-lg-4 pt-5">
+			<div class="row py-5 px-4 bg-light mb-5 shadow mx-1">
+				<div class="col text-center">
+					<img class="pb-5" src="images/Propic.jpg" width="100%" style="max-width: 300px">
+					<p class="para" style="text-align: justify; text-justify: inter-word" >
+				&emsp;	I am a final year undergraduate student at the National Institute of Technology, Warangal, studying Electronics and Communication Engineering. I started research in machine learning in my freshman year of UG. My propensity to research led me to take up various internships and research projects during my undergraduate study. I have collaborations at the Indian Institute of Science, Bangalore; the Indian Institute of Technology, Dharwad, and I also work as a part-time Machine Learning Researcher at Skylark Labs LLC.
+						<br>
+	 					<br>
+					&emsp; During my projects, I explored various domains of ML including non-convex optimization, Deep Learning, Computer Vision, Deep Reinforcement Learning, and Robotics. I'm currently seeking positions to pursue MSc or a Ph.D.<br>
+					</p>
+				</div>
+			</div>
+
+			<div class="row pt-5 pb-3 pl-3 bg-light mb-5 shadow mx-1">
+				<div class="col">
+					<h5 class="pb-2"><b>Contact Information</b></h5>
+					<p>
+						<a href="mailto:vamshi.hemadri@gmail.com"><strong>Gmaild: </strong> vamshi.hemadri@gmail.com</a><br><br>
+						<a href="https://www.linkedin.com/in/raghu-vamshi-hemadri-8ab78362/"><strong>LinkedIn</strong> </a><br><br>
+						<a href="https://scholar.google.co.in/citations?user=eb3JyOoAAAAJ&hl=en"><strong>Google Scholar</strong> </a><br><br>
+						<a href="https://github.com/RaghuHemadri"><strong>GitHub</strong> </a><br><br>
+						<a href="https://orcid.org/0000-0002-0272-9714"><strong>Orcid</strong> </a><br><br>
+						<a href="https://www.facebook.com/vamshi.hemadri"><strong>Facebook</strong> </a><br><br>
+						<a href="tel:+91 90004 38694"><strong>Call: +91 90004 38694</strong> </a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

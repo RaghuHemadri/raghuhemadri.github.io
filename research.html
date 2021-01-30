@@ -1,0 +1,231 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+	<style>
+		body{
+			margin:0;
+			background: linear-gradient(to bottom, #333333 0%,#333333 350px,#EDEDED 350px,#EDEDED 100%);
+			font-family:georgia,garamond,serif;font-size:14px;
+		}
+		.onHoverDark:hover { background-color: #222222 !important; color: #BABABA !important;}
+		.hrefWithoutDecoration {text-decoration: none !important; color:black !important;}
+		.activeCustom {color:#FFF}
+		.inactiveCustom {color:#A9A9A9}
+		#more {display: none;}
+	</style>
+
+	<link rel="shortcut icon" type="image/png" href="/static/Images/Profile/profileCircular.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Raghu Vamshi's Home Page">
+	<meta name="author" content="Raghu vamshi"
+	<meta charset="UTF-8">
+	<meta name="keywords" content="machine learning, artificial intelligence, coding">
+
+	<meta property="og:title" content="Raghu's HomePage">
+	<meta property="og:image" content="/static/Images/Propic.jpg">
+	<meta property="og:description" content="Raghu Vamshi's Home Page">
+
+	<title>Raghu Hemadri</title>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110954752-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-110954752-1');
+	</script>
+	<script>
+	function myFunction() {
+	var dots = document.getElementById("dots");
+	var moreText = document.getElementById("more");
+	var btnText = document.getElementById("myBtn");
+
+	if (dots.style.display === "none") {
+		dots.style.display = "inline";
+		btnText.innerHTML = "Read more";
+		moreText.style.display = "none";
+	} else {
+		dots.style.display = "none";
+		btnText.innerHTML = "Read less";
+		moreText.style.display = "inline";
+	}
+	}
+	</script>
+
+
+</head>
+<body>
+
+<div class="container pt-5 pb-3">
+	<div class="row">
+		<div class="col-lg-8">
+			<div class="row pb-3">
+				<div class="col">
+					<h3 class="text-white">Raghu Vamshi Hemadri</h3>
+				</div>
+			</div>
+
+			<div class="row mt-3 mb-4 text-center">
+				<div class="col-xl-6">
+					<div class="row">
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/">Home</a>
+						</div>
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/profile">Profile</a>
+						</div>
+						<div class="col">
+							<a class="nav-link onHoverDark activeCustom" href="/research">Research</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6">
+					<div class="row">
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/latest">Latest</a>
+						</div>
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/projects">Project</a>
+						</div>
+						<div class="col">
+							<a class="nav-link onHoverDark inactiveCustom" href="/publications">Publication</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8">
+			<div class="shadow row bg-light mb-5 mx-1">
+				<div class="col px-4 pt-5">
+					<h2>Research <button type="button" class="btn btn-light btn-outline-dark" onClick="window.open('https://scholar.google.com/citations?hl=en&authuser=1&user=ky_QjGgAAAAJ');">Visit my google scholar profile</button></h2>
+					<img class="pt-3" src="images/research.png" width="100%">
+				</div>
+				<div class="px-4 pt-5 pb-4">
+					<p>
+						Last Updated: 26th April
+					</p>
+					<p>
+						My research goal is to understand what intelligence means and trying to reproduce it artificially so that we can have a tool which will reduce the development process drastically in every field. I believe that to achieve this we would require a good understanding of psychology, and an intutive sense of why and how humans function.
+					</p>
+					<p>
+						I started my journey in the academia by focusing on Computer Vision because of its popularity and ease of applicatoin but my interests have diverged into graphs and audio as well.
+					</p>
+					<p>
+						I have mentioned some brief description of my publications below. To get a list of all my publications please visit <a class="" href="/publications">here <i class="fa fa-external-link" style="font-size:12px"></i></a>.
+					</p>
+				</div>
+			</div>
+
+
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<a href="/research/VoiceSeparation"><img src="images/HowGCNNWorks.png" width="100%"></a>
+				<div class="px-4 pt-5 pb-4">
+					<a class="hrefWithoutDecoration" href="https://bit.ly/itgamma_pami_paper" target="_blank"><h2>A novel Nonconvex regularization for accurate low-rank
+          plus sparse constrained model <i class="fa fa-external-link" style="font-size:12px"></i></h2></a>
+					<p>Last Updated: 6th Jan 2021</p>
+					<p class="para" style="text-align: justify; text-justify: inter-word">
+						&emsp; Human child trafficking has become a global epidemic with over 10 million children forced into labor or prostitution. Children kidnapped from poverty-stricken
+						sections of India have been especially vulnerable due to the lack of initiative from law enforcement agencies to retrieve them. The facial image of the children
+						is<span id="dots">...</span><span id="more"> generally used to retrieve and
+						reunite the children with their families. However, the facial features of children change drastically over short periods making it hard to recognize them using these images. In
+						addition, images of several kidnapped children is often unavailable as several families in India never took picturesof their children due to the lack of resources. This further
+						makes it difficult to identify these children. In this paper, we propose the ChildrEN SafEty and Retrieval (CENSER) system that is being used by non-profit organizations in India to
+						retrieve abducted children from brothels. The CENSER system encodes the input image of a child using the proposed Memory Augmented ScatterNet ResNet Hybrid (MSRHN)
+						network and queries the encoding with the (i) Age, (ii) Kinship, and (iii) Sketch databases to establish the child’s identity. The MSRHN network is pre-trained on the KinFace
+						database and then fine-tuned on the three databases. The network also has the capability to learn new faces of children in one-shot using the memory buffer. The performance
+						of the proposed model is compared with several state-of-the-art methods.</span></p>
+					<button type="button" class="btn btn-light btn-outline-dark" onclick="myFunction()" id="myBtn">Read more</button>
+				</div>
+			</div>
+
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<a href="/research/VoiceSeparation"><img src="images/fg-1.png" width="100%"></a>
+				<div class="px-4 pt-5 pb-4">
+					<a class="hrefWithoutDecoration" href="https://bit.ly/2QWcLwk" target="_blank"><h2>ChildrEN SafEty Retrieval (CENSER) System for Retrieval of Kidnapped Children from Brothels in India using the Memory Augmented ScatterNet ResNet Hybrid
+          (MSRHN) Network <i class="fa fa-external-link" style="font-size:12px"></i></h2></a>
+					<p>Last Updated: 6th Jan 2021</p>
+					<p class="para" style="text-align: justify; text-justify: inter-word">
+						&emsp; Human child trafficking has become a global epidemic with over 10 million children forced into labor or prostitution. Children kidnapped from poverty-stricken
+						sections of India have been especially vulnerable due to the lack of initiative from law enforcement agencies to retrieve them. The facial image of the children
+						is<span id="dots">...</span><span id="more"> generally used to retrieve and
+            reunite the children with their families. However, the facial features of children change drastically over short periods making it hard to recognize them using these images. In
+            addition, images of several kidnapped children is often unavailable as several families in India never took picturesof their children due to the lack of resources. This further
+            makes it difficult to identify these children. In this paper, we propose the ChildrEN SafEty and Retrieval (CENSER) system that is being used by non-profit organizations in India to
+            retrieve abducted children from brothels. The CENSER system encodes the input image of a child using the proposed Memory Augmented ScatterNet ResNet Hybrid (MSRHN)
+            network and queries the encoding with the (i) Age, (ii) Kinship, and (iii) Sketch databases to establish the child’s identity. The MSRHN network is pre-trained on the KinFace
+            database and then fine-tuned on the three databases. The network also has the capability to learn new faces of children in one-shot using the memory buffer. The performance
+            of the proposed model is compared with several state-of-the-art methods.</span></p>
+					<button type="button" class="btn btn-light btn-outline-dark" onclick="myFunction()" id="myBtn">Read more</button>
+				</div>
+			</div>
+
+
+			<div class="row bg-light mb-5 shadow mx-1">
+				<a href="/research/VoiceSeparation"><img src="images/Fig3.png" width="100%"></a>
+				<div class="px-4 pt-5 pb-4">
+					<a class="hrefWithoutDecoration" href="https://bit.ly/aevb_comm" target="_blank"><h2>AEVB-Comm: An Intelligent CommunicationSystem based on AEVBs<i class="fa fa-external-link" style="font-size:12px"></i></h2></a>
+					<p>Last Updated: 6th Jan 2021</p>
+					<p class="para" style="text-align: justify; text-justify: inter-word">
+						&emsp; In recent years, applying Deep Learning (DL) techniques emerged as a common practice in the communication system, demonstrating promising results. The present paper
+            proposes a new Convolutional Neural Network (CNN) based Variational Autoencoder (VAE) communication system. The VAE (continuous latent space) based communication systems confer
+            unprecedented improvement in<span id="dots">...</span><span id="more"> the system performance compared to AE (distributed latent space) and other traditional
+            methods. We have introduced an adjustable hyperparameter β−VAE in the proposed VAE, which is also known as β− VAE VAE, resulting in extremely disentangled latent space representation.
+            Furthermore, a higher-dimensional representation of latent space is employed, reducing the Block Error Rate (BLER). The CNN based VAE architecture performs the encoding and modulation
+            at the transmitter, whereas decoding and demodulation at the receiver. Finally, to prove that a continuous latent space-based system designated VAE performs better than the other and
+            4n dimensional representation is better than 2n representaion, various simulation results supporting the both has been conferred under normal and noisy conditions.</span></p>
+					<button type="button" class="btn btn-light btn-outline-dark" onclick="myFunction()" id="myBtn">Read more</button>
+				</div>
+			</div>
+
+
+
+		</div>
+		<div class="col-lg-4 pt-5">
+			<div class="row py-5 px-4 bg-light mb-5 shadow mx-1">
+				<div class="col text-center">
+					<img class="pb-5" src="images/Propic.jpg" width="100%" style="max-width: 300px">
+					<p class="para" style="text-align: justify; text-justify: inter-word" >
+				&emsp;	I am a final year undergraduate student at the National Institute of Technology, Warangal, studying Electronics and Communication Engineering. I started research in machine learning in my freshman year of UG. My propensity to research led me to take up various internships and research projects during my undergraduate study. I have collaborations at the Indian Institute of Science, Bangalore; the Indian Institute of Technology, Dharwad, and I also work as a part-time Machine Learning Researcher at Skylark Labs LLC.
+						<br>
+						<br>
+					&emsp; During my projects, I explored various domains of ML including non-convex optimization, Deep Learning, Computer Vision, Deep Reinforcement Learning, and Robotics. I'm currently seeking positions to pursue MSc or a Ph.D.<br>
+					</p>
+				</div>
+			</div>
+
+			<div class="row pt-5 pb-3 pl-3 bg-light mb-5 shadow mx-1">
+				<div class="col">
+					<h5 class="pb-2"><b>Contact Information</b></h5>
+					<p>
+						<a href="mailto:vamshi.hemadri@gmail.com"><strong>Gmaild: </strong> vamshi.hemadri@gmail.com</a><br><br>
+						<a href="https://www.linkedin.com/in/raghu-vamshi-hemadri-8ab78362/"><strong>LinkedIn</strong> </a><br><br>
+						<a href="https://scholar.google.co.in/citations?user=eb3JyOoAAAAJ&hl=en"><strong>Google Scholar</strong> </a><br><br>
+						<a href="https://github.com/RaghuHemadri"><strong>GitHub</strong> </a><br><br>
+						<a href="https://orcid.org/0000-0002-0272-9714"><strong>Orcid</strong> </a><br><br>
+						<a href="https://www.facebook.com/vamshi.hemadri"><strong>Facebook</strong> </a><br><br>
+						<a href="tel:+91 90004 38694"><strong>Call: +91 90004 38694</strong> </a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>
