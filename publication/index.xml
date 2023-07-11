@@ -7,10 +7,23 @@
     <generator>Source Themes academia (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year}</copyright>
-    <lastBuildDate>Sun, 07 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 Oct 2021 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="https://raghuhemadri.github.io/publication/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Iteratively reweighted minimax-concave penalty minimization for accurate low-rank plus sparse matrix decomposition</title>
+      <link>https://raghuhemadri.github.io/publication/journal-article/</link>
+      <pubDate>Tue, 26 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/publication/journal-article/</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Supplementary material: &lt;a href=&#34;https://ieeexplore.ieee.org/ielx7/34/9940447/9585422/supp1-3122259.pdf?arnumber=9585422/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;* Both authors have equal contribution.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>An example preprint / working paper</title>
@@ -19,18 +32,6 @@
       
       <guid>https://raghuhemadri.github.io/publication/preprint/</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>An example journal article</title>
-      <link>https://raghuhemadri.github.io/publication/journal-article/</link>
-      <pubDate>Tue, 01 Sep 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://raghuhemadri.github.io/publication/journal-article/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
