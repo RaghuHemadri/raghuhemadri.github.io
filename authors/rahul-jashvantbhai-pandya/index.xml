@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rahul Jashvantbhai Pandya on Raghu Hemadri</title>
+    <link>https://raghuhemadri.github.io/authors/rahul-jashvantbhai-pandya/</link>
+    <description>Recent content in Rahul Jashvantbhai Pandya on Raghu Hemadri</description>
+    <generator>Source Themes academia (https://sourcethemes.com/academic/)</generator>
+    <language>en-us</language>
+    <copyright>Copyright &amp;copy; {year}</copyright>
+    <lastBuildDate>Tue, 19 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	    <atom:link href="https://raghuhemadri.github.io/authors/rahul-jashvantbhai-pandya/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AEVB-Comm: An Intelligent CommunicationSystem based on AEVBs</title>
+      <link>https://raghuhemadri.github.io/publication/aevbcomm/</link>
+      <pubDate>Tue, 19 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/publication/aevbcomm/</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Supplementary material and &lt;a href=&#34;https://github.com/RaghuHemadri/AEVBComm.git&#34;&gt;code&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

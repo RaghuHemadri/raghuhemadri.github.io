@@ -7,10 +7,37 @@
     <generator>Source Themes academia (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year}</copyright>
-    <lastBuildDate>Tue, 26 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jun 2022 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="https://raghuhemadri.github.io/authors/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ajeet Singh</title>
+      <link>https://raghuhemadri.github.io/authors/ajeet-singh/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/ajeet-singh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Amarjot Singh</title>
+      <link>https://raghuhemadri.github.io/authors/amarjot-singh/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/amarjot-singh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Raghu Vamshi Hemadri</title>
+      <link>https://raghuhemadri.github.io/authors/raghu-vamshi-hemadri/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/raghu-vamshi-hemadri/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Chandra Sekhar Seelamantula</title>
@@ -31,18 +58,72 @@
     </item>
     
     <item>
-      <title>Raghu Vamshi Hemadri*</title>
-      <link>https://raghuhemadri.github.io/authors/raghu-vamshi-hemadri/</link>
-      <pubDate>Tue, 26 Oct 2021 00:00:00 +0000</pubDate>
+      <title>C Chandravathi</title>
+      <link>https://raghuhemadri.github.io/authors/c-chandravathi/</link>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/authors/raghu-vamshi-hemadri/</guid>
+      <guid>https://raghuhemadri.github.io/authors/c-chandravathi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>KV Sridhar</title>
+      <link>https://raghuhemadri.github.io/authors/kv-sridhar/</link>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/kv-sridhar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sarvesh Kumar</title>
+      <link>https://raghuhemadri.github.io/authors/sarvesh-kumar/</link>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/sarvesh-kumar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ravi Kishore Kodali</title>
+      <link>https://raghuhemadri.github.io/authors/ravi-kishore-kodali/</link>
+      <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/ravi-kishore-kodali/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Akshay Rayaluru</title>
+      <link>https://raghuhemadri.github.io/authors/akshay-rayaluru/</link>
+      <pubDate>Tue, 19 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/akshay-rayaluru/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rahul Jashvantbhai Pandya</title>
+      <link>https://raghuhemadri.github.io/authors/rahul-jashvantbhai-pandya/</link>
+      <pubDate>Tue, 19 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/rahul-jashvantbhai-pandya/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ravi Kumar Jatoth</title>
+      <link>https://raghuhemadri.github.io/authors/ravi-kumar-jatoth/</link>
+      <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/authors/ravi-kumar-jatoth/</guid>
       <description></description>
     </item>
     
     <item>
       <title></title>
       <link>https://raghuhemadri.github.io/authors/admin/</link>
-      <pubDate>Sun, 07 Apr 2019 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://raghuhemadri.github.io/authors/admin/</guid>
       <description>&lt;p&gt;Welcome to my website! I&amp;rsquo;m a software developer at Oracle, specializing in machine learning. Currently, I&amp;rsquo;m a member of the Autonomous Health Framework (AHF) team, where I contribute my expertise in developing innovative solutions.&lt;/p&gt;
@@ -51,15 +132,6 @@
 &lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Robert Ford</title>
-      <link>https://raghuhemadri.github.io/authors/robert-ford/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
-      
-      <guid>https://raghuhemadri.github.io/authors/robert-ford/</guid>
-      <description></description>
     </item>
     
   </channel>

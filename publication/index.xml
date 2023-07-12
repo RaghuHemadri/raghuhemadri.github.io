@@ -7,17 +7,29 @@
     <generator>Source Themes academia (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year}</copyright>
-    <lastBuildDate>Tue, 26 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jun 2022 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="https://raghuhemadri.github.io/publication/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>ChildrEN SafEty and Rescue (CENSER) System for Trafficked Children from Brothels in India</title>
+      <link>https://raghuhemadri.github.io/publication/censer/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/publication/censer/</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Supplementary material: &lt;a href=&#34;https://github.com/RaghuHemadri/CENSER.git&#34;&gt;code&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Iteratively reweighted minimax-concave penalty minimization for accurate low-rank plus sparse matrix decomposition</title>
-      <link>https://raghuhemadri.github.io/publication/journal-article/</link>
+      <link>https://raghuhemadri.github.io/publication/irmcp/</link>
       <pubDate>Tue, 26 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/publication/journal-article/</guid>
+      <guid>https://raghuhemadri.github.io/publication/irmcp/</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;Supplementary material: &lt;a href=&#34;https://ieeexplore.ieee.org/ielx7/34/9940447/9585422/supp1-3122259.pdf?arnumber=9585422/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
@@ -26,61 +38,46 @@
     </item>
     
     <item>
-      <title>An example preprint / working paper</title>
-      <link>https://raghuhemadri.github.io/publication/preprint/</link>
-      <pubDate>Sun, 07 Apr 2019 00:00:00 +0000</pubDate>
+      <title>Performance analysis of weighted low rank model with sparse image histograms for face recognition under lowlevel illumination and occlusion</title>
+      <link>https://raghuhemadri.github.io/publication/perf-conit/</link>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/publication/preprint/</guid>
+      <guid>https://raghuhemadri.github.io/publication/perf-conit/</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
 </description>
     </item>
     
     <item>
-      <title>An example conference paper</title>
-      <link>https://raghuhemadri.github.io/publication/conference-paper.1/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
+      <title>Attendance management system</title>
+      <link>https://raghuhemadri.github.io/publication/att-man/</link>
+      <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/publication/conference-paper.1/</guid>
+      <guid>https://raghuhemadri.github.io/publication/att-man/</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
     <item>
-      <title>An example conference paper</title>
-      <link>https://raghuhemadri.github.io/publication/conference-paper.2/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
+      <title>AEVB-Comm: An Intelligent CommunicationSystem based on AEVBs</title>
+      <link>https://raghuhemadri.github.io/publication/aevbcomm/</link>
+      <pubDate>Tue, 19 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/publication/conference-paper.2/</guid>
+      <guid>https://raghuhemadri.github.io/publication/aevbcomm/</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Supplementary material and &lt;a href=&#34;https://github.com/RaghuHemadri/AEVBComm.git&#34;&gt;code&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
     <item>
-      <title>An example conference paper</title>
-      <link>https://raghuhemadri.github.io/publication/conference-paper.3/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
+      <title>Jaya Algorithm Based Intelligent Color Reduction</title>
+      <link>https://raghuhemadri.github.io/publication/aotit-jaya/</link>
+      <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/publication/conference-paper.3/</guid>
+      <guid>https://raghuhemadri.github.io/publication/aotit-jaya/</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>An example conference paper</title>
-      <link>https://raghuhemadri.github.io/publication/conference-paper/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
-      
-      <guid>https://raghuhemadri.github.io/publication/conference-paper/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;code and math&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

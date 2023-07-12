@@ -33,7 +33,7 @@
     <item>
       <title>Publications</title>
       <link>https://raghuhemadri.github.io/publication/</link>
-      <pubDate>Tue, 26 Oct 2021 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
       
       <guid>https://raghuhemadri.github.io/publication/</guid>
       <description></description>
@@ -45,15 +45,6 @@
       <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
       
       <guid>https://raghuhemadri.github.io/courses/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Posts</title>
-      <link>https://raghuhemadri.github.io/post/</link>
-      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://raghuhemadri.github.io/post/</guid>
       <description></description>
     </item>
     
@@ -72,6 +63,15 @@
       <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
       
       <guid>https://raghuhemadri.github.io/project/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Posts</title>
+      <link>https://raghuhemadri.github.io/post/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/post/</guid>
       <description></description>
     </item>
     
