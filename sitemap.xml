@@ -29,6 +29,11 @@
     <loc>https://raghuhemadri.github.io/courses/example.1/example4/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
   </url><url>
+    <loc>https://raghuhemadri.github.io/skills/</loc>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://raghuhemadri.github.io/talk/coding/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
@@ -146,9 +151,6 @@
     <loc>https://raghuhemadri.github.io/project/internal-project/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://raghuhemadri.github.io/project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://raghuhemadri.github.io/tags/robotics/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
   </url><url>
@@ -166,5 +168,11 @@
     <loc>https://raghuhemadri.github.io/categories/</loc>
   </url><url>
     <loc>https://raghuhemadri.github.io/post/</loc>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/experience/</loc>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/featured/</loc>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/recent_publications/</loc>
   </url>
 </urlset>
