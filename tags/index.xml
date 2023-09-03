@@ -22,15 +22,6 @@
     </item>
     
     <item>
-      <title>Demo</title>
-      <link>https://raghuhemadri.github.io/tags/demo/</link>
-      <pubDate>Sat, 01 Jul 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://raghuhemadri.github.io/tags/demo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Machine Learning</title>
       <link>https://raghuhemadri.github.io/tags/machine-learning/</link>
       <pubDate>Sat, 01 Jul 2023 00:00:00 +0000</pubDate>
@@ -40,29 +31,29 @@
     </item>
     
     <item>
-      <title>Robotics</title>
-      <link>https://raghuhemadri.github.io/tags/robotics/</link>
-      <pubDate>Sun, 27 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://raghuhemadri.github.io/tags/robotics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Other</title>
       <link>https://raghuhemadri.github.io/tags/other/</link>
-      <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 01 Jul 2023 00:00:00 +0000</pubDate>
       
       <guid>https://raghuhemadri.github.io/tags/other/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>human</title>
-      <link>https://raghuhemadri.github.io/tags/human/</link>
-      <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
+      <title>Demo</title>
+      <link>https://raghuhemadri.github.io/tags/demo/</link>
+      <pubDate>Mon, 01 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/tags/human/</guid>
+      <guid>https://raghuhemadri.github.io/tags/demo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Robotics</title>
+      <link>https://raghuhemadri.github.io/tags/robotics/</link>
+      <pubDate>Sun, 27 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/tags/robotics/</guid>
       <description></description>
     </item>
     
