@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>robotics on Raghu Hemadri</title>
+    <title>Robotics on Raghu Hemadri</title>
     <link>https://raghuhemadri.github.io/tags/robotics/</link>
-    <description>Recent content in robotics on Raghu Hemadri</description>
+    <description>Recent content in Robotics on Raghu Hemadri</description>
     <generator>Source Themes academia (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year}</copyright>
-    <lastBuildDate>Wed, 27 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Jun 2021 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="https://raghuhemadri.github.io/tags/robotics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Artificial Intelligence</title>
-      <link>https://raghuhemadri.github.io/project/artificial-intelligence/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <title>Reinforcement Learning with Unity</title>
+      <link>https://raghuhemadri.github.io/project/unity/</link>
+      <pubDate>Sun, 27 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/project/artificial-intelligence/</guid>
+      <guid>https://raghuhemadri.github.io/project/unity/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Robotics</title>
-      <link>https://raghuhemadri.github.io/project/robotics/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <title>Social Neuro RL using Unity environments</title>
+      <link>https://raghuhemadri.github.io/project/snrl/</link>
+      <pubDate>Mon, 27 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/project/robotics/</guid>
+      <guid>https://raghuhemadri.github.io/project/snrl/</guid>
       <description></description>
     </item>
     

@@ -32,7 +32,7 @@
     <loc>https://raghuhemadri.github.io/skills/</loc>
   </url><url>
     <loc>https://raghuhemadri.github.io/project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2023-07-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raghuhemadri.github.io/talk/coding/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
@@ -48,6 +48,27 @@
   </url><url>
     <loc>https://raghuhemadri.github.io/talk/synthesizing/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/tags/computer-vision/</loc>
+    <lastmod>2023-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/tags/demo/</loc>
+    <lastmod>2023-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/imc2023/</loc>
+    <lastmod>2023-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/tags/machine-learning/</loc>
+    <lastmod>2023-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/tags/</loc>
+    <lastmod>2023-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/badpose/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/fitgen/</loc>
+    <lastmod>2023-04-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raghuhemadri.github.io/publication_types/1/</loc>
     <lastmod>2022-06-28T00:00:00+00:00</lastmod>
@@ -73,6 +94,9 @@
     <loc>https://raghuhemadri.github.io/authors/raghu-vamshi-hemadri/</loc>
     <lastmod>2022-06-28T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://raghuhemadri.github.io/project/log-anomaly/</loc>
+    <lastmod>2022-01-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://raghuhemadri.github.io/publication_types/2/</loc>
     <lastmod>2021-10-26T00:00:00+00:00</lastmod>
   </url><url>
@@ -84,6 +108,12 @@
   </url><url>
     <loc>https://raghuhemadri.github.io/authors/praveen-kumar-pokala/</loc>
     <lastmod>2021-10-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/unity/</loc>
+    <lastmod>2021-06-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/tags/robotics/</loc>
+    <lastmod>2021-06-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raghuhemadri.github.io/authors/c-chandravathi/</loc>
     <lastmod>2021-06-25T00:00:00+00:00</lastmod>
@@ -97,11 +127,23 @@
     <loc>https://raghuhemadri.github.io/authors/sarvesh-kumar/</loc>
     <lastmod>2021-06-25T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://raghuhemadri.github.io/project/magnet/</loc>
+    <lastmod>2021-05-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://raghuhemadri.github.io/publication/att-man/</loc>
+    <lastmod>2021-01-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/tags/other/</loc>
     <lastmod>2021-01-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raghuhemadri.github.io/authors/ravi-kishore-kodali/</loc>
     <lastmod>2021-01-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/stock-rl/</loc>
+    <lastmod>2021-01-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/covivac-bot/</loc>
+    <lastmod>2020-12-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raghuhemadri.github.io/publication_types/3/</loc>
     <lastmod>2020-05-19T00:00:00+00:00</lastmod>
@@ -115,6 +157,12 @@
     <loc>https://raghuhemadri.github.io/authors/rahul-jashvantbhai-pandya/</loc>
     <lastmod>2020-05-19T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://raghuhemadri.github.io/project/maml-info/</loc>
+    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/snrl/</loc>
+    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://raghuhemadri.github.io/publication/aotit-jaya/</loc>
     <lastmod>2019-07-10T00:00:00+00:00</lastmod>
   </url><url>
@@ -124,44 +172,20 @@
     <loc>https://raghuhemadri.github.io/courses/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
   </url><url>
+    <loc>https://raghuhemadri.github.io/tags/human/</loc>
+    <lastmod>2019-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raghuhemadri.github.io/project/torch-ml/</loc>
+    <lastmod>2019-04-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://raghuhemadri.github.io/slides/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raghuhemadri.github.io/slides/example/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://raghuhemadri.github.io/project/artificial-intelligence/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/tags/deep-learning/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/project/deep-learning/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/tags/demo/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/project/external-project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/tags/human/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/project/internal-project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/tags/robotics/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/project/robotics/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/project/skin-cancer-ai/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raghuhemadri.github.io/tags/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>https://raghuhemadri.github.io/project/age-gender/</loc>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raghuhemadri.github.io/authors/admin/</loc>
   </url><url>

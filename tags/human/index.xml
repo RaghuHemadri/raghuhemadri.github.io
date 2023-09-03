@@ -7,17 +7,17 @@
     <generator>Source Themes academia (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year}</copyright>
-    <lastBuildDate>Wed, 27 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="https://raghuhemadri.github.io/tags/human/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Skin Cancer AI</title>
-      <link>https://raghuhemadri.github.io/project/skin-cancer-ai/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <title>PyTorch-Powered Machine Learning Models</title>
+      <link>https://raghuhemadri.github.io/project/torch-ml/</link>
+      <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/project/skin-cancer-ai/</guid>
+      <guid>https://raghuhemadri.github.io/project/torch-ml/</guid>
       <description></description>
     </item>
     

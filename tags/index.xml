@@ -7,44 +7,62 @@
     <generator>Source Themes academia (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year}</copyright>
-    <lastBuildDate>Wed, 27 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jul 2023 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="https://raghuhemadri.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Deep Learning</title>
-      <link>https://raghuhemadri.github.io/tags/deep-learning/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <title>Computer Vision</title>
+      <link>https://raghuhemadri.github.io/tags/computer-vision/</link>
+      <pubDate>Sat, 01 Jul 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/tags/deep-learning/</guid>
+      <guid>https://raghuhemadri.github.io/tags/computer-vision/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Demo</title>
       <link>https://raghuhemadri.github.io/tags/demo/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 01 Jul 2023 00:00:00 +0000</pubDate>
       
       <guid>https://raghuhemadri.github.io/tags/demo/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>human</title>
-      <link>https://raghuhemadri.github.io/tags/human/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <title>Machine Learning</title>
+      <link>https://raghuhemadri.github.io/tags/machine-learning/</link>
+      <pubDate>Sat, 01 Jul 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://raghuhemadri.github.io/tags/human/</guid>
+      <guid>https://raghuhemadri.github.io/tags/machine-learning/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>robotics</title>
+      <title>Robotics</title>
       <link>https://raghuhemadri.github.io/tags/robotics/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 27 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://raghuhemadri.github.io/tags/robotics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Other</title>
+      <link>https://raghuhemadri.github.io/tags/other/</link>
+      <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/tags/other/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>human</title>
+      <link>https://raghuhemadri.github.io/tags/human/</link>
+      <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://raghuhemadri.github.io/tags/human/</guid>
       <description></description>
     </item>
     
