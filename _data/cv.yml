@@ -2,31 +2,31 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
+      value: Raghu Vamshi Hemadri
     - name: Date of Birth
-      value: 14th March 1879
+      value: 14th March 2000
     - name: Languages
-      value: English, German
+      value: Telugu, English, Hindi
 
 - title: Education
   type: time_table
   contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
+    - title: MS in Computer Engineering
+      institution: New York University, New York, US
+      year: 2026
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
+        - GPA: 4.0/4.0
+        - title: Coursework
           contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Federal teaching diploma
-      institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
-      year: 1900
+            - Introduction to Machine Learning
+            - Advanced Machine Learning
+            - Deep Learning
+            - Machine Learning Operations (MLOps)
+    - title: B.Tech in Electronics and Communication Engineering
+      institution: National Institute of Technology, Warangal, India
+      year: 2017
       description:
-        - Description 1.
-        - Description 2.
+        - GPA: 8.36/10.0
 
 - title: Experience
   type: time_table
