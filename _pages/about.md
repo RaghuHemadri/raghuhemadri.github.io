@@ -2,16 +2,17 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+# subtitle: <a href='#'>ML Researcher</a>. Address. Contacts. Motto. Etc.
+subtitle: ML Research @ NYU
 
 profile:
   align: right
   image: prof_pic.jpeg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>370 Jay St.</p>
+    <p>NYU, Tandon School of Engineering</p>
+    <p>Brooklyn, NY, 11201</p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
@@ -27,8 +28,15 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am **Raghu Vamshi Hemadri**, a **Machine Learning Researcher** with a strong focus on **Natural Language Processing (NLP) and Reinforcement Learning (RL)**. Currently, I am working under the supervision of [Prof. Siddharth Garg](https://engineering.nyu.edu/faculty/siddharth-garg) at **New York University**, exploring **LLMs for hardware design**. My latest research involves **real-time hardware code analysis and vulnerability detection**, a collaboration with **Synopsys**. Additionally, I am collaborating with **Microsoft Research** on **domain-specific LLM fine-tuning and distillation**.  
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+Beyond my research in LLMs, I also work with [Siddharth Nayak (MIT)](https://nsidn98.github.io/) on developing **human-interpretable communication protocols in multi-agent reinforcement learning (MARL)**, leveraging multimodal AI for effective coordination and decision-making.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+Previously, I worked as a **Member of Technical Staff at Oracle**, where I developed **ML-based log anomaly detection, automated bug detection, and large-scale recommendation systems**.  
+
+Apart from my research, I am a **professional badminton player**. Badminton has instilled in me discipline, strategic thinking, and resilience—qualities that also translate into my research mindset. Beyond badminton, I enjoy playing and watching **cricket**.
+
+I am currently on the **job market for 2025 summer internships**.  
+
+### **Contact Me**  
+I am always open to discussing **LLMs, reinforcement learning, and engineering/science-related ideas**. If you have an exciting idea, feel free to drop me an **email**. Also, if you’re up for a game of **badminton or cricket**, I’m always in—whether it's playing or watching a great match!

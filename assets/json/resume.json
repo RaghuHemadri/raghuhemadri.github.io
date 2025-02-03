@@ -134,7 +134,7 @@
     },
     {
       "title": "General Secretary",
-      "date": "2020-21",
+      "date": "2020",
       "awarder": "Electronic Amateur & HAM Club",
       "url": "",
       "summary": "Served as the General Secretary (President) of the Electronics Amateurs and HAM Club, leading initiatives in electronics, and machine learning. Organized technical workshops, hands-on projects, and knowledge-sharing sessions, fostering innovation and engagement within the community."
@@ -199,6 +199,13 @@
     }
   ],
   "publications": [
+    {
+      "name": "Detecting anomalies in log messages using code-derived message patterns to guide structured message classification",
+      "publisher": "US Patent",
+      "releaseDate": "2024-03-18",
+      "url": "",
+      "summary": "Developed a log anomaly detection system leveraging code-derived message patterns for structured classification. The system processes 10TB of log data daily with 94% accuracy, reducing bug-fixing time from 2 days to 1 hour by enabling early and precise anomaly detection."
+    },
     {
       "name": "Attendance Management System",
       "publisher": "ICCCI",
