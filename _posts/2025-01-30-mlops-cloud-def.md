@@ -13,9 +13,6 @@ images:
   venobox: true
 ---
 
-# Cloud Computing: Definitions
-
-
 # **Block, File, and Object Storage**
 
 Storage solutions in computing can be categorized into **Block Storage, File Storage, and Object Storage** based on their data structure and access methods.

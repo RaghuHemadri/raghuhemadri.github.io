@@ -13,11 +13,9 @@ images:
   venobox: true
 ---
 
-# Cloud Computing
-
 This section explores key concepts from the blog post in greater detail. If you're new to these topics, you'll find this overview valuable. If you're pressed for time, you can skip ahead to the main content.
 
-[Cloud Computing: Definitions]()
+[Cloud Computing: Definitions](https://raghuhemadri.github.io/blog/2025/mlops-cloud-def/)
 
 # **Understanding Cloud Computing in MLOps**
 
