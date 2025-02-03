@@ -1,14 +1,14 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - RaghuHemadri
 
 repo_description_lines_max: 2
 
 github_repos:
-  - alshedivat/al-folio
-  - jekyll/jekyll
-  - twbs/bootstrap
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - mathjax/MathJax
-  - jpswalsh/academicons
+  - RaghuHemadri/Custom-Exercise-Plans
+  - RaghuHemadri/IMC-2023
+  - RaghuHemadri/AI-HealthCare-Assistant
+  - RaghuHemadri/MPE-PPO
+  - RaghuHemadri/badminton-game-analysis-using-ML
+  - RaghuHemadri/rh3884_RTES_project
+  - RaghuHemadri/rh3884_CSA_project
+  - RaghuHemadri/q-lms-hackathon
