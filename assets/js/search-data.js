@@ -44,25 +44,7 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "nav-people",
-          title: "people",
-          description: "members of the lab or group",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/people/";
-          },
-        },{id: "post-mlops-cloud-computing",
-      
-        title: "MLOps: Cloud Computing",
-      
-      description: "Cloud Computing Basics for MLOps",
-      section: "Posts",
-      handler: () => {
-        
-          window.location.href = "/blog/2025/mlops-cloud/";
-        
-      },
-    },{id: "post-mlops-cloud-computing-definitions",
+        },{id: "post-mlops-cloud-computing-definitions",
       
         title: "MLOps: Cloud Computing Definitions",
       
@@ -71,6 +53,17 @@ ninja.data = [{
       handler: () => {
         
           window.location.href = "/blog/2025/mlops-cloud-def/";
+        
+      },
+    },{id: "post-mlops-cloud-computing",
+      
+        title: "MLOps: Cloud Computing",
+      
+      description: "Cloud Computing Basics for MLOps",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/mlops-cloud/";
         
       },
     },{id: "post-low-level-design-a-comprehensive-guide",
@@ -106,16 +99,17 @@ ninja.data = [{
           window.location.href = "/blog/2025/mlops-overview/";
         
       },
-    },{id: "news-a-simple-inline-announcement",
-          title: 'A simple inline announcement.',
+    },{id: "news-joined-oracle-as-member-of-technical-staff",
+          title: 'Joined oracle as Member of Technical Staff',
           description: "",
-          section: "News",},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
+          section: "News",},{id: "news-filed-first-ever-us-patent",
+          title: 'Filed first ever US Patent',
           description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
+          section: "News",},{id: "news-joined-new-york-university-for-ms-in-ce-sparkles-smile",
+          title: 'Joined New York University for MS in CE! :sparkles: :smile:',
+          description: "",
+          section: "News",},{id: "news-started-a-new-position-as-graduate-research-assistant-under-prof-siddharth-garg",
+          title: 'Started a new position as Graduate Research Assistant under Prof. Siddharth Garg',
           description: "",
           section: "News",},{id: "projects-social-neuro-rl",
           title: 'Social Neuro RL',
