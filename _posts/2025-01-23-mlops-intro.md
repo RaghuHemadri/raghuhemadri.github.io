@@ -307,6 +307,7 @@ Despite **real-world ML deployment challenges**, our approach **showcases MLOps'
 Our shift from **rule-based to machine learning-based service time estimation** has **improved prediction accuracy** and **opened doors for future optimization**.
 
 Key **MLOps lessons learned**:
+
 ✔️ **Data quality is the foundation of ML success.**
 
 ✔️ **Real-world ML deployment requires constant monitoring.**

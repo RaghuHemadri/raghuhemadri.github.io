@@ -22,3 +22,7 @@ Throughout these posts, I'll walk you through essential MLOps concepts—from au
 ### Course webpage: 
 
 [https://ffund.github.io/ml-sys-ops/](https://ffund.github.io/ml-sys-ops/)
+
+
+#### Disclaimer:
+This blog series is based on concepts covered in *ECE-GY 9183: Machine Learning Systems Engineering and Operations*, taught by Prof. Fraida Fund. While it serves as an additional reference, it is **not a substitute** for the official course materials, lectures, or discussions. Students taking this course are **strongly encouraged** to follow the class and its content diligently. This blog should be used only as a supplementary resource to reinforce understanding, not as a primary learning source.
