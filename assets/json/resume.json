@@ -29,8 +29,8 @@
       "url": "https://wp.nyu.edu/ensure_group/",
       "startDate": "2024-09-01",
       "endDate": "Present",
-      "summary": "Conducting research on leveraging Large Language Models (LLMs) for hardware Code analysis, including using LLMs as encoders to predict vulnerable code directly from RTL before synthesis.\n", 
-      "highlights": ["AI for hardware design", "LLM based frameworks"]
+      "summary": "AI for hardware design, LLM based frameworks", 
+      "highlights": ["Conducting research on leveraging Large Language Models (LLMs) for hardware Code analysis, including using LLMs as encoders to predict vulnerable code directly from RTL before synthesis."]
     },
     {
       "name": "Massachusetts Institute of Technology",
@@ -38,8 +38,8 @@
       "url": "https://www.mit.edu/",
       "startDate": "2024-09-01",
       "endDate": "Present",
-      "summary": "Working on LLMs for multi-agent reinforcement learning (MARL), focusing on long-horizon planning and task execution in complex, partially observable environments.\nFormulated new policy loss function to improve multi-agent decision-making, reducing suboptimal actions by 26%",
-      "highlights": ["Multi-agent Reinforcement Learning", "Policy Loss Function", "Vision Language Models"]
+      "summary": "Multi-agent Reinforcement Learning, Policy Loss Function, Vision Language Models",
+      "highlights": ["Working on LLMs for multi-agent reinforcement learning (MARL), focusing on long-horizon planning and task execution in complex, partially observable environments. Formulated new policy loss function to improve multi-agent decision-making, reducing suboptimal actions by 26%", "Developed Vision Language Models (VLMs) for MARL, enabling agents to understand and execute complex tasks using visual inputs and natural language instructions."]
     },
     {
       "name": "Oracle Corporation",
@@ -47,8 +47,8 @@
       "url": "https://www.oracle.com/",
       "startDate": "2021-07-07",
       "endDate": "2024-08-07",
-      "summary": "Created ML system to identify errors causing build failures, providing diagnosis, resolution with 98.6% accuracy.\nBuilt log anomaly detection, processing 10TB/day, 94% accuracy, reducing bug-fixing time from 2 days to 1 hour.\nDevised a recommendation system generating 50,000 daily recommendations, automating bug detection and fixing.\nEngineered a plugin engine, handling 1M+ CPU processes daily, improving productivity by 40%.\nDeveloped web pages with HTML, CSS, JavaScript, and Python APIs, increasing user engagement by 30%",
-      "highlights": ["Machine Learning", "Log Anomaly Detection", "Recommendation System", "Plugin Engine", "Web Development"]
+      "summary": "Machine Learning, Log Anomaly Detection, Recommendation System, Plugin Engine, Web Development",
+      "highlights": ["Created ML system to identify errors causing build failures, providing diagnosis, resolution with 98.6% accuracy.", "Built log anomaly detection, processing 10TB/day, 94% accuracy, reducing bug-fixing time from 2 days to 1 hour.", "Devised a recommendation system generating 50,000 daily recommendations, automating bug detection and fixing.", "Engineered a plugin engine, handling 1M+ CPU processes daily, improving productivity by 40%.", "Developed web pages with HTML, CSS, JavaScript, and Python APIs, increasing user engagement by 30%"]
     }
   ],
   "education": [
@@ -127,7 +127,7 @@
     },
     {
       "title": "General Secretary",
-      "date": "2017",
+      "date": "2020-21",
       "awarder": "Electronic Amateur & HAM Club",
       "url": "",
       "summary": "Served as the General Secretary (President) of the Electronics Amateurs and HAM Club, leading initiatives in electronics, and machine learning. Organized technical workshops, hands-on projects, and knowledge-sharing sessions, fostering innovation and engagement within the community."
