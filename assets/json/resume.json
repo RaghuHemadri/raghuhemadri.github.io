@@ -1,70 +1,136 @@
 {
   "basics": {
-    "name": "Albert Einstein",
-    "label": "Scientist",
+    "name": "Raghu Hemadri",
+    "label": "ML Researcher",
     "image": "",
-    "email": "albert@einstein.de",
-    "phone": "(912) 123-4567",
-    "url": "https://alshedivat.github.io/al-folio/",
-    "summary": "A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time",
+    "email": "raghu.hemadri@nyu.edu",
+    "phone": "(929) 724-6024",
+    "url": "https://raghuhemadri.github.io/",
+    "summary": "I am a Machine Learning Researcher with a focus on Natural Language Processing and Reinforcement Learning. I am currently pursuing my Master's in Computer Engineering at New York University. I have a strong background in Mathematics and Statistics. I am passionate about solving real-world problems using Machine Learning and Deep Learning.",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
+      "address": "370 Jay St",
+      "postalCode": "NY 11201",
+      "city": "Brooklyn",
       "countryCode": "US",
-      "region": "California"
+      "region": "New York"
     },
     "profiles": [
       {
-        "network": "Twitter",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "network": "LinkedIn",
+        "username": "Raghu Hemadri",
+        "url": "https://www.linkedin.com/in/raghuhemadri/"
       }
     ]
   },
   "work": [
     {
-      "name": "Institute for Advanced Study, Princeton University",
-      "position": "Professor of Theoretical Physics",
-      "url": "https://example.com",
-      "startDate": "1933-01-01",
-      "endDate": "1955-01-01",
-      "summary": "Teaching at Palmer Physical Laboratory (now 302 Frist Campus Center). While not a professor at Princeton, I associated with the physics professors and continued to give lectures on campus.",
-      "highlights": ["Relativity"]
-    }
-  ],
-  "volunteer": [
+      "name": "Electrical and Computer Engineering Department, NYU Tandon School of Engineering",
+      "position": "Graduate Research Assistant",
+      "url": "https://wp.nyu.edu/ensure_group/",
+      "startDate": "2024-09-01",
+      "endDate": "Present",
+      "summary": "Conducting research on leveraging Large Language Models (LLMs) for hardware Code analysis, including using LLMs as encoders to predict vulnerable code directly from RTL before synthesis.\n", 
+      "highlights": ["AI for hardware design", "LLM based frameworks"]
+    },
     {
-      "organization": "People's Climate March",
-      "location": "Zurich, Switzerland",
-      "position": "Lead Organizer",
-      "url": "https://example.com",
-      "startDate": "2014-04-01",
-      "endDate": "2015-07-01",
-      "summary": "Lead organizer for the New York City branch of the People's Climate March, the largest climate march in history.",
-      "highlights": ["Awarded 'Climate Hero' award by Greenpeace for my efforts organizing the march.", "Men of the year 2014 by Time magazine"]
+      "name": "Massachusetts Institute of Technology",
+      "position": "Research Collaborator",
+      "url": "https://www.mit.edu/",
+      "startDate": "2024-09-01",
+      "endDate": "Present",
+      "summary": "Working on LLMs for multi-agent reinforcement learning (MARL), focusing on long-horizon planning and task execution in complex, partially observable environments.\nFormulated new policy loss function to improve multi-agent decision-making, reducing suboptimal actions by 26%",
+      "highlights": ["Multi-agent Reinforcement Learning", "Policy Loss Function", "Vision Language Models"]
+    },
+    {
+      "name": "Oracle Corporation",
+      "position": "Member of Technical Staff",
+      "url": "https://www.oracle.com/",
+      "startDate": "2021-07-07",
+      "endDate": "2024-08-07",
+      "summary": "Created ML system to identify errors causing build failures, providing diagnosis, resolution with 98.6% accuracy.\nBuilt log anomaly detection, processing 10TB/day, 94% accuracy, reducing bug-fixing time from 2 days to 1 hour.\nDevised a recommendation system generating 50,000 daily recommendations, automating bug detection and fixing.\nEngineered a plugin engine, handling 1M+ CPU processes daily, improving productivity by 40%.\nDeveloped web pages with HTML, CSS, JavaScript, and Python APIs, increasing user engagement by 30%",
+      "highlights": ["Machine Learning", "Log Anomaly Detection", "Recommendation System", "Plugin Engine", "Web Development"]
     }
   ],
   "education": [
     {
-      "institution": "University of Zurich, Zurich, Switzerland",
-      "location": "Zurich, Switzerland",
-      "url": "https://www.uzh.ch/",
-      "area": "Software Development",
-      "studyType": "PhD",
-      "startDate": "1905-01-01",
-      "endDate": "1905-01-01",
-      "score": "10",
-      "courses": ["Theory of Relativity"]
+      "institution": "New York University",
+      "location": "Brooklyn, NY",
+      "url": "https://www.nyu.edu/",
+      "area": "Computer Engineering",
+      "studyType": "MS",
+      "startDate": "2024-09-01",
+      "endDate": "2026-05-15",
+      "score": "4.0 / 4.0",
+      "courses": ["Intro to Machine Learning", "Advanced Machine Learning", "Deep Learning", "Machine Learning Operations (MLOps)"]
+    },
+    {
+      "institution": "National Institute of Technology Warangal",
+      "location": "Warangal, India",
+      "url": "https://www.nitw.ac.in/",
+      "area": "Electronics and Communication Engineering",
+      "studyType": "BTech",
+      "startDate": "2017-07-21",
+      "endDate": "2021-05-15",
+      "score": "8.36 / 10.0",
+      "courses": ["Data Structures and Algorithms", "Object-Oriented Programming", "Java"]
     }
   ],
   "awards": [
     {
-      "title": "Nobel Prize in Physics",
-      "date": "1921-11-01",
-      "awarder": "Royal Swedish Academy of Sciences",
-      "url": "https://www.nobelprize.org/prizes/physics/1921/einstein/biographical/",
-      "summary": "The Nobel Prizes are five separate prizes that, according to Alfred Nobel's will of 1895, are awarded to 'those who, during the preceding year, have conferred the greatest benefit to humankind.'"
+      "title": "Best Outgoing Student",
+      "date": "2021",
+      "awarder": "National Institute of Technology Warangal",
+      "url": "https://drive.google.com/file/d/1qqf1x8jKyMd9FivzOzQgdUCFCoOrx6jG/view?usp=sharing",
+      "summary": "Awarded in recognition of my outstanding overall academic and research performance during my undergraduate studies. This honor reflects my excellence in coursework, impactful research contributions, and commitment to academic growth."
+    },
+    {
+      "title": "Best Allrounder",
+      "date": "2021",
+      "awarder": "National Institute of Technology Warangal",
+      "url": "https://drive.google.com/file/d/1qqf1x8jKyMd9FivzOzQgdUCFCoOrx6jG/view?usp=sharing",
+      "summary": "Recognized for excellence in academics, research, and extracurricular activities during my undergraduate studies. Along with strong academic and research contributions, I was an active member of the institute's badminton team, balancing both intellectual and athletic pursuits."
+    },
+    {
+      "title": "Best Student Paper",
+      "date": "2020",
+      "awarder": "National Institute of Technology Warangal",
+      "url": "https://drive.google.com/file/d/1cOxSkrlmqqQ6vqJi82X1cPhuF2SHx3qn/view?usp=sharing",
+      "summary": "Awarded for outstanding research contributions and scholarly impact during my undergraduate studies. This recognition highlights the significance of my research work, its academic rigor, and its contribution to the field."
+    },
+    {
+      "title": "Best Student Paper",
+      "date": "2021",
+      "awarder": "National Institute of Technology Warangal",
+      "url": "https://drive.google.com/file/d/1RpJ8a8d8X2qhvBwztv4g0TKZbVCvfxvc/view?usp=sharing",
+      "summary": "Awarded for outstanding research contributions and scholarly impact during my undergraduate studies. This recognition highlights the significance of my research work, its academic rigor, and its contribution to the field."
+    },
+    {
+      "title": "Merit Scholarship",
+      "date": "2018, 2019, 2021",
+      "awarder": "National Institute of Technology Warangal",
+      "url": "",
+      "summary": "Awarded for academic excellence, ranking among the top 10 students in the department. This scholarship recognizes consistent high performance and dedication to academic achievement."
+    },
+    {
+      "title": "Google Research AI Summer School",
+      "date": "2020",
+      "awarder": "Google Research",
+      "url": "",
+      "summary": "Selected as one of 150 participants globally for the Google Research AI Summer School, an elite program focused on cutting-edge advancements in artificial intelligence and machine learning. Engaged with leading researchers, explored state-of-the-art AI methodologies, and gained hands-on experience in AI research applications."
+    },
+    {
+      "title": "International Physics Olympiad",
+      "date": "2017",
+      "awarder": "IPhO Committee",
+      "url": "",
+      "summary": "Qualified for the prefinal round of the International Physics Olympiad (IPhO), ranking among the top students nationally. This selection reflects strong problem-solving skills, deep conceptual understanding of physics, and excellence in competitive examinations."
+    },
+    {
+      "title": "General Secretary",
+      "date": "2017",
+      "awarder": "Electronic Amateur & HAM Club",
+      "url": "",
+      "summary": "Served as the General Secretary (President) of the Electronics Amateurs and HAM Club, leading initiatives in electronics, and machine learning. Organized technical workshops, hands-on projects, and knowledge-sharing sessions, fostering innovation and engagement within the community."
     }
   ],
   "certificates": [
