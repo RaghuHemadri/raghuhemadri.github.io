@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "MLOps: Cloud Computing Definitions"
-date: 2025-01-28 10:00:00
+date: 2025-01-30 10:00:00
 description: "Detailed explanations of concepts from `MLOps: Cloud Computing` blog"
 tags: mlops
 categories: ml
