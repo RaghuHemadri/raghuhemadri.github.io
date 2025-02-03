@@ -1,10 +1,11 @@
 ---
 layout: page
-title: project 4
-description: another without an image
-img:
+title: Log File Summarization
+description: A log file summarization tool using the Drain algorithm to extract key insights and patterns, improving system monitoring and troubleshooting efficiency.
+img: assets/img/drain.jpg
+redirect: https://github.com/RaghuHemadri/Log-File-Anomaly-Detection
 importance: 3
-category: fun
+category: work
 ---
 
 Every project has a beautiful feature showcase page.

@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Rally Master AI
-description: An AI-driven badminton training analysis system using perspective transformation and bird’s-eye view analysis to provide data-driven posture correction and performance assessment.
-img: assets/img/bad.jpg
-redirect: https://github.com/RaghuHemadri/badminton-game-analysis-using-ML
+title: "MAGNET: Multi-Agent Generative Network"
+description: Multi-Agent Generative Network, a dual-agent cooperative architecture for data generation, outperforming traditional GANs in producing high-quality images resembling the CelebA dataset.
+img: assets/img/magnet.jpg
+redirect: https://github.com/RaghuHemadri/Multi-Agent-Generative-Network
 importance: 3
-category: work
+category: fun
 ---
 
 Every project has a beautiful feature showcase page.

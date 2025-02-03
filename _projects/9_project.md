@@ -1,9 +1,10 @@
 ---
 layout: page
-title: project 9
-description: another project with an image 🎉
-img: assets/img/6.jpg
-importance: 4
+title: Stock Trading using RL
+description: A RL-based stock trading system, training RL agents on historical data to optimize portfolio management and enhance market returns.
+img: assets/img/stock.jpg
+redirect: https://github.com/RaghuHemadri/Stock-Trading-using-RL
+importance: 3
 category: fun
 ---
 

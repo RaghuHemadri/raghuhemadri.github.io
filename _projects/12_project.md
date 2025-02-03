@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Rally Master AI
-description: An AI-driven badminton training analysis system using perspective transformation and bird’s-eye view analysis to provide data-driven posture correction and performance assessment.
-img: assets/img/bad.jpg
-redirect: https://github.com/RaghuHemadri/badminton-game-analysis-using-ML
+title: Meta Learning with exact information estimation
+description: An information-theoretic meta-regularizer to mitigate overfitting in meta-learning by maximizing mutual information using MINE, improving generalization on non-mutually-exclusive tasks.
+img: assets/img/meta.jpg
+redirect: https://github.com/RaghuHemadri/Meta-Learning-without-memorization-with-exact-information-estimation
 importance: 3
-category: work
+category: fun
 ---
 
 Every project has a beautiful feature showcase page.

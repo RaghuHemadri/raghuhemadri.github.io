@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Rally Master AI
-description: An AI-driven badminton training analysis system using perspective transformation and bird’s-eye view analysis to provide data-driven posture correction and performance assessment.
-img: assets/img/bad.jpg
-redirect: https://github.com/RaghuHemadri/badminton-game-analysis-using-ML
+title: Social Neuro RL
+description: Explores context-conditioned reasoning and compositional thinking in AI agents using MARL to enhance coordination, generalization, and cognitive architectures inspired by social neuroscience.
+img: assets/img/snrl.jpg
+redirect: https://github.com/RaghuHemadri/Social-Neuro-RL-using-Unity-environments
 importance: 3
-category: work
+category: fun
 ---
 
 Every project has a beautiful feature showcase page.

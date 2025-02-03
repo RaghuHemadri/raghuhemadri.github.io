@@ -1,11 +1,11 @@
 ---
 layout: page
-title: project 8
-description: an other project with a background image and giscus comments
-img: assets/img/9.jpg
-importance: 2
+title: PyTorch-Powered Machine Learning Models
+description: A comprehensive repository of machine learning models in PyTorch, providing well-structured implementations for applications in computer vision, NLP, and beyond.
+img: assets/img/torch.jpg
+redirect: https://github.com/RaghuHemadri/machine-learning-models-using-pytorch
+importance: 3
 category: work
-giscus_comments: true
 ---
 
 Every project has a beautiful feature showcase page.

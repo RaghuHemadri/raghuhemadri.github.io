@@ -1,10 +1,11 @@
 ---
 layout: page
-title: project 6
-description: a project with no image
-img:
-importance: 4
-category: fun
+title: FitGen - Personalized Exercise Planner
+description: Generate personalized exercise plans, optimizing workouts through real-time form feedback to enhance fitness efficiency and reduce injury risk.
+img: assets/img/fitgen.jpg
+redirect: https://github.com/RaghuHemadri/Custom-Exercise-Plans
+importance: 3
+category: work
 ---
 
 Every project has a beautiful feature showcase page.

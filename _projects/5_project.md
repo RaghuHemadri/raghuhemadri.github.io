@@ -1,10 +1,11 @@
 ---
 layout: page
-title: project 5
-description: a project with a background image
-img: assets/img/1.jpg
+title: 3D Scene Reconstruction
+description:  Accurate 3D maps using for multi-view scene reconstruction.
+img: assets/img/3d.jpg
+redirect: https://github.com/RaghuHemadri/IMC-2023
 importance: 3
-category: fun
+category: work
 ---
 
 Every project has a beautiful feature showcase page.
