@@ -57,7 +57,7 @@
       "location": "Brooklyn, NY",
       "url": "https://www.nyu.edu/",
       "area": "Computer Engineering",
-      "studyType": "MS",
+      "studyType": "Master of Science",
       "startDate": "2024-09-01",
       "endDate": "2026-05-15",
       "score": "4.0 / 4.0",
@@ -68,7 +68,7 @@
       "location": "Warangal, India",
       "url": "https://www.nitw.ac.in/",
       "area": "Electronics and Communication Engineering",
-      "studyType": "BTech",
+      "studyType": "Bachelor of Technology",
       "startDate": "2017-07-21",
       "endDate": "2021-05-15",
       "score": "8.36 / 10.0",
@@ -242,11 +242,11 @@
       "summary": "A comparison of the low-rank recovery performance of two Low-rank matrix approximation (LRMA) algorithms-RPCA and WSNM is brought out on occluded human facial images."
     },
     {
-      "name": "Die Grundlage der allgemeinen Relativitätstheorie",
-      "publisher": "Annalen der Physik",
-      "releaseDate": "1916-03-20",
-      "url": "https://de.wikisource.org/wiki/Die_Grundlage_der_allgemeinen_Relativitätstheorie",
-      "summary": "The publication of the theory of general relativity made him internationally famous. He was professor of physics at the universities of Zurich (1909–1911) and Prague (1911–1912), before he returned to ETH Zurich (1912–1914)."
+      "name": "PrefixLLM: LLM-aided Prefix Circuit Design",
+      "publisher": "ArXiv",
+      "releaseDate": "2024-12-03",
+      "url": "https://arxiv.org/abs/2412.02594",
+      "summary": "PrefixLLM leverages large language models (LLMs) to synthesize optimized prefix circuits, transforming the task into a structured text generation problem (SPCR). Using an iterative design space exploration (DSE) framework, it achieves 3.70% area reduction while maintaining the same delay, demonstrating the potential of LLMs in arithmetic circuit synthesis."
     }
   ],
   "skills": [
