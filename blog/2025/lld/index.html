@@ -1,0 +1,1062 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Low-Level Design: A Comprehensive Guide | Raghu Hemadri </title> <meta name="author" content="Raghu V. Hemadri"> <meta name="description" content="Explores fundamental principles, best practices, and patterns for crafting efficient, scalable, and maintainable system architectures."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://raghuhemadri.github.io/blog/2025/lld/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.5/dist/css/lightbox.min.css" integrity="sha256-uypRbsAiJcFInM/ndyI/JHpzNe6DtUNXaWEUWEPfMGo=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.min.css" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/css/spotlight.min.css" integrity="sha256-Dsvkx8BU8ntk9Iv+4sCkgHRynYSQQFP6gJfBN5STFLY=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/venobox@2.1.8/dist/venobox.min.css" integrity="sha256-ohJEB0/WsBOdBD+gQO/MGfyJSbTUI8OOLbQGdkxD6Cg=" crossorigin="anonymous"> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Raghu Hemadri </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item "> <a class="nav-link" href="/teaching/">teaching </a> </li> <li class="nav-item "> <a class="nav-link" href="/people/">people </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">submenus </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/publications/">publications</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/projects/">projects</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/blog/">blog</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Low-Level Design: A Comprehensive Guide</h1> <p class="post-meta"> Created in January 28, 2025 </p> <p class="post-tags"> <a href="/blog/2025"> <i class="fa-solid fa-calendar fa-sm"></i> 2025 </a>   ·   <a href="/blog/tag/lld"> <i class="fa-solid fa-hashtag fa-sm"></i> lld</a>   <a href="/blog/tag/low-level-design"> <i class="fa-solid fa-hashtag fa-sm"></i> low-level-design</a>   ·   <a href="/blog/category/system-design"> <i class="fa-solid fa-tag fa-sm"></i> system-design</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <h1 id="low-level-design-a-comprehensive-guide">Low-Level Design: A Comprehensive Guide</h1> <h1 id="chapter-1-introduction-to-design-patterns"><strong>Chapter 1: Introduction to Design Patterns</strong></h1> <h2 id="theoretical-significance-of-design-patterns-in-software-engineering"><strong>Theoretical Significance of Design Patterns in Software Engineering</strong></h2> <p>Design patterns constitute a compendium of best practices that provide pre-established solutions to frequently encountered problems in software architecture. These patterns underpin the development of flexible, extensible, and maintainable systems by enabling robust abstractions and facilitating code reuse. A profound understanding of design patterns empowers developers to construct resilient systems that are both testable and scalable.</p> <p>Design patterns address common software design challenges such as:</p> <ol> <li>Reducing tight coupling between components.</li> <li>Enhancing scalability and flexibility of systems.</li> <li>Improving code readability and maintainability.</li> </ol> <p>For example, the <strong>Observer Pattern</strong> can be used in a stock market application to notify multiple clients of changes in stock prices.</p> <h2 id="taxonomy-of-design-patterns"><strong>Taxonomy of Design Patterns</strong></h2> <p>Design patterns are systematically classified into three overarching categories:</p> <ol> <li> <strong>Creational Patterns</strong>: These deal with object creation mechanisms and abstract the instantiation process to make systems independent of the objects they create. Examples: <ul> <li> <strong>Factory</strong>: Centralizes object creation logic.</li> <li> <strong>Singleton</strong>: Ensures only one instance of a class exists.</li> </ul> </li> <li> <strong>Structural Patterns</strong>: These focus on composing classes and objects into larger structures while ensuring that the overall architecture remains flexible and efficient. Examples: <ul> <li> <strong>Adapter</strong>: Makes incompatible interfaces work together.</li> <li> <strong>Composite</strong>: Models part-whole hierarchies using tree structures.</li> </ul> </li> <li> <strong>Behavioral Patterns</strong>: These deal with communication and interaction between objects. Examples: <ul> <li> <strong>Strategy</strong>: Defines interchangeable algorithms encapsulated within a class.</li> <li> <strong>Observer</strong>: Establishes a one-to-many dependency between objects.</li> </ul> </li> </ol> <h2 id="unified-modeling-language-uml-as-a-visualization-tool"><strong>Unified Modeling Language (UML) as a Visualization Tool</strong></h2> <p>Unified Modeling Language (UML) diagrams are indispensable tools for visualizing, specifying, constructing, and documenting software systems. Key diagram types include:</p> <ul> <li> <strong>Class Diagrams</strong>: Represent the structure of a system by showing its classes, attributes, and relationships.</li> <li> <strong>Sequence Diagrams</strong>: Highlight object interactions over time. Example: A sequence diagram for user authentication.</li> <li> <strong>State Diagrams</strong>: Illustrate state transitions of an object in response to events. Example: The lifecycle of a TCP connection.</li> <li> <strong>Activity Diagrams</strong>: Describe workflows and the sequence of actions within a process.</li> </ul> <h3 id="practical-example-observer-pattern-in-python"><strong>Practical Example: Observer Pattern in Python</strong></h3> <p>Imagine a stock market application where multiple clients (observers) need updates when stock prices change:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Stock</span><span class="p">:</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">symbol</span> <span class="o">=</span> <span class="n">symbol</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">price</span> <span class="o">=</span> <span class="mi">0</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">observers</span> <span class="o">=</span> <span class="p">[]</span>
+
+   <span class="k">def</span> <span class="nf">add_observer</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">observers</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">remove_observer</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">observers</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">set_price</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+       <span class="n">self</span><span class="p">.</span><span class="nf">notify_observers</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">notify_observers</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+       <span class="k">for</span> <span class="n">observer</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">observers</span><span class="p">:</span>
+           <span class="n">observer</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Investor</span><span class="p">:</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+   <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">stock</span><span class="p">):</span>
+       <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s"> notified of </span><span class="si">{</span><span class="n">stock</span><span class="p">.</span><span class="n">symbol</span><span class="si">}</span><span class="s"> price change to </span><span class="si">{</span><span class="n">stock</span><span class="p">.</span><span class="n">price</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">apple</span> <span class="o">=</span> <span class="nc">Stock</span><span class="p">(</span><span class="sh">"</span><span class="s">AAPL</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">john</span> <span class="o">=</span> <span class="nc">Investor</span><span class="p">(</span><span class="sh">"</span><span class="s">John</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">mary</span> <span class="o">=</span> <span class="nc">Investor</span><span class="p">(</span><span class="sh">"</span><span class="s">Mary</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">apple</span><span class="p">.</span><span class="nf">add_observer</span><span class="p">(</span><span class="n">john</span><span class="p">)</span>
+<span class="n">apple</span><span class="p">.</span><span class="nf">add_observer</span><span class="p">(</span><span class="n">mary</span><span class="p">)</span>
+
+<span class="n">apple</span><span class="p">.</span><span class="nf">set_price</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
+<span class="c1"># Output:
+# John notified of AAPL price change to 150
+# Mary notified of AAPL price change to 150
+</span></code></pre></div></div> <p>This example demonstrates how the <strong>Observer Pattern</strong> decouples the stock from the investors, making the system more flexible and maintainable.</p> <h1 id="chapter-2-foundational-principles-of-object-oriented-design"><strong>Chapter 2: Foundational Principles of Object-Oriented Design</strong></h1> <h2 id="encapsulation"><strong>Encapsulation</strong></h2> <p>Encapsulation is the principle of bundling data (attributes) and methods (functions) that operate on the data into a single unit, typically a class. It restricts access to some of an object’s components, which is critical for protecting the integrity of the data and hiding implementation details. Encapsulation is achieved through access modifiers like private, protected, and public.</p> <h3 id="example"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">BankAccount</span><span class="p">:</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">account_number</span><span class="p">,</span> <span class="n">balance</span><span class="p">):</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">__account_number</span> <span class="o">=</span> <span class="n">account_number</span>  <span class="c1"># Private attribute
+</span>       <span class="n">self</span><span class="p">.</span><span class="n">__balance</span> <span class="o">=</span> <span class="n">balance</span>
+
+   <span class="k">def</span> <span class="nf">deposit</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+       <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+           <span class="n">self</span><span class="p">.</span><span class="n">__balance</span> <span class="o">+=</span> <span class="n">amount</span>
+           <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Deposited </span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s">. New balance is </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">__balance</span><span class="si">}</span><span class="s">.</span><span class="sh">"</span><span class="p">)</span>
+       <span class="k">else</span><span class="p">:</span>
+           <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Deposit amount must be positive.</span><span class="sh">"</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+       <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">amount</span> <span class="o">&lt;=</span> <span class="n">self</span><span class="p">.</span><span class="n">__balance</span><span class="p">:</span>
+           <span class="n">self</span><span class="p">.</span><span class="n">__balance</span> <span class="o">-=</span> <span class="n">amount</span>
+           <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Withdrew </span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s">. Remaining balance is </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">__balance</span><span class="si">}</span><span class="s">.</span><span class="sh">"</span><span class="p">)</span>
+       <span class="k">else</span><span class="p">:</span>
+           <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Invalid withdrawal amount.</span><span class="sh">"</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">get_balance</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+       <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">__balance</span>
+
+<span class="c1"># Example usage
+</span><span class="n">account</span> <span class="o">=</span> <span class="nc">BankAccount</span><span class="p">(</span><span class="sh">"</span><span class="s">12345</span><span class="sh">"</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">account</span><span class="p">.</span><span class="nf">deposit</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">account</span><span class="p">.</span><span class="nf">withdraw</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="nf">get_balance</span><span class="p">())</span>  <span class="c1"># Output: 1300
+</span></code></pre></div></div> <p>In this example, encapsulation ensures that the __balance attribute cannot be directly accessed or modified, protecting the account’s integrity.</p> <h2 id="inheritance"><strong>Inheritance</strong></h2> <p>Inheritance allows a class (child) to inherit attributes and methods from another class (parent), promoting code reuse and hierarchical relationships. However, inheritance must be used judiciously to avoid excessive coupling.</p> <h3 id="example-1"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Vehicle</span><span class="p">:</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">brand</span> <span class="o">=</span> <span class="n">brand</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+   <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+       <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Starting </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">brand</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="si">}</span><span class="s">.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">doors</span><span class="p">):</span>
+       <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="n">brand</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+       <span class="n">self</span><span class="p">.</span><span class="n">doors</span> <span class="o">=</span> <span class="n">doors</span>
+
+   <span class="k">def</span> <span class="nf">honk</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+       <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">brand</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="si">}</span><span class="s"> goes </span><span class="sh">'</span><span class="s">beep beep</span><span class="sh">'</span><span class="s">!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">my_car</span> <span class="o">=</span> <span class="nc">Car</span><span class="p">(</span><span class="sh">"</span><span class="s">Toyota</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Corolla</span><span class="sh">"</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">my_car</span><span class="p">.</span><span class="nf">start</span><span class="p">()</span>
+<span class="n">my_car</span><span class="p">.</span><span class="nf">honk</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="polymorphism"><strong>Polymorphism</strong></h2> <p>Polymorphism allows objects to be treated as instances of their parent class rather than their actual class. This enables the use of a single interface to represent different types.</p> <h3 id="example-2"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Animal</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Woof!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Cat</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Meow!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="nc">Dog</span><span class="p">(),</span> <span class="nc">Cat</span><span class="p">()]</span>
+<span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">:</span>
+    <span class="n">animal</span><span class="p">.</span><span class="nf">speak</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="abstraction"><strong>Abstraction</strong></h2> <p>Abstraction focuses on exposing only essential details and hiding the implementation. It is typically achieved using abstract classes or interfaces.</p> <h3 id="example-3"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span> <span class="nc">Shape</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">width</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">height</span>
+
+    <span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">height</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">rect</span> <span class="o">=</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Area:</span><span class="sh">"</span><span class="p">,</span> <span class="n">rect</span><span class="p">.</span><span class="nf">area</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Perimeter:</span><span class="sh">"</span><span class="p">,</span> <span class="n">rect</span><span class="p">.</span><span class="nf">perimeter</span><span class="p">())</span>
+</code></pre></div></div> <h1 id="chapter-3-core-design-philosophies"><strong>Chapter 3: Core Design Philosophies</strong></h1> <h2 id="encapsulate-what-varies"><strong>Encapsulate What Varies</strong></h2> <p>Encapsulating what varies involves identifying volatile components of a system and isolating them, enabling easier modification without impacting the stable parts. This philosophy lies at the heart of many design patterns, including Strategy and Observer.</p> <h3 id="example-using-strategy-pattern"><strong>Example: Using Strategy Pattern</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PaymentStrategy</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">pay</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">CreditCardPayment</span><span class="p">(</span><span class="n">PaymentStrategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">pay</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Paid </span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s"> using Credit Card.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">PayPalPayment</span><span class="p">(</span><span class="n">PaymentStrategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">pay</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Paid </span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s"> using PayPal.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ShoppingCart</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">items</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">calculate_total</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nf">sum</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="sh">'</span><span class="s">price</span><span class="sh">'</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">items</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">checkout</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">payment_strategy</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">calculate_total</span><span class="p">()</span>
+        <span class="n">payment_strategy</span><span class="p">.</span><span class="nf">pay</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">cart</span> <span class="o">=</span> <span class="nc">ShoppingCart</span><span class="p">()</span>
+<span class="n">cart</span><span class="p">.</span><span class="nf">add_item</span><span class="p">({</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">Laptop</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">price</span><span class="sh">'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">})</span>
+<span class="n">cart</span><span class="p">.</span><span class="nf">add_item</span><span class="p">({</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">Mouse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">price</span><span class="sh">'</span><span class="p">:</span> <span class="mi">50</span><span class="p">})</span>
+
+<span class="n">cart</span><span class="p">.</span><span class="nf">checkout</span><span class="p">(</span><span class="nc">CreditCardPayment</span><span class="p">())</span>
+<span class="n">cart</span><span class="p">.</span><span class="nf">checkout</span><span class="p">(</span><span class="nc">PayPalPayment</span><span class="p">())</span>
+</code></pre></div></div> <h2 id="program-to-an-interface-not-an-implementation"><strong>Program to an Interface, Not an Implementation</strong></h2> <p>This principle ensures that code depends on abstractions rather than specific implementations, making it easier to extend and modify without affecting existing code.</p> <h3 id="example-4"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span> <span class="nc">NotificationService</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">EmailNotification</span><span class="p">(</span><span class="n">NotificationService</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sending Email: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SMSNotification</span><span class="p">(</span><span class="n">NotificationService</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sending SMS: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">NotificationManager</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">service</span><span class="p">:</span> <span class="n">NotificationService</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">service</span><span class="p">.</span><span class="nf">send_notification</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">email_service</span> <span class="o">=</span> <span class="nc">EmailNotification</span><span class="p">()</span>
+<span class="n">sms_service</span> <span class="o">=</span> <span class="nc">SMSNotification</span><span class="p">()</span>
+
+<span class="n">manager</span> <span class="o">=</span> <span class="nc">NotificationManager</span><span class="p">(</span><span class="n">email_service</span><span class="p">)</span>
+<span class="n">manager</span><span class="p">.</span><span class="nf">notify</span><span class="p">(</span><span class="sh">"</span><span class="s">Hello via Email!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">manager</span> <span class="o">=</span> <span class="nc">NotificationManager</span><span class="p">(</span><span class="n">sms_service</span><span class="p">)</span>
+<span class="n">manager</span><span class="p">.</span><span class="nf">notify</span><span class="p">(</span><span class="sh">"</span><span class="s">Hello via SMS!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="favor-composition-over-inheritance"><strong>Favor Composition Over Inheritance</strong></h2> <p>Favoring composition involves designing systems where objects are composed with behaviors rather than relying on deep inheritance hierarchies. This makes the system more modular and easier to modify.</p> <h3 id="example-5"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Engine</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Engine started.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Car</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">Engine</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="nf">start</span><span class="p">()</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Car is ready to drive.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">engine</span> <span class="o">=</span> <span class="nc">Engine</span><span class="p">()</span>
+<span class="n">car</span> <span class="o">=</span> <span class="nc">Car</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">car</span><span class="p">.</span><span class="nf">start</span><span class="p">()</span>
+</code></pre></div></div> <h1 id="chapter-4-the-solid-design-principles"><strong>Chapter 4: The SOLID Design Principles</strong></h1> <h2 id="single-responsibility-principle-srp"><strong>Single Responsibility Principle (SRP)</strong></h2> <p>A class must have only one responsibility, meaning it should encapsulate a singular concern. This reduces the likelihood of introducing errors when modifying the system. For example:</p> <h3 id="example-6"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Invoice</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">items</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total</span>
+
+<span class="k">class</span> <span class="nc">InvoicePrinter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">print_invoice</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">invoice</span><span class="p">:</span> <span class="n">Invoice</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Invoice Details:</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">invoice</span><span class="p">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">- </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Total: </span><span class="si">{</span><span class="n">invoice</span><span class="p">.</span><span class="n">total</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">invoice</span> <span class="o">=</span> <span class="nc">Invoice</span><span class="p">([</span><span class="sh">"</span><span class="s">Item1</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Item2</span><span class="sh">"</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">printer</span> <span class="o">=</span> <span class="nc">InvoicePrinter</span><span class="p">()</span>
+<span class="n">printer</span><span class="p">.</span><span class="nf">print_invoice</span><span class="p">(</span><span class="n">invoice</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="openclosed-principle-ocp"><strong>Open/Closed Principle (OCP)</strong></h2> <p>Classes should be open for extension but closed for modification. This ensures that new functionality can be added without altering existing code.</p> <h3 id="example-7"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Discount</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">total</span>
+
+<span class="k">class</span> <span class="nc">SeasonalDiscount</span><span class="p">(</span><span class="n">Discount</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">total</span> <span class="o">*</span> <span class="mf">0.9</span>
+
+<span class="k">class</span> <span class="nc">ClearanceDiscount</span><span class="p">(</span><span class="n">Discount</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">total</span> <span class="o">*</span> <span class="mf">0.8</span>
+
+<span class="k">class</span> <span class="nc">Cart</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total</span>
+
+    <span class="k">def</span> <span class="nf">apply_discount</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">discount</span><span class="p">:</span> <span class="n">Discount</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">discount</span><span class="p">.</span><span class="nf">apply</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">total</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">cart</span> <span class="o">=</span> <span class="nc">Cart</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">cart</span><span class="p">.</span><span class="nf">apply_discount</span><span class="p">(</span><span class="nc">SeasonalDiscount</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">cart</span><span class="p">.</span><span class="n">total</span><span class="p">)</span>  <span class="c1"># Output: 90
+</span></code></pre></div></div> <h2 id="liskov-substitution-principle-lsp"><strong>Liskov Substitution Principle (LSP)</strong></h2> <p>Subtypes must be substitutable for their base types without altering the correctness of the program. This ensures that derived classes extend functionality without changing the expected behavior.</p> <h3 id="example-8"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Bird</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">fly</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This bird can fly.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Sparrow</span><span class="p">(</span><span class="n">Bird</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fly</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Sparrow flying high.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Ostrich</span><span class="p">(</span><span class="n">Bird</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fly</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="nc">Exception</span><span class="p">(</span><span class="sh">"</span><span class="s">Ostriches can</span><span class="sh">'</span><span class="s">t fly.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Correct implementation
+</span><span class="k">class</span> <span class="nc">FlightlessBird</span><span class="p">(</span><span class="n">Bird</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fly</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This bird doesn</span><span class="sh">'</span><span class="s">t fly.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Penguin</span><span class="p">(</span><span class="n">FlightlessBird</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Example usage
+</span><span class="n">birds</span> <span class="o">=</span> <span class="p">[</span><span class="nc">Sparrow</span><span class="p">(),</span> <span class="nc">Penguin</span><span class="p">()]</span>
+<span class="k">for</span> <span class="n">bird</span> <span class="ow">in</span> <span class="n">birds</span><span class="p">:</span>
+    <span class="n">bird</span><span class="p">.</span><span class="nf">fly</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="interface-segregation-principle-isp"><strong>Interface Segregation Principle (ISP)</strong></h2> <p>Clients should not be forced to depend on methods they do not use. This can be achieved by creating smaller, more specific interfaces.</p> <h3 id="example-9"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Printer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">print_document</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Scanner</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">scan_document</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">AllInOnePrinter</span><span class="p">(</span><span class="n">Printer</span><span class="p">,</span> <span class="n">Scanner</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">print_document</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Printing document...</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">scan_document</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Scanning document...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">printer</span> <span class="o">=</span> <span class="nc">AllInOnePrinter</span><span class="p">()</span>
+<span class="n">printer</span><span class="p">.</span><span class="nf">print_document</span><span class="p">()</span>
+<span class="n">printer</span><span class="p">.</span><span class="nf">scan_document</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="dependency-inversion-principle-dip"><strong>Dependency Inversion Principle (DIP)</strong></h2> <p>High-level modules should not depend on low-level modules. Both should depend on abstractions.</p> <h3 id="example-10"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span> <span class="nc">NotificationService</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">EmailService</span><span class="p">(</span><span class="n">NotificationService</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sending Email: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SMSService</span><span class="p">(</span><span class="n">NotificationService</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sending SMS: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">NotificationManager</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">service</span><span class="p">:</span> <span class="n">NotificationService</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">service</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">email_service</span> <span class="o">=</span> <span class="nc">EmailService</span><span class="p">()</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="nc">NotificationManager</span><span class="p">(</span><span class="n">email_service</span><span class="p">)</span>
+<span class="n">manager</span><span class="p">.</span><span class="nf">notify</span><span class="p">(</span><span class="sh">"</span><span class="s">Hello World</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <h1 id="chapter-5-creational-design-patterns"><strong>Chapter 5: Creational Design Patterns</strong></h1> <h2 id="simple-factory"><strong>Simple Factory</strong></h2> <p>The Simple Factory pattern centralizes object creation logic, encapsulating the instantiation process within a single factory class. This pattern provides a convenient way to create objects without exposing the underlying instantiation logic to the client.</p> <h3 id="example-11"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Shape</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Drawing a Circle</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Square</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Drawing a Square</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ShapeFactory</span><span class="p">:</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_shape</span><span class="p">(</span><span class="n">shape_type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">shape_type</span> <span class="o">==</span> <span class="sh">"</span><span class="s">circle</span><span class="sh">"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nc">Circle</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">shape_type</span> <span class="o">==</span> <span class="sh">"</span><span class="s">square</span><span class="sh">"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nc">Square</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sh">"</span><span class="s">Unknown shape type</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">shape</span> <span class="o">=</span> <span class="n">ShapeFactory</span><span class="p">.</span><span class="nf">create_shape</span><span class="p">(</span><span class="sh">"</span><span class="s">circle</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">shape</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>  <span class="c1"># Output: Drawing a Circle
+</span></code></pre></div></div> <h2 id="singleton-pattern"><strong>Singleton Pattern</strong></h2> <p>The Singleton Pattern ensures that a class has only one instance and provides a global access point to that instance. It is commonly used for managing shared resources such as configuration settings or database connections.</p> <h3 id="example-12"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Singleton</span><span class="p">:</span>
+    <span class="n">_instance</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cls</span><span class="p">.</span><span class="n">_instance</span><span class="p">:</span>
+            <span class="n">cls</span><span class="p">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nf">super</span><span class="p">().</span><span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">.</span><span class="n">_instance</span>
+
+<span class="c1"># Example usage
+</span><span class="n">singleton1</span> <span class="o">=</span> <span class="nc">Singleton</span><span class="p">()</span>
+<span class="n">singleton2</span> <span class="o">=</span> <span class="nc">Singleton</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">singleton1</span> <span class="ow">is</span> <span class="n">singleton2</span><span class="p">)</span>  <span class="c1"># Output: True
+</span></code></pre></div></div> <h2 id="factory-method-pattern"><strong>Factory Method Pattern</strong></h2> <p>The Factory Method pattern defines an interface for creating objects but allows subclasses to alter the type of objects that will be created.</p> <h3 id="example-13"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span> <span class="nc">Shape</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Drawing a Circle</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Square</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Drawing a Square</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ShapeFactory</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">create_shape</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">CircleFactory</span><span class="p">(</span><span class="n">ShapeFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_shape</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nc">Circle</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">SquareFactory</span><span class="p">(</span><span class="n">ShapeFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_shape</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nc">Square</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="n">factory</span> <span class="o">=</span> <span class="nc">CircleFactory</span><span class="p">()</span>
+<span class="n">shape</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="nf">create_shape</span><span class="p">()</span>
+<span class="n">shape</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="abstract-factory-pattern"><strong>Abstract Factory Pattern</strong></h2> <p>The Abstract Factory pattern provides an interface for creating families of related or dependent objects without specifying their concrete classes. This pattern is useful when the client code needs to work with a group of related objects that are designed to work together.</p> <h3 id="example-14"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="c1"># Abstract product classes
+</span><span class="k">class</span> <span class="nc">Chair</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">sit_on</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Table</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">use</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="c1"># Concrete product classes
+</span><span class="k">class</span> <span class="nc">ModernChair</span><span class="p">(</span><span class="n">Chair</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">sit_on</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Sitting on a modern chair.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ModernTable</span><span class="p">(</span><span class="n">Table</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">use</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Using a modern table.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">VictorianChair</span><span class="p">(</span><span class="n">Chair</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">sit_on</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Sitting on a Victorian chair.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">VictorianTable</span><span class="p">(</span><span class="n">Table</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">use</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Using a Victorian table.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Abstract factory
+</span><span class="k">class</span> <span class="nc">FurnitureFactory</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">create_chair</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">create_table</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="c1"># Concrete factories
+</span><span class="k">class</span> <span class="nc">ModernFurnitureFactory</span><span class="p">(</span><span class="n">FurnitureFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_chair</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nc">ModernChair</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">create_table</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nc">ModernTable</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">VictorianFurnitureFactory</span><span class="p">(</span><span class="n">FurnitureFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_chair</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nc">VictorianChair</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">create_table</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nc">VictorianTable</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="k">def</span> <span class="nf">create_furniture</span><span class="p">(</span><span class="n">factory</span><span class="p">:</span> <span class="n">FurnitureFactory</span><span class="p">):</span>
+    <span class="n">chair</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="nf">create_chair</span><span class="p">()</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="nf">create_table</span><span class="p">()</span>
+    <span class="n">chair</span><span class="p">.</span><span class="nf">sit_on</span><span class="p">()</span>
+    <span class="n">table</span><span class="p">.</span><span class="nf">use</span><span class="p">()</span>
+
+<span class="n">modern_factory</span> <span class="o">=</span> <span class="nc">ModernFurnitureFactory</span><span class="p">()</span>
+<span class="n">victorian_factory</span> <span class="o">=</span> <span class="nc">VictorianFurnitureFactory</span><span class="p">()</span>
+
+<span class="nf">create_furniture</span><span class="p">(</span><span class="n">modern_factory</span><span class="p">)</span>
+<span class="nf">create_furniture</span><span class="p">(</span><span class="n">victorian_factory</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="builder-pattern"><strong>Builder Pattern</strong></h2> <p>The Builder pattern separates the construction of a complex object from its representation so that the same construction process can create different representations. It is particularly useful when an object has many optional parts.</p> <h3 id="example-15"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Product class
+</span><span class="k">class</span> <span class="nc">House</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">wall_material</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">door_type</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">num_windows</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="s">House with </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">wall_material</span><span class="si">}</span><span class="s"> walls, </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">door_type</span><span class="si">}</span><span class="s"> door, and </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">num_windows</span><span class="si">}</span><span class="s"> windows.</span><span class="sh">"</span>
+
+<span class="c1"># Abstract builder
+</span><span class="k">class</span> <span class="nc">HouseBuilder</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">set_wall_material</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">material</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">set_door_type</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">door_type</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">set_num_windows</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="c1"># Concrete builder
+</span><span class="k">class</span> <span class="nc">ConcreteHouseBuilder</span><span class="p">(</span><span class="n">HouseBuilder</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">house</span> <span class="o">=</span> <span class="nc">House</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">set_wall_material</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">material</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">house</span><span class="p">.</span><span class="n">wall_material</span> <span class="o">=</span> <span class="n">material</span>
+
+    <span class="k">def</span> <span class="nf">set_door_type</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">door_type</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">house</span><span class="p">.</span><span class="n">door_type</span> <span class="o">=</span> <span class="n">door_type</span>
+
+    <span class="k">def</span> <span class="nf">set_num_windows</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">house</span><span class="p">.</span><span class="n">num_windows</span> <span class="o">=</span> <span class="n">count</span>
+
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">house</span>
+
+<span class="c1"># Director
+</span><span class="k">class</span> <span class="nc">HouseDirector</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">builder</span><span class="p">:</span> <span class="n">HouseBuilder</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">builder</span> <span class="o">=</span> <span class="n">builder</span>
+
+    <span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="nf">set_wall_material</span><span class="p">(</span><span class="sh">"</span><span class="s">brick</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="nf">set_door_type</span><span class="p">(</span><span class="sh">"</span><span class="s">wooden</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="nf">set_num_windows</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="nf">build</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="n">builder</span> <span class="o">=</span> <span class="nc">ConcreteHouseBuilder</span><span class="p">()</span>
+<span class="n">director</span> <span class="o">=</span> <span class="nc">HouseDirector</span><span class="p">(</span><span class="n">builder</span><span class="p">)</span>
+<span class="n">house</span> <span class="o">=</span> <span class="n">director</span><span class="p">.</span><span class="nf">construct</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">house</span><span class="p">)</span>  <span class="c1"># Output: House with brick walls, wooden door, and 4 windows.
+</span></code></pre></div></div> <h1 id="chapter-6-structural-design-patterns"><strong>Chapter 6: Structural Design Patterns</strong></h1> <p>Structural design patterns focus on how objects and classes are composed to form larger structures while keeping these structures flexible and efficient. These patterns streamline relationships between different entities, improving code readability and maintainability.</p> <h2 id="adapter-pattern"><strong>Adapter Pattern</strong></h2> <p>The Adapter pattern bridges the gap between incompatible interfaces by converting one interface into another that a client expects. It is particularly useful when integrating old code with new systems.</p> <h3 id="example-16"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OldSystem</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">specific_request</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">Old system functionality</span><span class="sh">"</span>
+
+<span class="k">class</span> <span class="nc">Target</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Adapter</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">adaptee</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">adaptee</span> <span class="o">=</span> <span class="n">adaptee</span>
+
+    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">adaptee</span><span class="p">.</span><span class="nf">specific_request</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="n">old_system</span> <span class="o">=</span> <span class="nc">OldSystem</span><span class="p">()</span>
+<span class="n">adapter</span> <span class="o">=</span> <span class="nc">Adapter</span><span class="p">(</span><span class="n">old_system</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">adapter</span><span class="p">.</span><span class="nf">request</span><span class="p">())</span>  <span class="c1"># Output: Old system functionality
+</span></code></pre></div></div> <h2 id="bridge-pattern"><strong>Bridge Pattern</strong></h2> <p>The Bridge pattern decouples an abstraction from its implementation, allowing them to vary independently. This pattern is particularly helpful in scenarios where a class has multiple dimensions of variability.</p> <h3 id="example-17"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Renderer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">render_circle</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">VectorRenderer</span><span class="p">(</span><span class="n">Renderer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">render_circle</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Drawing a circle with radius </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s"> using vector rendering.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">RasterRenderer</span><span class="p">(</span><span class="n">Renderer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">render_circle</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Drawing a circle with radius </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s"> using raster rendering.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Shape</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">renderer</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">renderer</span> <span class="o">=</span> <span class="n">renderer</span>
+
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="n">renderer</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">renderer</span><span class="p">.</span><span class="nf">render_circle</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">radius</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">vector_renderer</span> <span class="o">=</span> <span class="nc">VectorRenderer</span><span class="p">()</span>
+<span class="n">raster_renderer</span> <span class="o">=</span> <span class="nc">RasterRenderer</span><span class="p">()</span>
+
+<span class="n">circle</span> <span class="o">=</span> <span class="nc">Circle</span><span class="p">(</span><span class="n">vector_renderer</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">circle</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>  <span class="c1"># Output: Drawing a circle with radius 5 using vector rendering.
+</span>
+<span class="n">circle</span><span class="p">.</span><span class="n">renderer</span> <span class="o">=</span> <span class="n">raster_renderer</span>
+<span class="n">circle</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>  <span class="c1"># Output: Drawing a circle with radius 5 using raster rendering.
+</span></code></pre></div></div> <h2 id="composite-pattern"><strong>Composite Pattern</strong></h2> <p>The Composite pattern allows you to compose objects into tree structures to represent part-whole hierarchies. It enables clients to treat individual objects and compositions uniformly.</p> <h3 id="example-18"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Component</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">operation</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Leaf</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">operation</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Leaf </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s"> operation.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Composite</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">children</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">children</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">operation</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Composite operation begins.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">child</span><span class="p">.</span><span class="nf">operation</span><span class="p">()</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Composite operation ends.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">leaf1</span> <span class="o">=</span> <span class="nc">Leaf</span><span class="p">(</span><span class="sh">"</span><span class="s">A</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">leaf2</span> <span class="o">=</span> <span class="nc">Leaf</span><span class="p">(</span><span class="sh">"</span><span class="s">B</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">composite</span> <span class="o">=</span> <span class="nc">Composite</span><span class="p">()</span>
+<span class="n">composite</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">leaf1</span><span class="p">)</span>
+<span class="n">composite</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">leaf2</span><span class="p">)</span>
+<span class="n">composite</span><span class="p">.</span><span class="nf">operation</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="decorator-pattern"><strong>Decorator Pattern</strong></h2> <p>The Decorator pattern dynamically adds behavior or responsibilities to objects without modifying their code. This pattern is ideal for adhering to the Open/Closed Principle.</p> <h3 id="example-19"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Coffee</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">cost</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">5</span>
+
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">Plain coffee</span><span class="sh">"</span>
+
+<span class="k">class</span> <span class="nc">MilkDecorator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">coffee</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">coffee</span> <span class="o">=</span> <span class="n">coffee</span>
+
+    <span class="k">def</span> <span class="nf">cost</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">coffee</span><span class="p">.</span><span class="nf">cost</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">coffee</span><span class="p">.</span><span class="nf">description</span><span class="p">()</span> <span class="o">+</span> <span class="sh">"</span><span class="s">, Milk</span><span class="sh">"</span>
+
+<span class="k">class</span> <span class="nc">SugarDecorator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">coffee</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">coffee</span> <span class="o">=</span> <span class="n">coffee</span>
+
+    <span class="k">def</span> <span class="nf">cost</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">coffee</span><span class="p">.</span><span class="nf">cost</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">coffee</span><span class="p">.</span><span class="nf">description</span><span class="p">()</span> <span class="o">+</span> <span class="sh">"</span><span class="s">, Sugar</span><span class="sh">"</span>
+
+<span class="c1"># Example usage
+</span><span class="n">coffee</span> <span class="o">=</span> <span class="nc">Coffee</span><span class="p">()</span>
+<span class="n">milk_coffee</span> <span class="o">=</span> <span class="nc">MilkDecorator</span><span class="p">(</span><span class="n">coffee</span><span class="p">)</span>
+<span class="n">sugar_milk_coffee</span> <span class="o">=</span> <span class="nc">SugarDecorator</span><span class="p">(</span><span class="n">milk_coffee</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">sugar_milk_coffee</span><span class="p">.</span><span class="nf">description</span><span class="p">())</span>  <span class="c1"># Output: Plain coffee, Milk, Sugar
+</span><span class="nf">print</span><span class="p">(</span><span class="n">sugar_milk_coffee</span><span class="p">.</span><span class="nf">cost</span><span class="p">())</span>  <span class="c1"># Output: 8
+</span></code></pre></div></div> <h2 id="facade-pattern"><strong>Facade Pattern</strong></h2> <p>The Facade pattern provides a simplified interface to a complex subsystem, making it easier for clients to interact with the system.</p> <h3 id="example-20"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SubsystemA</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">operation_a</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Subsystem A operation.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SubsystemB</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">operation_b</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Subsystem B operation.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Facade</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">subsystem_a</span> <span class="o">=</span> <span class="nc">SubsystemA</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">subsystem_b</span> <span class="o">=</span> <span class="nc">SubsystemB</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">operation</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Facade simplifies subsystem operations.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">subsystem_a</span><span class="p">.</span><span class="nf">operation_a</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">subsystem_b</span><span class="p">.</span><span class="nf">operation_b</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="n">facade</span> <span class="o">=</span> <span class="nc">Facade</span><span class="p">()</span>
+<span class="n">facade</span><span class="p">.</span><span class="nf">operation</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="flyweight-pattern"><strong>Flyweight Pattern</strong></h2> <p>The Flyweight pattern reduces memory usage by sharing common parts of object states rather than creating new objects for each state.</p> <h3 id="example-21"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Flyweight</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">shared_state</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">shared_state</span> <span class="o">=</span> <span class="n">shared_state</span>
+
+    <span class="k">def</span> <span class="nf">operation</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">unique_state</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Shared: </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">shared_state</span><span class="si">}</span><span class="s">, Unique: </span><span class="si">{</span><span class="n">unique_state</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">FlyweightFactory</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">flyweights</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">get_flyweight</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">shared_state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">shared_state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">flyweights</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">flyweights</span><span class="p">[</span><span class="n">shared_state</span><span class="p">]</span> <span class="o">=</span> <span class="nc">Flyweight</span><span class="p">(</span><span class="n">shared_state</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">flyweights</span><span class="p">[</span><span class="n">shared_state</span><span class="p">]</span>
+
+<span class="c1"># Example usage
+</span><span class="n">factory</span> <span class="o">=</span> <span class="nc">FlyweightFactory</span><span class="p">()</span>
+<span class="n">flyweight1</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="nf">get_flyweight</span><span class="p">(</span><span class="sh">"</span><span class="s">State1</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">flyweight2</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="nf">get_flyweight</span><span class="p">(</span><span class="sh">"</span><span class="s">State1</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">flyweight1</span><span class="p">.</span><span class="nf">operation</span><span class="p">(</span><span class="sh">"</span><span class="s">Unique1</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">flyweight2</span><span class="p">.</span><span class="nf">operation</span><span class="p">(</span><span class="sh">"</span><span class="s">Unique2</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">flyweight1</span> <span class="ow">is</span> <span class="n">flyweight2</span><span class="p">)</span>  <span class="c1"># Output: True
+</span></code></pre></div></div> <h2 id="proxy-pattern"><strong>Proxy Pattern</strong></h2> <p>The Proxy pattern provides a surrogate or placeholder object to control access to another object. It is useful for adding security or caching functionality.</p> <h3 id="example-22"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">RealSubject</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">RealSubject: Handling request.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Proxy</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">real_subject</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">real_subject</span> <span class="o">=</span> <span class="n">real_subject</span>
+
+    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Proxy: Checking access before forwarding the request.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">real_subject</span><span class="p">.</span><span class="nf">request</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="n">real_subject</span> <span class="o">=</span> <span class="nc">RealSubject</span><span class="p">()</span>
+<span class="n">proxy</span> <span class="o">=</span> <span class="nc">Proxy</span><span class="p">(</span><span class="n">real_subject</span><span class="p">)</span>
+<span class="n">proxy</span><span class="p">.</span><span class="nf">request</span><span class="p">()</span>
+</code></pre></div></div> <h1 id="chapter-7-behavioral-design-patterns"><strong>Chapter 7: Behavioral Design Patterns</strong></h1> <p>Behavioral design patterns focus on communication between objects. They help define how objects interact, delegate responsibilities, and ensure flexibility in executing complex behaviors.</p> <h2 id="chain-of-responsibility-pattern"><strong>Chain of Responsibility Pattern</strong></h2> <p>The Chain of Responsibility pattern decouples the sender and receiver of a request by passing the request along a chain of handlers. Each handler decides whether to process the request or pass it to the next handler.</p> <h3 id="example-23"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Handler</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">successor</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">successor</span> <span class="o">=</span> <span class="n">successor</span>
+
+    <span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">successor</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">successor</span><span class="p">.</span><span class="nf">handle_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ConcreteHandlerA</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">request</span> <span class="o">==</span> <span class="sh">"</span><span class="s">A</span><span class="sh">"</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Handler A processed the request.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">self</span><span class="p">.</span><span class="n">successor</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">successor</span><span class="p">.</span><span class="nf">handle_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ConcreteHandlerB</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">request</span> <span class="o">==</span> <span class="sh">"</span><span class="s">B</span><span class="sh">"</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Handler B processed the request.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">self</span><span class="p">.</span><span class="n">successor</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">successor</span><span class="p">.</span><span class="nf">handle_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">handler_chain</span> <span class="o">=</span> <span class="nc">ConcreteHandlerA</span><span class="p">(</span><span class="nc">ConcreteHandlerB</span><span class="p">())</span>
+<span class="n">handler_chain</span><span class="p">.</span><span class="nf">handle_request</span><span class="p">(</span><span class="sh">"</span><span class="s">A</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># Output: Handler A processed the request.
+</span><span class="n">handler_chain</span><span class="p">.</span><span class="nf">handle_request</span><span class="p">(</span><span class="sh">"</span><span class="s">B</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># Output: Handler B processed the request.
+</span></code></pre></div></div> <h2 id="command-pattern"><strong>Command Pattern</strong></h2> <p>The Command pattern encapsulates a request as an object, allowing clients to parameterize objects with different requests, delay execution, or queue requests.</p> <h3 id="example-24"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Command</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Light</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">turn_on</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Light is ON</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">turn_off</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Light is OFF</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">TurnOnCommand</span><span class="p">(</span><span class="n">Command</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">light</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">light</span> <span class="o">=</span> <span class="n">light</span>
+
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">light</span><span class="p">.</span><span class="nf">turn_on</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">TurnOffCommand</span><span class="p">(</span><span class="n">Command</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">light</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">light</span> <span class="o">=</span> <span class="n">light</span>
+
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">light</span><span class="p">.</span><span class="nf">turn_off</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">RemoteControl</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">command</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">set_command</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">command</span> <span class="o">=</span> <span class="n">command</span>
+
+    <span class="k">def</span> <span class="nf">press_button</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">command</span><span class="p">.</span><span class="nf">execute</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="n">light</span> <span class="o">=</span> <span class="nc">Light</span><span class="p">()</span>
+<span class="n">turn_on</span> <span class="o">=</span> <span class="nc">TurnOnCommand</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+<span class="n">turn_off</span> <span class="o">=</span> <span class="nc">TurnOffCommand</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+
+<span class="n">remote</span> <span class="o">=</span> <span class="nc">RemoteControl</span><span class="p">()</span>
+<span class="n">remote</span><span class="p">.</span><span class="nf">set_command</span><span class="p">(</span><span class="n">turn_on</span><span class="p">)</span>
+<span class="n">remote</span><span class="p">.</span><span class="nf">press_button</span><span class="p">()</span>  <span class="c1"># Output: Light is ON
+</span><span class="n">remote</span><span class="p">.</span><span class="nf">set_command</span><span class="p">(</span><span class="n">turn_off</span><span class="p">)</span>
+<span class="n">remote</span><span class="p">.</span><span class="nf">press_button</span><span class="p">()</span>  <span class="c1"># Output: Light is OFF
+</span></code></pre></div></div> <h2 id="observer-pattern"><strong>Observer Pattern</strong></h2> <p>The Observer pattern establishes a one-to-many dependency between objects so that when one object changes state, all its dependents are notified.</p> <h3 id="example-25"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Subject</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">observers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">observers</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">detach</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">observers</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">observer</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">observers</span><span class="p">:</span>
+            <span class="n">observer</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">ConcreteObserver</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s"> received an update.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">subject</span> <span class="o">=</span> <span class="nc">Subject</span><span class="p">()</span>
+<span class="n">observer1</span> <span class="o">=</span> <span class="nc">ConcreteObserver</span><span class="p">(</span><span class="sh">"</span><span class="s">Observer 1</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">observer2</span> <span class="o">=</span> <span class="nc">ConcreteObserver</span><span class="p">(</span><span class="sh">"</span><span class="s">Observer 2</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">subject</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="n">observer1</span><span class="p">)</span>
+<span class="n">subject</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="n">observer2</span><span class="p">)</span>
+
+<span class="n">subject</span><span class="p">.</span><span class="nf">notify</span><span class="p">()</span>
+<span class="c1"># Output:
+# Observer 1 received an update.
+# Observer 2 received an update.
+</span></code></pre></div></div> <h2 id="strategy-pattern"><strong>Strategy Pattern</strong></h2> <p>The Strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. This pattern enables the algorithm to vary independently from the clients that use it.</p> <h3 id="example-26"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Strategy</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ConcreteStrategyA</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Executing Strategy A</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ConcreteStrategyB</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Executing Strategy B</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Context</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">strategy</span>
+
+    <span class="k">def</span> <span class="nf">set_strategy</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">strategy</span>
+
+    <span class="k">def</span> <span class="nf">execute_strategy</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">strategy</span><span class="p">.</span><span class="nf">execute</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="p">(</span><span class="nc">ConcreteStrategyA</span><span class="p">())</span>
+<span class="n">context</span><span class="p">.</span><span class="nf">execute_strategy</span><span class="p">()</span>  <span class="c1"># Output: Executing Strategy A
+</span>
+<span class="n">context</span><span class="p">.</span><span class="nf">set_strategy</span><span class="p">(</span><span class="nc">ConcreteStrategyB</span><span class="p">())</span>
+<span class="n">context</span><span class="p">.</span><span class="nf">execute_strategy</span><span class="p">()</span>  <span class="c1"># Output: Executing Strategy B
+</span></code></pre></div></div> <h2 id="state-pattern"><strong>State Pattern</strong></h2> <p>The State pattern allows an object to alter its behavior when its internal state changes. The object appears to change its class.</p> <h3 id="example-27"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">State</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ConcreteStateA</span><span class="p">(</span><span class="n">State</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Handling State A</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ConcreteStateB</span><span class="p">(</span><span class="n">State</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Handling State B</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Context</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="nf">handle</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="n">state_a</span> <span class="o">=</span> <span class="nc">ConcreteStateA</span><span class="p">()</span>
+<span class="n">state_b</span> <span class="o">=</span> <span class="nc">ConcreteStateB</span><span class="p">()</span>
+
+<span class="n">context</span> <span class="o">=</span> <span class="nc">Context</span><span class="p">(</span><span class="n">state_a</span><span class="p">)</span>
+<span class="n">context</span><span class="p">.</span><span class="nf">request</span><span class="p">()</span>  <span class="c1"># Output: Handling State A
+</span>
+<span class="n">context</span><span class="p">.</span><span class="nf">set_state</span><span class="p">(</span><span class="n">state_b</span><span class="p">)</span>
+<span class="n">context</span><span class="p">.</span><span class="nf">request</span><span class="p">()</span>  <span class="c1"># Output: Handling State B
+</span></code></pre></div></div> <h2 id="interpreter-pattern"><strong>Interpreter Pattern</strong></h2> <p>The Interpreter pattern defines a grammar and provides a way to interpret sentences in that grammar. This is often used for parsing or evaluating expressions.</p> <h3 id="example-28"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Expression</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">interpret</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Number</span><span class="p">(</span><span class="n">Expression</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">interpret</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">value</span>
+
+<span class="k">class</span> <span class="nc">Add</span><span class="p">(</span><span class="n">Expression</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
+
+    <span class="k">def</span> <span class="nf">interpret</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="nf">interpret</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="nf">interpret</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Subtract</span><span class="p">(</span><span class="n">Expression</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
+
+    <span class="k">def</span> <span class="nf">interpret</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="nf">interpret</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="nf">interpret</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="nc">Add</span><span class="p">(</span><span class="nc">Number</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="nc">Subtract</span><span class="p">(</span><span class="nc">Number</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="nc">Number</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">expression</span><span class="p">.</span><span class="nf">interpret</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>  <span class="c1"># Output: 12
+</span></code></pre></div></div> <h2 id="iterator-pattern"><strong>Iterator Pattern</strong></h2> <p>The Iterator pattern provides a way to access elements of a collection sequentially without exposing its underlying representation.</p> <h3 id="example-29"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Iterator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">collection</span> <span class="o">=</span> <span class="n">collection</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">has_next</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">collection</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="nf">has_next</span><span class="p">():</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">collection</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">raise</span> <span class="nb">StopIteration</span>
+
+<span class="c1"># Example usage
+</span><span class="n">collection</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">iterator</span> <span class="o">=</span> <span class="nc">Iterator</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="n">iterator</span><span class="p">.</span><span class="nf">has_next</span><span class="p">():</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">iterator</span><span class="p">.</span><span class="nf">next</span><span class="p">())</span>
+</code></pre></div></div> <h2 id="mediator-pattern"><strong>Mediator Pattern</strong></h2> <p>The Mediator pattern centralizes complex communication between objects, promoting loose coupling.</p> <h3 id="example-30"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Mediator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ConcreteMediator</span><span class="p">(</span><span class="n">Mediator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">component1</span> <span class="o">=</span> <span class="n">component1</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">component1</span><span class="p">.</span><span class="n">mediator</span> <span class="o">=</span> <span class="n">self</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">component2</span> <span class="o">=</span> <span class="n">component2</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">component2</span><span class="p">.</span><span class="n">mediator</span> <span class="o">=</span> <span class="n">self</span>
+
+    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="sh">"</span><span class="s">A</span><span class="sh">"</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Mediator reacts to event A and triggers component2.</span><span class="sh">"</span><span class="p">)</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">component2</span><span class="p">.</span><span class="nf">do_c</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="sh">"</span><span class="s">B</span><span class="sh">"</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Mediator reacts to event B and triggers component1.</span><span class="sh">"</span><span class="p">)</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">component1</span><span class="p">.</span><span class="nf">do_a</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Component</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">mediator</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">class</span> <span class="nc">Component1</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">do_a</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Component1 does A.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">mediator</span><span class="p">.</span><span class="nf">notify</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="sh">"</span><span class="s">A</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Component2</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">do_c</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Component2 does C.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">component1</span> <span class="o">=</span> <span class="nc">Component1</span><span class="p">()</span>
+<span class="n">component2</span> <span class="o">=</span> <span class="nc">Component2</span><span class="p">()</span>
+<span class="n">mediator</span> <span class="o">=</span> <span class="nc">ConcreteMediator</span><span class="p">(</span><span class="n">component1</span><span class="p">,</span> <span class="n">component2</span><span class="p">)</span>
+<span class="n">component1</span><span class="p">.</span><span class="nf">do_a</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="memento-pattern"><strong>Memento Pattern</strong></h2> <p>The Memento pattern captures and restores an object’s internal state without violating encapsulation.</p> <h3 id="example-31"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Memento</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+
+<span class="k">class</span> <span class="nc">Originator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">save_to_memento</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nc">Memento</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">restore_from_memento</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">memento</span><span class="p">.</span><span class="n">state</span>
+
+<span class="k">class</span> <span class="nc">Caretaker</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">mementos</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_memento</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">mementos</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">memento</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_memento</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">mementos</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+<span class="c1"># Example usage
+</span><span class="n">originator</span> <span class="o">=</span> <span class="nc">Originator</span><span class="p">()</span>
+<span class="n">caretaker</span> <span class="o">=</span> <span class="nc">Caretaker</span><span class="p">()</span>
+
+<span class="n">originator</span><span class="p">.</span><span class="nf">set_state</span><span class="p">(</span><span class="sh">"</span><span class="s">State1</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">caretaker</span><span class="p">.</span><span class="nf">add_memento</span><span class="p">(</span><span class="n">originator</span><span class="p">.</span><span class="nf">save_to_memento</span><span class="p">())</span>
+
+<span class="n">originator</span><span class="p">.</span><span class="nf">set_state</span><span class="p">(</span><span class="sh">"</span><span class="s">State2</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">caretaker</span><span class="p">.</span><span class="nf">add_memento</span><span class="p">(</span><span class="n">originator</span><span class="p">.</span><span class="nf">save_to_memento</span><span class="p">())</span>
+
+<span class="n">originator</span><span class="p">.</span><span class="nf">restore_from_memento</span><span class="p">(</span><span class="n">caretaker</span><span class="p">.</span><span class="nf">get_memento</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">originator</span><span class="p">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># Output: State1
+</span></code></pre></div></div> <h2 id="template-method-pattern"><strong>Template Method Pattern</strong></h2> <p>The Template Method pattern defines the skeleton of an algorithm in a base class while allowing subclasses to redefine specific steps of the algorithm.</p> <h3 id="example-32"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AbstractClass</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">template_method</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="nf">step_one</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="nf">step_two</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="nf">step_three</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">step_one</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">AbstractClass: Step One</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">step_two</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">step_three</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">AbstractClass: Step Three</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ConcreteClassA</span><span class="p">(</span><span class="n">AbstractClass</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">step_two</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">ConcreteClassA: Step Two</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ConcreteClassB</span><span class="p">(</span><span class="n">AbstractClass</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">step_two</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">ConcreteClassB: Step Two</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">a</span> <span class="o">=</span> <span class="nc">ConcreteClassA</span><span class="p">()</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nc">ConcreteClassB</span><span class="p">()</span>
+<span class="n">a</span><span class="p">.</span><span class="nf">template_method</span><span class="p">()</span>
+<span class="c1"># Output:
+# AbstractClass: Step One
+# ConcreteClassA: Step Two
+# AbstractClass: Step Three
+</span>
+<span class="n">b</span><span class="p">.</span><span class="nf">template_method</span><span class="p">()</span>
+<span class="c1"># Output:
+# AbstractClass: Step One
+# ConcreteClassB: Step Two
+# AbstractClass: Step Three
+</span></code></pre></div></div> <h2 id="visitor-pattern"><strong>Visitor Pattern</strong></h2> <p>The Visitor pattern allows you to add new operations to a class hierarchy without modifying the classes.</p> <h3 id="example-33"><strong>Example:</strong></h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Visitor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ConcreteVisitor</span><span class="p">(</span><span class="n">Visitor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Visiting </span><span class="si">{</span><span class="n">element</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Element</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ConcreteElementA</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Element A</span><span class="sh">"</span>
+
+    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
+        <span class="n">visitor</span><span class="p">.</span><span class="nf">visit</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ConcreteElementB</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Element B</span><span class="sh">"</span>
+
+    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
+        <span class="n">visitor</span><span class="p">.</span><span class="nf">visit</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+
+<span class="c1"># Example usage
+</span><span class="n">elements</span> <span class="o">=</span> <span class="p">[</span><span class="nc">ConcreteElementA</span><span class="p">(),</span> <span class="nc">ConcreteElementB</span><span class="p">()]</span>
+<span class="n">visitor</span> <span class="o">=</span> <span class="nc">ConcreteVisitor</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+    <span class="n">element</span><span class="p">.</span><span class="nf">accept</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
+<span class="c1"># Output:
+# Visiting Element A
+# Visiting Element B
+</span></code></pre></div></div> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="external nofollow noopener">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="external nofollow noopener">Displaying External Posts on Your al-folio Blog</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/mlops-cloud/">MLOps: Cloud Computing</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/mlops-cloud-def/">MLOps: Cloud Computing Definitions</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/mlops-intro/">MLOps: Introduction</a> </li> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Raghu V. Hemadri. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.5/dist/js/lightbox.min.js" integrity="sha256-A6jI5V9s1JznkWwsBaRK8kSeXLgIqQfxfnvdDOZEURY=" crossorigin="anonymous"></script> <script defer src="/assets/js/photoswipe-setup.js?ff2f76a5e4d60ef5998292f7b915a48b" type="module"></script> <script defer src="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/spotlight.bundle.min.js" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/venobox@2.1.8/dist/venobox.min.js" integrity="sha256-LsGXHsHMMmTcz3KqTaWvLv6ome+7pRiic2LPnzTfiSo=" crossorigin="anonymous"></script> <script defer src="/assets/js/venobox-setup.js?897c1d9c0b6fcf82b949511c1609d055" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>
