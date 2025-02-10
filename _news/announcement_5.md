@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Selected as the recipient of the David Chang and Cecilia M. Chang Student Leadership Award
+Selected as the recipient of the [David Chang and Cecilia M. Chang Student Leadership Award](https://raghuhemadri.github.io/cv/#awards-1)
