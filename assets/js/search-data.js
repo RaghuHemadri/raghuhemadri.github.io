@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-mlops-cloud-computing-definitions",
+        },{id: "post-mlops-devops-for-ml-systems",
+      
+        title: "MLOps: DevOps for ML systems",
+      
+      description: "Overview of the blog series",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/mlops-devops/";
+        
+      },
+    },{id: "post-mlops-cloud-computing-definitions",
       
         title: "MLOps: Cloud Computing Definitions",
       
