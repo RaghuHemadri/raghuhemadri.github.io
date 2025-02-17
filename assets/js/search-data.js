@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-mlops-devops-for-ml-systems",
+        },{id: "post-mlops-model-trainig-at-scale",
+      
+        title: "MLOps: Model Trainig at Scale",
+      
+      description: "Techniques for training large-scale machine learning models.",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/mlops-large-model-training/";
+        
+      },
+    },{id: "post-mlops-devops-for-ml-systems",
       
         title: "MLOps: DevOps for ML systems",
       
