@@ -114,8 +114,27 @@ dist.init_process_group("nccl")
 model = DDP(model.to(device))
 ```
 
+#### **Example: Image Classification on Multiple GPUs**
+Imagine you are training a **ResNet-50** model on **ImageNet** using four GPUs. The entire model is **replicated** across each GPU, but the dataset is **split** into four mini-batches.
+
+- **How it works:**  
+  - Each GPU gets a different subset of the data.
+  - Each GPU performs forward and backward passes independently.
+  - Gradients from all GPUs are aggregated and synchronized using **all-reduce**.
+  - Model updates happen simultaneously on all GPUs.
+
+- **Advantage:**  
+  - Efficient for data-intensive training as it scales well with more GPUs.
+
+- **Limitation:**  
+  - Model replication on each GPU requires sufficient memory.
+
 ### 2. Fully Sharded Data Parallelism (FSDP)
-FSDP shards model weights across GPUs instead of replicating them entirely. This allows training even larger models.
+FSDP shards model weights across GPUs instead of replicating them entirely. This allows training even larger models. FSDP allows for efficient training of models larger than the memory of a single GPU by sharding parameters, optimizer states, and gradients.
+
+1. **Forward Pass:** Each GPU loads only the necessary model weights for computation.
+2. **Backward Pass:** Activations are stored and discarded layer by layer to save memory.
+3. **Gradient Synchronization:** Uses Reduce-Scatter for efficiency.
 
 #### FSDP Implementation:
 ```python
@@ -123,6 +142,21 @@ from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
 
 fsdp_model = FSDP(model)
 ```
+
+#### **Example: Training a Large Transformer Model**
+Suppose you're training a **GPT-style** model with **billions of parameters** that exceed a single GPU’s memory capacity.
+
+- **How it works:**  
+  - Instead of replicating the model on each GPU, **FSDP shards the model parameters across all GPUs**.
+  - Each GPU holds only a fraction of the model, reducing memory usage.
+  - During training, it loads only the required parameters for computation and releases unused ones.
+  - Gradients are computed locally and synchronized efficiently.
+
+- **Advantage:**  
+  - Enables training very large models without requiring high memory per GPU.
+
+- **Limitation:**  
+  - Communication overhead due to parameter sharding and synchronization.
 
 ### 3. Model Parallelism (Tensor and Pipeline Parallelism)
 For models too large for data parallelism, **model parallelism** splits computation across GPUs:
@@ -137,12 +171,27 @@ segments = torch.nn.Sequential(model.layer1, model.layer2)
 pipeline = Pipe(segments, chunks=8)
 ```
 
-## Fully Sharded Data Parallelism (FSDP) in Depth
-FSDP allows for efficient training of models larger than the memory of a single GPU by sharding parameters, optimizer states, and gradients.
+#### **Example: Training a Gigantic Vision Transformer (ViT)**
+Consider training a **Vision Transformer (ViT)** that has **huge self-attention layers** requiring excessive memory.
 
-1. **Forward Pass:** Each GPU loads only the necessary model weights for computation.
-2. **Backward Pass:** Activations are stored and discarded layer by layer to save memory.
-3. **Gradient Synchronization:** Uses Reduce-Scatter for efficiency.
+- **How it works:**  
+  - Instead of splitting data, **the model itself is split across multiple GPUs**.
+  - One GPU may handle **self-attention layers**, while another handles **feed-forward layers**.
+  - Intermediate outputs are exchanged between GPUs during forward/backward passes.
+
+- **Advantage:**  
+  - Allows training ultra-large models that wouldn’t fit on a single GPU.
+
+- **Limitation:**  
+  - Requires careful model partitioning and introduces **inter-GPU communication delays**.
+
+### **Comparison Summary**
+| Approach | How It Works | Best Used When | Key Trade-off |
+|----------|-------------|---------------|--------------|
+| **DDP** | Replicates model, distributes data | Data fits in GPU memory | High memory usage per GPU |
+| **FSDP** | Shards model and optimizer states | Model is too big for one GPU | High communication overhead |
+| **Model Parallelism** | Splits model across GPUs | Layers require excessive memory | Synchronization bottlenecks |
+
 
 ## Summary and Future Directions
 ### Techniques for Single GPU Training:
