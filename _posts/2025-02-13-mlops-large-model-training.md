@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MLOps: Model Trainig at Scale"
+title: "MLOps: Model Training at Scale"
 date: 2025-02-13 09:00:00
 description: Techniques for training large-scale machine learning models.
 tags: mlops
