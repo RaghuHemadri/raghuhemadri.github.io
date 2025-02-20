@@ -44,9 +44,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-mlops-model-trainig-at-scale",
+        },{id: "post-mlops-model-training-at-scale",
       
-        title: "MLOps: Model Trainig at Scale",
+        title: "MLOps: Model Training at Scale",
       
       description: "Techniques for training large-scale machine learning models.",
       section: "Posts",
