@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-mlops-model-serving",
+        },{id: "post-genai-generative-ai-101",
+      
+        title: "GenAI: Generative AI 101",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/genai-101/";
+        
+      },
+    },{id: "post-mlops-model-serving",
       
         title: "MLOps: Model serving",
       
