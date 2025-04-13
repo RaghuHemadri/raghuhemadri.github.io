@@ -6,7 +6,7 @@ Previously, I worked as a **Member of Technical Staff** at **Oracle**, where I d
 
 Apart from my research, I am a **professional badminton player**. Badminton has instilled in me discipline, strategic thinking, and resilience—qualities that also translate into my research mindset. Beyond badminton, I enjoy playing and watching **cricket**.
 
-I am currently on the **job market for 2025 summer internships**.  
+I am currently on the **job market for AI/ML Roles**.  
 
 #### Contact Me
 I am always open to discussing **LLMs, RL, and engineering/science-related ideas**. If you have an exciting idea, feel free to drop me an **email**. Also, if you’re up for a game of **badminton** or **cricket**, I’m always in—whether it's playing or watching a great match!
