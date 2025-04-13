@@ -44,7 +44,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-mlops-model-training-at-scale",
+        },{id: "post-mlops-model-serving",
+      
+        title: "MLOps: Model serving",
+      
+      description: "From Concepts to Cutting-Edge Optimizations",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/mlops-model-serving/";
+        
+      },
+    },{id: "post-mlops-model-training-infrastructure-and-platform",
+      
+        title: "MLOps: Model Training Infrastructure and Platform",
+      
+      description: "Infrastructure and platform requirements to support large model training.",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/mlops-model-training-and-infra/";
+        
+      },
+    },{id: "post-mlops-model-training-at-scale",
       
         title: "MLOps: Model Training at Scale",
       
