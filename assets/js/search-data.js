@@ -44,9 +44,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-genai-generative-ai-101",
+        },{id: "post-genai-agentic-ai-101",
       
-        title: "GenAI: Generative AI 101",
+        title: "GenAI: Agentic AI 101",
       
       description: "",
       section: "Posts",
