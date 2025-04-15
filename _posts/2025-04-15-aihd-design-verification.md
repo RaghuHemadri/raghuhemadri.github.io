@@ -16,6 +16,9 @@ images:
 
 This post is part of my ongoing blog series on **AI for Hardware Design**, where we explore how AI is transforming every stage of the hardware development lifecycle. You can check out the full series [here](https://raghuhemadri.github.io/blog/tag/ai-for-hardware-design/).  
 
+---
+
+# Table of Contents
 - [1. Introduction to Design Verification](#1-introduction-to-design-verification)
   - [Why is it Important?](#why-is-it-important)
 - [2. Digital Design Lifecycle and Where Verification Fits In](#2-digital-design-lifecycle-and-where-verification-fits-in)
@@ -66,6 +69,7 @@ This post is part of my ongoing blog series on **AI for Hardware Design**, where
   - [Case Study 4: Cisco Trust Anchor Vulnerability (2019)](#case-study-4-cisco-trust-anchor-vulnerability-2019)
   - [Case Study 5: Meltdown and Spectre Vulnerabilities (2018)](#case-study-5-meltdown-and-spectre-vulnerabilities-2018)
 
+---
 
 # 1. Introduction to Design Verification
 
