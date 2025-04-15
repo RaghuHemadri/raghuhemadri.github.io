@@ -236,7 +236,7 @@ The tool checks that *whenever `ready` is high, `valid` must follow in the next 
 
 ---
 
-# **5. What is a Testbench?**
+# 5. What is a Testbench?
 
 A **testbench** is a virtual lab setup that:
 - Applies inputs to the Design Under Test (DUT),
