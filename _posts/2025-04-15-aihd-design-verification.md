@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Design Verification — From Basics to Advanced Concepts"
+title: "Design Verification — Introdution"
 date: 2025-04-15 09:00:00
 description: 
 tags: aihd ai-for-hardware-design
@@ -12,6 +12,9 @@ images:
   spotlight: true
   venobox: true
 ---
+> Designing hardware is only half the battle—ensuring it works as intended is the real challenge.  
+
+This post is part of my ongoing blog series on **AI for Hardware Design**, where we explore how AI is transforming every stage of the hardware development lifecycle. You can check out the full series [here](https://raghuhemadri.github.io/blog/tag/ai-for-hardware-design/).  
 
 # **1. Introduction to Design Verification**
 
@@ -33,6 +36,7 @@ A modern System-on-Chip (SoC) may take years to design and can cost **millions o
 
 Hence, verifying the design early and thoroughly is **critical**. 
 
+---
 
 # **2. Digital Design Lifecycle and Where Verification Fits In**
 
@@ -77,6 +81,7 @@ Let's take an example of building a **USB Controller Chip**.
 | RTL Design           | Use Verilog to describe blocks                                  | `usb_tx_fsm.v`, `crc_gen.v`                           |
 | Design Verification  | Simulate, write testbenches, assertions                         | Test USB packet send/receive, CRC, line state         |
 
+---
 
 # **3. RTL Design vs. Design Verification**
 
@@ -112,6 +117,8 @@ end
 ```
 
 This checks whether the counter increments correctly after reset.
+
+---
 
 # **4. Types of Verification (with Deep Explanations)**
 
@@ -227,6 +234,8 @@ assert property (@(posedge clk) ready |-> #1 valid);
 
 The tool checks that *whenever `ready` is high, `valid` must follow in the next cycle*. If there's **any** input that violates this, the tool will report it — no testbench needed.
 
+---
+
 # **5. What is a Testbench?**
 
 A **testbench** is a virtual lab setup that:
@@ -265,6 +274,8 @@ module tb_counter;
 endmodule
 ```
 
+---
+
 # **6. Verification Languages and Methodologies**
 
 ## **SystemVerilog**
@@ -292,6 +303,7 @@ endclass
 
 This sequence sends a transaction with specific address and data.
 
+---
 
 # **7. Functional and Code Coverage**
 
@@ -340,6 +352,8 @@ You’ll see a report like:
 
 This guides you to write new tests for `mul`.
 
+---
+
 # **8. Assertions and Formal Methods**
 
 ## **Assertions**
@@ -359,7 +373,7 @@ Formal tools will **prove or disprove** this for *all* input combinations.
   - Safety properties
   - Protocol correctness
 
-
+---
 
 # **9. Constrained Random Verification (CRV)**
 
@@ -383,6 +397,8 @@ constraint valid_range { addr inside {[0:255]}; addr % 2 == 0; }
 ```
 
 You might get `addr = 14`, `addr = 202`, `addr = 48` — all valid and unexpected values.
+
+---
 
 # **10. Regression Testing**
 
@@ -410,6 +426,7 @@ foreach t in tests/
 
 You track failures and maintain stability with every RTL change.
 
+---
 
 # **11. Advanced Topics in Verification**
 
@@ -445,6 +462,7 @@ Use this in simulation, emulation, or prototyping — **no rewrite needed**.
   - Generate better constrained-random scenarios.
   - ML model trained on past bug data predicts that the new `memory_ctrl.v` module has a **high probability of having a corner-case bug** → focus testing there.
 
+---
 
 # **12. Coverage Closure**
 
@@ -467,6 +485,7 @@ You now:
 - Add new test sequences
 - Improve coverage to 95%
 
+---
 
 # **13. Summary and Key Takeaways**
 
@@ -475,6 +494,8 @@ You now:
 - Modern verification relies on **reusable methodologies like UVM** and **automation**.
 - Understanding both **code coverage** and **functional coverage** is key.
 - Advanced areas like **formal proofs**, **portable stimulus**, and **machine learning** are shaping the future of verification.
+
+---
 
 # Case Studies (Optional)
 
