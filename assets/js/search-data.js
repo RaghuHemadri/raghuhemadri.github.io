@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-genai-agentic-ai-101",
+        },{id: "post-design-verification-from-basics-to-advanced-concepts",
+      
+        title: "Design Verification — From Basics to Advanced Concepts",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/aihd-design-verification/";
+        
+      },
+    },{id: "post-genai-agentic-ai-101",
       
         title: "GenAI: Agentic AI 101",
       
