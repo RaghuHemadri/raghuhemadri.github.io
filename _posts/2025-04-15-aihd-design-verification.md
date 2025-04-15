@@ -503,7 +503,7 @@ Building upon our comprehensive chapter on Design Verification, let's delve into
 
 
 
-# **Case Study 1: Intel Pentium FDIV Bug (1994)**
+## **Case Study 1: Intel Pentium FDIV Bug (1994)**
 
 **Overview:**
 In 1994, a flaw was discovered in the floating-point unit (FPU) of Intel's Pentium processors. The bug caused incorrect results during certain floating-point division operations, leading to significant public concern.
@@ -521,7 +521,7 @@ This incident highlighted the necessity of exhaustive testing, especially for co
 
 
 
-# **Case Study 2: Therac-25 Radiation Therapy Machine (1985–1987)**
+## **Case Study 2: Therac-25 Radiation Therapy Machine (1985–1987)**
 
 **Overview:**
 The Therac-25, a computer-controlled radiation therapy machine, was involved in at least six accidents where patients received massive overdoses of radiation, leading to severe injuries and deaths.
@@ -540,7 +540,7 @@ This case underscores the dangers of relying solely on software for safety-criti
 
 
 
-# **Case Study 3: Intel F00F Bug (1997)**
+## **Case Study 3: Intel F00F Bug (1997)**
 
 **Overview:**
 In 1997, a flaw was discovered in Intel's Pentium processors where executing a specific invalid instruction sequence would cause the processor to lock up, requiring a system reboot.
@@ -558,7 +558,7 @@ This incident highlights the importance of thoroughly testing exception handling
 
 
 
-# **Case Study 4: Cisco Trust Anchor Vulnerability (2019)**
+## **Case Study 4: Cisco Trust Anchor Vulnerability (2019)**
 
 **Overview:**
 Researchers discovered a vulnerability in Cisco's Trust Anchor module, a hardware root of trust used in various Cisco devices, allowing attackers to bypass secure boot protections.
@@ -576,7 +576,7 @@ This case emphasizes the need for rigorous verification of security features, in
 
 
 
-# **Case Study 5: Meltdown and Spectre Vulnerabilities (2018)**
+## **Case Study 5: Meltdown and Spectre Vulnerabilities (2018)**
 
 **Overview:**
 In 2018, researchers revealed two major security vulnerabilities, Meltdown and Spectre, affecting modern processors. These flaws allowed unauthorized access to sensitive data by exploiting speculative execution.
