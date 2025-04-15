@@ -44,9 +44,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-design-verification-from-basics-to-advanced-concepts",
+        },{id: "post-design-verification-introdution",
       
-        title: "Design Verification — From Basics to Advanced Concepts",
+        title: "Design Verification — Introdution",
       
       description: "",
       section: "Posts",
