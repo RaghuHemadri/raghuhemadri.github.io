@@ -13,7 +13,7 @@ images:
   venobox: true
 ---
 
-## **1. Introduction to Design Verification**
+# **1. Introduction to Design Verification**
 
 Imagine constructing a skyscraper. Before building, you need architectural blueprints. After building, you need inspections to ensure everything works—plumbing, electrical, structural integrity. In hardware design, **design verification** is like those inspections. It ensures that the digital logic (written in languages like Verilog or VHDL) behaves exactly as intended **before it's manufactured into silicon chips**.
 
@@ -22,7 +22,7 @@ Design verification helps answer the critical question:
 
 Unlike **validation** (which asks *“Are we building the right product?”*), **verification** asks *“Are we building the product right?”*
 
-### **Why is it Important?**
+## **Why is it Important?**
 
 A modern System-on-Chip (SoC) may take years to design and can cost **millions of dollars** to fabricate. A bug found after manufacturing could lead to:
 - Product recalls
@@ -34,11 +34,11 @@ A modern System-on-Chip (SoC) may take years to design and can cost **millions o
 Hence, verifying the design early and thoroughly is **critical**. 
 
 
-## **2. Digital Design Lifecycle and Where Verification Fits In**
+# **2. Digital Design Lifecycle and Where Verification Fits In**
 
 To understand design verification, we must first understand the full flow of how a chip is created.
 
-### **2.1. The Stages of Chip Design**
+## **2.1. The Stages of Chip Design**
 
 1. **Specification**  
    This is the starting point. It defines what the chip should do: what features it must support, what its inputs/outputs are, performance goals, etc.
@@ -64,7 +64,7 @@ To understand design verification, we must first understand the full flow of how
 8. **Post-Silicon Validation**  
    Once the chip is made, real-world tests are run on it using testing hardware.
 
-### **2.2. Verification's Role**
+## **2.2. Verification's Role**
 
 If you catch a bug here (Stage 4), you can fix it quickly and cheaply. Catch it in Stage 8 (after fabrication), and it may cost millions to fix.
 
@@ -78,7 +78,7 @@ Let's take an example of building a **USB Controller Chip**.
 | Design Verification  | Simulate, write testbenches, assertions                         | Test USB packet send/receive, CRC, line state         |
 
 
-## **3. RTL Design vs. Design Verification**
+# **3. RTL Design vs. Design Verification**
 
 | Feature              | RTL Design                             | Design Verification                            |
 |-|--||
@@ -113,17 +113,17 @@ end
 
 This checks whether the counter increments correctly after reset.
 
-## **4. Types of Verification (with Deep Explanations)**
+# **4. Types of Verification (with Deep Explanations)**
 
 There are two main categories: **Static** and **Dynamic**.
 
 
 
-### **4.1 Static Verification**
+## **4.1 Static Verification**
 
 These techniques do not require simulation.
 
-#### **4.1.1 Linting**
+## **4.1.1 Linting**
 - Think of it like a grammar checker for code.
 - It catches bad coding practices, ambiguous expressions, unused variables, etc.
 - Example: Assigning a 5-bit value to a 4-bit wire, or missing reset signals.
@@ -138,7 +138,7 @@ assign b = a;  // Lint warning: width mismatch
 
 Lint tools like Verilator or SpyGlass will warn about this mismatch — which may not cause simulation issues, but will fail in synthesis.
 
-#### **4.1.2 CDC (Clock Domain Crossing) Checks**
+## **4.1.2 CDC (Clock Domain Crossing) Checks**
 - Modern chips use multiple clocks.
 - A **Clock Domain Crossing bug** happens when data passes from one clock domain to another **without synchronization**, leading to **metastability** (unpredictable outputs).
 - CDC tools analyze signals and ensure synchronizers are present.
@@ -166,7 +166,7 @@ always @(posedge clk200) begin
 end
 ```
 
-#### **4.1.3 Formal Equivalence Checking**
+## **4.1.3 Formal Equivalence Checking**
 - Ensures that the **RTL code before and after synthesis** behaves exactly the same.
 - This is important because synthesis tools may optimize logic — you must ensure functionality is preserved.
 
@@ -185,11 +185,11 @@ assign y = (a ? b : c);
 Formally, they are equivalent. Formal tools will mathematically prove this.
 
 
-### **4.2 Dynamic Verification**
+## **4.2 Dynamic Verification**
 
 These methods simulate or emulate the design.
 
-#### **4.2.1 Simulation-Based Verification**
+## **4.2.1 Simulation-Based Verification**
 - The design is loaded into a **digital simulator**.
 - A **testbench** applies inputs and checks outputs.
 - This is like unit testing in software development.
@@ -211,30 +211,30 @@ assert(y == 1);
 ```
 
 
-#### **4.2.2 Emulation / Acceleration**
+## **4.2.2 Emulation / Acceleration**
 - Emulation uses special hardware (FPGA-based) to run the design **much faster** than software simulators.
 - Acceleration uses hardware to speed up simulation but still requires interaction with a simulator.
 - Instead of waiting 10 minutes for simulation of Linux boot, emulation tools can boot Linux on your SoC design in **under a minute** using hardware.
 
-#### **4.2.3 Formal Verification**
+## **4.2.3 Formal Verification**
 - Uses **mathematics** to prove or disprove properties (called **assertions**).
 - Formal tools **try all possible input combinations** and analyze the behavior **exhaustively**.
 - It's slow but powerful, especially for control logic and protocols.
 
 ```systemverilog
-assert property (@(posedge clk) ready |-> ##1 valid);
+assert property (@(posedge clk) ready |-> #1 valid);
 ```
 
 The tool checks that *whenever `ready` is high, `valid` must follow in the next cycle*. If there's **any** input that violates this, the tool will report it — no testbench needed.
 
-## **5. What is a Testbench?**
+# **5. What is a Testbench?**
 
 A **testbench** is a virtual lab setup that:
 - Applies inputs to the Design Under Test (DUT),
 - Observes its outputs,
 - And checks for correctness.
 
-### **Testbench Structure:**
+## **Testbench Structure:**
 
 1. **Stimulus Generator** – Generates test patterns or input signals.
 2. **Driver** – Applies these patterns to the DUT.
@@ -243,7 +243,7 @@ A **testbench** is a virtual lab setup that:
 5. **Assertions** – Defines rules the design must obey.
 6. **Coverage Collector** – Measures how much of the design has been tested.
 
-### **Example: Simple Testbench for a Counter**
+## **Example: Simple Testbench for a Counter**
 
 ```systemverilog
 module tb_counter;
@@ -265,20 +265,20 @@ module tb_counter;
 endmodule
 ```
 
-## **6. Verification Languages and Methodologies**
+# **6. Verification Languages and Methodologies**
 
-### **SystemVerilog**
+## **SystemVerilog**
 - Extension of Verilog.
 - Adds features like OOP, randomization, assertions.
 - Industry standard for verification.
 
-### **UVM (Universal Verification Methodology)**
+## **UVM (Universal Verification Methodology)**
 - A SystemVerilog-based framework.
 - Promotes **modularity**, **reusability**, and **scalability**.
 - Uses components like:
   - `agent`, `driver`, `sequencer`, `monitor`, `scoreboard`, `environment`, etc.
 
-### **UVM Example:**
+## **UVM Example:**
 
 In UVM, a stimulus sequence might look like:
 
@@ -293,9 +293,9 @@ endclass
 This sequence sends a transaction with specific address and data.
 
 
-## **7. Functional and Code Coverage**
+# **7. Functional and Code Coverage**
 
-### **7.1 Code Coverage**
+## **7.1 Code Coverage**
 - Measures **how much of the RTL code has been exercised** by your testbench.
   - Line coverage
   - Toggle coverage (has each bit gone from 0 to 1 and back?)
@@ -315,7 +315,7 @@ else
 If your testbench only tests `mode=2'b00`, then 66% of code is **not covered**. Tools will highlight this.
 
 
-### **7.2 Functional Coverage**
+## **7.2 Functional Coverage**
 - Measures whether **functional scenarios** have been tested.
 - For example:
   - Have you tested a read-modify-write on a register?
@@ -340,19 +340,19 @@ You’ll see a report like:
 
 This guides you to write new tests for `mul`.
 
-## **8. Assertions and Formal Methods**
+# **8. Assertions and Formal Methods**
 
-### **Assertions**
+## **Assertions**
 - Think of them as “rules” written in the code to check for bugs.
 
 ```systemverilog
 // Ensure that when 'req' is high, 'ack' must be high within 2 cycles.
-assert property (@(posedge clk) req |-> ##[1:2] ack);
+assert property (@(posedge clk) req |-> #[1:2] ack);
 ```
 
 Formal tools will **prove or disprove** this for *all* input combinations.
 
-### **Formal Verification**
+## **Formal Verification**
 - Tools attempt to **prove** assertions for **all** possible inputs.
 - Useful for:
   - Deadlocks
@@ -361,22 +361,22 @@ Formal tools will **prove or disprove** this for *all* input combinations.
 
 
 
-## **9. Constrained Random Verification (CRV)**
+# **9. Constrained Random Verification (CRV)**
 
-### Problem:
+## Problem:
 Hardcoding every test case is tedious and can miss corner cases.
 
-### Solution:
+## Solution:
 Use **randomized inputs** with **constraints** to guide them.
 
-### Example:
+## Example:
 
-#### Manual Test:
+## Manual Test:
 ```systemverilog
 addr = 0; data = 0; // boring
 ```
 
-#### CRV Test:
+## CRV Test:
 ```systemverilog
 rand bit [7:0] addr;
 constraint valid_range { addr inside {[0:255]}; addr % 2 == 0; }
@@ -384,16 +384,16 @@ constraint valid_range { addr inside {[0:255]}; addr % 2 == 0; }
 
 You might get `addr = 14`, `addr = 202`, `addr = 48` — all valid and unexpected values.
 
-## **10. Regression Testing**
+# **10. Regression Testing**
 
 - As designs evolve, you want to re-run all existing tests to ensure no new bugs were introduced.
 - This is called a **regression suite**.
 - Can be run nightly or after every code change.
 
-### Tools:
+## Tools:
 - Shell scripts, Jenkins pipelines, or Python orchestration.
 
-### Example:
+## Example:
 
 You have 300 tests:
 - test_reset
@@ -411,9 +411,9 @@ foreach t in tests/
 You track failures and maintain stability with every RTL change.
 
 
-## **11. Advanced Topics in Verification**
+# **11. Advanced Topics in Verification**
 
-### **11.1 Portable Stimulus (PSS)**
+## **11.1 Portable Stimulus (PSS)**
 - Write tests once, reuse them across:
   - Simulation
   - Emulation
@@ -432,13 +432,13 @@ action write_data {
 Use this in simulation, emulation, or prototyping — **no rewrite needed**.
 
 
-### **11.2 Emulation Platforms**
+## **11.2 Emulation Platforms**
 - Cadence Palladium, Synopsys ZeBu
 - Can run full operating systems on DUT in a few minutes.
 - Your test takes 3 hours in simulation. Load it on ZeBu. It runs in 5 minutes. You can now boot embedded Linux images for pre-silicon validation.
 
 
-### **11.3 ML for Verification**
+## **11.3 ML for Verification**
 - ML models can:
   - Predict RTL modules likely to have bugs.
   - Learn which tests are most effective.
@@ -446,7 +446,7 @@ Use this in simulation, emulation, or prototyping — **no rewrite needed**.
   - ML model trained on past bug data predicts that the new `memory_ctrl.v` module has a **high probability of having a corner-case bug** → focus testing there.
 
 
-## **12. Coverage Closure**
+# **12. Coverage Closure**
 
 Coverage closure means:
 > “We’ve tested all parts of the design sufficiently and reached our verification goals.”
@@ -468,7 +468,7 @@ You now:
 - Improve coverage to 95%
 
 
-## **13. Summary and Key Takeaways**
+# **13. Summary and Key Takeaways**
 
 - Design verification is about ensuring that your digital design is **correct before fabrication**.
 - It involves **simulations**, **formal tools**, **assertions**, and **coverage metrics**.
@@ -476,13 +476,13 @@ You now:
 - Understanding both **code coverage** and **functional coverage** is key.
 - Advanced areas like **formal proofs**, **portable stimulus**, and **machine learning** are shaping the future of verification.
 
-## Case Studies (Optional)
+# Case Studies (Optional)
 
 Building upon our comprehensive chapter on Design Verification, let's delve into real-world case studies that underscore the critical importance of thorough verification processes. These examples highlight how subtle design flaws, if undetected, can lead to significant consequences.
 
 
 
-## **Case Study 1: Intel Pentium FDIV Bug (1994)**
+# **Case Study 1: Intel Pentium FDIV Bug (1994)**
 
 **Overview:**
 In 1994, a flaw was discovered in the floating-point unit (FPU) of Intel's Pentium processors. The bug caused incorrect results during certain floating-point division operations, leading to significant public concern.
@@ -500,7 +500,7 @@ This incident highlighted the necessity of exhaustive testing, especially for co
 
 
 
-## **Case Study 2: Therac-25 Radiation Therapy Machine (1985–1987)**
+# **Case Study 2: Therac-25 Radiation Therapy Machine (1985–1987)**
 
 **Overview:**
 The Therac-25, a computer-controlled radiation therapy machine, was involved in at least six accidents where patients received massive overdoses of radiation, leading to severe injuries and deaths.
@@ -519,7 +519,7 @@ This case underscores the dangers of relying solely on software for safety-criti
 
 
 
-## **Case Study 3: Intel F00F Bug (1997)**
+# **Case Study 3: Intel F00F Bug (1997)**
 
 **Overview:**
 In 1997, a flaw was discovered in Intel's Pentium processors where executing a specific invalid instruction sequence would cause the processor to lock up, requiring a system reboot.
@@ -537,7 +537,7 @@ This incident highlights the importance of thoroughly testing exception handling
 
 
 
-## **Case Study 4: Cisco Trust Anchor Vulnerability (2019)**
+# **Case Study 4: Cisco Trust Anchor Vulnerability (2019)**
 
 **Overview:**
 Researchers discovered a vulnerability in Cisco's Trust Anchor module, a hardware root of trust used in various Cisco devices, allowing attackers to bypass secure boot protections.
@@ -555,7 +555,7 @@ This case emphasizes the need for rigorous verification of security features, in
 
 
 
-## **Case Study 5: Meltdown and Spectre Vulnerabilities (2018)**
+# **Case Study 5: Meltdown and Spectre Vulnerabilities (2018)**
 
 **Overview:**
 In 2018, researchers revealed two major security vulnerabilities, Meltdown and Spectre, affecting modern processors. These flaws allowed unauthorized access to sensitive data by exploiting speculative execution.
