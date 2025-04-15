@@ -371,12 +371,12 @@ Use **randomized inputs** with **constraints** to guide them.
 
 ## Example:
 
-## Manual Test:
+### Manual Test:
 ```systemverilog
 addr = 0; data = 0; // boring
 ```
 
-## CRV Test:
+### CRV Test:
 ```systemverilog
 rand bit [7:0] addr;
 constraint valid_range { addr inside {[0:255]}; addr % 2 == 0; }
