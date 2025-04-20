@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-design-verification-introdution",
+        },{id: "post-genai-model-context-protocol-mcp-from-fundamentals-to-real-world-applications",
+      
+        title: "GenAI: Model Context Protocol (MCP): From Fundamentals to Real‑World Applications",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/genai-mcp/";
+        
+      },
+    },{id: "post-design-verification-introdution",
       
         title: "Design Verification — Introdution",
       
