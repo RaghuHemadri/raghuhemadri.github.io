@@ -253,7 +253,7 @@ Here’s the **full expanded**:
 
 ---
 
-# 15. Implementation: Python Code Examples for Memory Systems in AI Agents
+# 14. Implementation: Python Code Examples for Memory Systems in AI Agents
 
 We’ll go **step-by-step**, covering:
 
