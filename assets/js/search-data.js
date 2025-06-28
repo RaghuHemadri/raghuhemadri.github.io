@@ -217,6 +217,31 @@ ninja.data = [{
           description: "An information-theoretic meta-regularizer to mitigate overfitting in meta-learning by maximizing mutual information using MINE, improving generalization on non-mutually-exclusive tasks.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/12_project/";
+            },},{id: "projects-real-time-healthcare-chatbot-with-end-to-end-mlops-dr-dialog",
+          title: 'Real-Time Healthcare Chatbot with End-to-End MLOps (Dr. Dialog)',
+          description: "Dr. Dialog is a fault-tolerant, MLOps-enabled healthcare assistant built on TinyLLaMA-1.1B, designed to simplify medical jargon and answer non-personalized health queries in real time. The system features distributed GPU training, continuous delivery with ArgoCD, and robust monitoring via Grafana and Prometheus.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/13_project/";
+            },},{id: "projects-parameter-efficient-deep-resnet-with-channel-attention",
+          title: 'Parameter-Efficient Deep ResNet with Channel Attention',
+          description: "Lightweight ResNet variant with Squeeze-and-Excitation attention for CIFAR-10, achieving 96.04% test accuracy under a strict 5M parameter budget. Integrated Mixup, Cutout, AutoAugment, and cosine-annealed SGD for state-of-the-art regularization and convergence.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/14_project/";
+            },},{id: "projects-parameter-efficient-transformer-for-scalable-nlp-classification",
+          title: 'Parameter-Efficient Transformer for Scalable NLP Classification',
+          description: "Parameter-efficient fine-tuning method using Low-Rank Adaptation (LoRA) on RoBERTa for news text classification. Achieved 86.5% test accuracy with under 1M trainable parameters, demonstrating near state-of-the-art performance at a fraction of computational cost.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/15_project/";
+            },},{id: "projects-adversarial-robustness-of-deep-image-classifiers-resnet-34-densenet-121",
+          title: 'Adversarial Robustness of Deep Image Classifiers (ResNet-34, DenseNet-121)',
+          description: "Investigated the vulnerability of ResNet-34 and DenseNet-121 classifiers to adversarial attacks using FGSM, PGD, and a custom patch-based PGD method. Demonstrated near-total degradation of classification accuracy with transferable adversarial examples and provided detailed ablation studies.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/16_project/";
+            },},{id: "projects-reasoning-with-llms-for-cancer-treatment-outcome-prediction",
+          title: 'Reasoning with LLMs for Cancer Treatment Outcome Prediction',
+          description: "A reasoning-aligned LLM framework for predicting cancer treatment outcomes using the MSK-CHORD dataset, integrating Chain-of-Thought prompting and reinforcement learning. Achieved state-of-the-art performance in both accuracy and interpretability for clinical decision support.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/17_project/";
             },},{id: "projects-age-and-gender-estimation",
           title: 'Age and gender estimation',
           description: "A CNN-based system using TensorFlow and dlib for accurate age and gender estimation from facial images, enabling multi-face demographic analysis.",
