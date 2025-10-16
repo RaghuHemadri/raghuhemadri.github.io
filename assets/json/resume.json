@@ -30,16 +30,25 @@
       "startDate": "2024-09-01",
       "endDate": "Present",
       "summary": "AI for hardware design, LLM based frameworks", 
-      "highlights": ["Conducting research on leveraging Large Language Models (LLMs) for hardware Code analysis, including using LLMs as encoders to predict vulnerable code directly from RTL before synthesis."]
+      "highlights": ["Developed VeriLoC, an LLM-based system using CL-Verilog embeddings for line-level prediction tasks on Verilog code; improved F1 to 0.95 and reduced error by 4× over SOTA.", "Created PrefixLLM, an LLM-aided framework for prefix circuit design, achieving 3.70% area reduction while maintaining delay, showcasing LLMs' potential in arithmetic circuit synthesis.", "Developing an AlphaChip-inspired RL placer using GNNs + PPO on netlist/hypergraph embeddings for joint macro and standard-cell co-placement; multi-objective reward; PyTorch/CUDA with GPU cost evaluation."]
+    },
+    {
+      "name": "Synopsys Inc",
+      "position": "Machine Learning Research Intern",
+      "url": "https://www.synopsys.com/",
+      "startDate": "2025-05-19",
+      "endDate": "2025-08-08",
+      "summary": "Non-Convex Optimization, Small Language Models, Interpretable AI, Coverage Optimization",
+      "highlights": ["Implemented a GPU-accelerated block-wise projected gradient descent algorithm for large-scale linear programming coverage optimization; reduced runtime by up to 315x and memory usage by 10x vs. OR-Tools with < 2% objective error.", "Designed a multimodal Transformer + LSTM autoencoder for novelty detection, integrating BM25-weighted scoring and perturbation-based variable attribution to guide constrained-random test generation and accelerate coverage closure."]
     },
     {
       "name": "Massachusetts Institute of Technology",
       "position": "Research Collaborator",
       "url": "https://www.mit.edu/",
       "startDate": "2024-09-01",
-      "endDate": "Present",
+      "endDate": "2025-01-15",
       "summary": "Multi-agent Reinforcement Learning, Policy Loss Function, Vision Language Models",
-      "highlights": ["Working on LLMs for multi-agent reinforcement learning (MARL), focusing on long-horizon planning and task execution in complex, partially observable environments. Formulated new policy loss function to improve multi-agent decision-making, reducing suboptimal actions by 26%", "Developed Vision Language Models (VLMs) for MARL, enabling agents to understand and execute complex tasks using visual inputs and natural language instructions."]
+      "highlights": ["Worked on LLMs for multi-agent reinforcement learning (MARL), focusing on long-horizon planning and task execution in complex, partially observable environments. Formulated new policy loss function to improve multi-agent decision-making, reducing suboptimal actions by 26%", "Developed Vision Language Models (VLMs) for MARL, enabling agents to understand and execute complex tasks using visual inputs and natural language instructions."]
     },
     {
       "name": "Oracle Corporation",
@@ -207,10 +216,17 @@
   ],
   "publications": [
     {
+      "name": "VeriLoC: An LLM-based Framework for Line-level Prediction Tasks on Verilog Code using CL-Verilog Embeddings",
+      "publisher": "NeurIPS",
+      "releaseDate": "2025",
+      "url": "https://arxiv.org/abs/2506.07239",
+      "summary": "VeriLoC, the first method that predicts design quality directly from Verilog at both the line- and module-level. VeriLoC achieves high F1-scores of 0.86-0.95 for line-level congestion and timing prediction, and reduces the mean average percentage error from 14% - 18% for SOTA methods down to only 4%."
+    },
+    {
       "name": "Detecting anomalies in log messages using code-derived message patterns to guide structured message classification",
       "publisher": "US Patent",
       "releaseDate": "2024-03-18",
-      "url": "",
+      "url": "https://worldwide.espacenet.com/patent/search/family/097028645/publication/US2025291700A1?q=pn%3DUS2025291700A1",
       "summary": "Developed a log anomaly detection system leveraging code-derived message patterns for structured classification. The system processes 10TB of log data daily with 94% accuracy, reducing bug-fixing time from 2 days to 1 hour by enabling early and precise anomaly detection."
     },
     {
@@ -376,6 +392,14 @@
     }
   ],
   "projects": [
+    {
+      "name": "ServiceSaverAI",
+      "summary": "ServiceSaverAI is your personal AI assistant to help you negotiate better deals on ANY service - moving, internet/phone, insurance, healthcare, auto services, home repairs, education, and more!",
+      "highlights": ["AI Agents", "Agent Orchestration", "Model Context Protocol (MCP)"],
+      "startDate": "2025-09-18",
+      "endDate": "2025-09-19",
+      "url": "https://github.com/RaghuHemadri/ServiceSaver"
+    },
     {
       "name": "OS Copilot",
       "summary": "Developed an AI assistant using on-device machine learning to enhance user productivity and multitasking, diagnosing and fixing issues to improve user experience and device performance.",

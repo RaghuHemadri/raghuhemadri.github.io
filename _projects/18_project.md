@@ -1,9 +1,9 @@
 ---
 layout: page
-title: Parameter-Efficient Deep ResNet with Channel Attention
-description: Lightweight ResNet variant with Squeeze-and-Excitation attention for CIFAR-10, achieving 96.04% test accuracy under a strict 5M parameter budget. Integrated Mixup, Cutout, AutoAugment, and cosine-annealed SGD for state-of-the-art regularization and convergence.
-img: assets/img/dl_p1.png
-redirect: https://github.com/RaghuHemadri/ECE-GY-7123-DL.git
+title: ServiceSaverAI
+description: ServiceSaverAI is your personal AI assistant to help you negotiate better deals on ANY service - moving, internet/phone, insurance, healthcare, auto services, home repairs, education, and more! Just tell me what service you need help with and I'll create a custom strategy. For example: 'I need cheaper car insurance' or 'Help me negotiate moving costs' or 'I want a better phone plan.'
+img: assets/img/servicesaver.webp
+redirect: https://github.com/RaghuHemadri/ServiceSaver
 importance: 1
 category: work
 ---
