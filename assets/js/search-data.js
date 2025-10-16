@@ -202,6 +202,15 @@ ninja.data = [{
           section: "News",},{id: "news-selected-as-the-recipient-of-the-david-chang-and-cecilia-m-chang-student-leadership-award",
           title: 'Selected as the recipient of the David Chang and Cecilia M. Chang Student...',
           description: "",
+          section: "News",},{id: "news-joined-synopsys-as-machine-learning-intern",
+          title: 'Joined Synopsys as Machine Learning Intern',
+          description: "",
+          section: "News",},{id: "news-first-author-paper-veriloc-accepted-at-neurips",
+          title: 'First author paper VeriLoC accepted at NeurIPS',
+          description: "",
+          section: "News",},{id: "news-first-inventor-us-patent-is-published-find-it-here",
+          title: 'First inventor US Patent is published. Find it here!',
+          description: "",
           section: "News",},{id: "projects-social-neuro-rl",
           title: 'Social Neuro RL',
           description: "Explores context-conditioned reasoning and compositional thinking in AI agents using MARL to enhance coordination, generalization, and cognitive architectures inspired by social neuroscience.",
@@ -242,9 +251,9 @@ ninja.data = [{
           description: "A reasoning-aligned LLM framework for predicting cancer treatment outcomes using the MSK-CHORD dataset, integrating Chain-of-Thought prompting and reinforcement learning. Achieved state-of-the-art performance in both accuracy and interpretability for clinical decision support.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/17_project/";
-            },},{id: "projects-",
-          title: '',
-          description: "",
+            },},{id: "projects-servicesaverai",
+          title: 'ServiceSaverAI',
+          description: "ServiceSaverAI is your personal AI assistant to help you negotiate better deals on ANY service - moving, internet/phone, insurance, healthcare, auto services, home repairs, education, and more! Just tell me what service you need help with and I&#39;ll create a custom strategy. For example: &#39;I need cheaper car insurance&#39; or &#39;Help me negotiate moving costs&#39; or &#39;I want a better phone plan.&#39;",
           section: "Projects",handler: () => {
               window.location.href = "/projects/18_project/";
             },},{id: "projects-age-and-gender-estimation",
