@@ -222,9 +222,9 @@ ninja.data = [{
           description: "Dr. Dialog is a fault-tolerant, MLOps-enabled healthcare assistant built on TinyLLaMA-1.1B, designed to simplify medical jargon and answer non-personalized health queries in real time. The system features distributed GPU training, continuous delivery with ArgoCD, and robust monitoring via Grafana and Prometheus.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/13_project/";
-            },},{id: "projects-parameter-efficient-deep-resnet-with-channel-attention",
-          title: 'Parameter-Efficient Deep ResNet with Channel Attention',
-          description: "Lightweight ResNet variant with Squeeze-and-Excitation attention for CIFAR-10, achieving 96.04% test accuracy under a strict 5M parameter budget. Integrated Mixup, Cutout, AutoAugment, and cosine-annealed SGD for state-of-the-art regularization and convergence.",
+            },},{id: "projects-",
+          title: '',
+          description: "",
           section: "Projects",handler: () => {
               window.location.href = "/projects/14_project/";
             },},{id: "projects-parameter-efficient-transformer-for-scalable-nlp-classification",
