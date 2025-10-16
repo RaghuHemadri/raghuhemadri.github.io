@@ -222,9 +222,9 @@ ninja.data = [{
           description: "Dr. Dialog is a fault-tolerant, MLOps-enabled healthcare assistant built on TinyLLaMA-1.1B, designed to simplify medical jargon and answer non-personalized health queries in real time. The system features distributed GPU training, continuous delivery with ArgoCD, and robust monitoring via Grafana and Prometheus.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/13_project/";
-            },},{id: "projects-",
-          title: '',
-          description: "",
+            },},{id: "projects-parameter-efficient-deep-resnet-with-channel-attention",
+          title: 'Parameter-Efficient Deep ResNet with Channel Attention',
+          description: "Lightweight ResNet variant with Squeeze-and-Excitation attention for CIFAR-10, achieving 96.04% test accuracy under a strict 5M parameter budget. Integrated Mixup, Cutout, AutoAugment, and cosine-annealed SGD for state-of-the-art regularization and convergence.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/14_project/";
             },},{id: "projects-parameter-efficient-transformer-for-scalable-nlp-classification",
@@ -242,6 +242,11 @@ ninja.data = [{
           description: "A reasoning-aligned LLM framework for predicting cancer treatment outcomes using the MSK-CHORD dataset, integrating Chain-of-Thought prompting and reinforcement learning. Achieved state-of-the-art performance in both accuracy and interpretability for clinical decision support.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/17_project/";
+            },},{id: "projects-",
+          title: '',
+          description: "",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/18_project/";
             },},{id: "projects-age-and-gender-estimation",
           title: 'Age and gender estimation',
           description: "A CNN-based system using TensorFlow and dlib for accurate age and gender estimation from facial images, enabling multi-face demographic analysis.",
