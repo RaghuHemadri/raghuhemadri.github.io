@@ -1,9 +1,9 @@
 ---
 layout: page
 title: ServiceSaverAI
-description: ServiceSaverAI is your personal AI assistant to help you negotiate better deals on ANY service - moving, internet/phone, insurance, healthcare, auto services, home repairs, education, and more! Just tell me what service you need help with and I'll create a custom strategy. For example: 'I need cheaper car insurance' or 'Help me negotiate moving costs' or 'I want a better phone plan.'
+description: "ServiceSaverAI is your personal AI assistant to help you negotiate better deals on ANY service - moving, internet/phone, insurance, healthcare, auto services, home repairs, education, and more! Just tell me what service you need help with and I'll create a custom strategy. For example: 'I need cheaper car insurance' or 'Help me negotiate moving costs' or 'I want a better phone plan.'"
 img: assets/img/servicesaver.png
-redirect: https://github.com/RaghuHemadri/ServiceSaver
+redirect: https://github.com/RaghuHemadri/ServiceSaver.git
 importance: 1
 category: work
 ---
