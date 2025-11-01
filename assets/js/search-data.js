@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-genai-memory-in-ai-agents",
+        },{id: "post-langgraph-cheatsheet-fundamentals-and-implementation",
+      
+        title: "LangGraph Cheatsheet: Fundamentals and Implementation",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/langgraph-cheatsheet/";
+        
+      },
+    },{id: "post-genai-memory-in-ai-agents",
       
         title: "GenAI: Memory in AI Agents",
       
