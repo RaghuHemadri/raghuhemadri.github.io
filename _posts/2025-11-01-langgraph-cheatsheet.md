@@ -32,6 +32,8 @@ LangGraph is a Python library built on top of LangChain for creating complex con
 | **State Graph** | The framework (`StateGraph` class) used to build and compile the graph structure, managing the nodes, edges, and overall state flow. | |
 | **Reducer Function** | A rule that defines how updates from nodes are combined with the existing state. `add_messages` is a reducer function used to append new data without overwriting the state. | |
 
+---
+
 ### II. Essential Python Type Annotations
 
 These concepts are used extensively for defining the State and handling complex data flow:
@@ -44,6 +46,8 @@ These concepts are used extensively for defining the State and handling complex 
 | **Lambda** | A shortcut for writing small, anonymous functions. | Often used as a pass-through function (`lambda state: state`) in nodes that only return an edge or perform comparison without state assignment. | |
 | **Annotated** | Provides additional context (metadata) to a type without changing its data type (e.g., specifying a `str` must be a "valid email format"). | | |
 | **Sequence** | Helps automatically handle state updates for sequential data structures, like chat history, avoiding manual list manipulation. | | |
+
+---
 
 ### III. Message Types (For AI Agents)
 
@@ -120,6 +124,7 @@ result = app.invoke({"message": "Bob"})
 # Output: {'message': 'Hey Bob how is your day going'}
 ```
 
+---
 
 #### B. Sequential Graph (Multiple Nodes)
 
@@ -139,6 +144,7 @@ graph.set_finish_point("second_node")
 app = graph.compile()
 ```
 
+---
 
 #### C. Conditional Graph (Routing)
 
@@ -190,6 +196,7 @@ graph.add_edge("subtract_node", END)
 app = graph.compile()
 ```
 
+---
 
 #### D. Looping Graph
 
@@ -245,6 +252,7 @@ class AgentState(TypedDict):
     messages: Annotated[Sequence[BaseMessage], add_messages] 
 ```
 
+---
 
 #### B. Tool Definition and Binding (React Agent)
 
@@ -266,6 +274,7 @@ model = ChatOpenAI(model="gpt-4o")
 llm_with_tools = model.bind_tools(tools) 
 ```
 
+---
 
 #### C. LLM Node Call and System Prompt
 
@@ -286,6 +295,7 @@ def model_call(state: AgentState) -> AgentState:
     return {"messages": response}
 ```
 
+---
 
 #### D. React Agent Conditional Edge (Loop Logic)
 
@@ -303,6 +313,7 @@ def should_continue(state: AgentState) -> str:
         return "continue" # Proceed to tool node
 ```
 
+---
 
 **Graph Flow for React:** The LLM node routes execution:
 
