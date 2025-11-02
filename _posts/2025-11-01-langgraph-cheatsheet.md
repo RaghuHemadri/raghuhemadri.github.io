@@ -330,7 +330,47 @@ A directed edge must also be added from the Tool Node back to the Agent Node to 
 graph.add_edge("tool_node", "agent") 
 ```
 
-### VI. RAG Example
+---
+
+### LangChain MCP Adapters
+
+A useful repository for Multi-Channel Protocol (MCP) adapters that integrate with LangChain and related workflows:
+
+[![langchain-mcp-adapters preview](https://opengraph.githubassets.com/1/langchain-ai/langchain-mcp-adapters/langchain-ai/langchain-mcp-adapters)](https://github.com/langchain-ai/langchain-mcp-adapters)
+
+Brief: adapters for connecting LangChain-based agents and pipelines to external messaging channels and MCP-compatible systems (useful for routing messages, webhooks, and channel-specific glue logic).
+
+---
+
+### LangSmith Server A2A (Agent-to-Agent)
+
+LangSmith Server A2A enables agent-to-agent communication patterns (A2A) using the LangSmith server. This is useful when you want agents to call other agents or coordinate workflows through a central server.
+
+- Docs: https://docs.langchain.com/langsmith/server-a2a
+
+Summary:
+- Purpose: Route messages and tool calls between agents via the LangSmith server, enabling orchestrated multi-agent flows and persistent observability.
+- Typical steps:
+    1. Configure the LangSmith server and obtain credentials/API endpoint.
+    2. Register agents (or agent endpoints) with LangSmith.
+    3. Use the provided client bindings or HTTP endpoints to send A2A requests and receive responses/events.
+- Common use cases: tool orchestration across agents, agent escalation/fallback, distributed tool execution, and audit/logging of inter-agent interactions.
+
+Example (conceptual):
+```python
+# Pseudocode: use the LangSmith A2A client to send a request to another agent
+from langsmith_client import LangSmithClient
+
+client = LangSmithClient(api_key="YOUR_KEY", base_url="https://your-langsmith-server")
+response = client.send_to_agent(agent_id="research_agent", payload={"query": "Summarize Q4 report"})
+print(response)
+```
+
+Refer to the official Server A2A docs for concrete setup, API details, and security best practices: https://docs.langchain.com/langsmith/server-a2a
+
+---
+
+### RAG Example
 
 ```python
 from dotenv import load_dotenv
