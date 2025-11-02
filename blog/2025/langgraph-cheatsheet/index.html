@@ -120,6 +120,193 @@
 </span></code></pre></div></div> <hr> <p><strong>Graph Flow for React:</strong> The LLM node routes execution:</p> <ol> <li>Agent Node (LLM decides)</li> <li>Conditional Edge (<code class="language-plaintext highlighter-rouge">should_continue</code>) <ul> <li> <strong>If Tool Call:</strong> Go to “continue” edge ➡️ Tool Node (runs tool)</li> <li> <strong>If Final Answer:</strong> Go to “end” edge ➡️ END</li> </ul> </li> </ol> <p>A directed edge must also be added from the Tool Node back to the Agent Node to allow the LLM to process the tool output and potentially loop again.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Agent to Tool Node (via conditional edge setup)
 # Tool Node back to Agent Node (to process tool result)
 </span><span class="n">graph</span><span class="p">.</span><span class="nf">add_edge</span><span class="p">(</span><span class="sh">"</span><span class="s">tool_node</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">agent</span><span class="sh">"</span><span class="p">)</span> 
+</code></pre></div></div> <h3 id="vi-rag-example">VI. RAG Example</h3> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span> <span class="n">os</span>
+<span class="kn">from</span> <span class="n">langgraph.graph</span> <span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">END</span>
+<span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="n">langchain_core.messages</span> <span class="kn">import</span> <span class="n">BaseMessage</span><span class="p">,</span> <span class="n">SystemMessage</span><span class="p">,</span> <span class="n">HumanMessage</span><span class="p">,</span> <span class="n">ToolMessage</span>
+<span class="kn">from</span> <span class="n">operator</span> <span class="kn">import</span> <span class="n">add</span> <span class="k">as</span> <span class="n">add_messages</span>
+<span class="kn">from</span> <span class="n">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span> <span class="n">langchain_openai</span> <span class="kn">import</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span> <span class="n">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">PyPDFLoader</span>
+<span class="kn">from</span> <span class="n">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
+<span class="kn">from</span> <span class="n">langchain_chroma</span> <span class="kn">import</span> <span class="n">Chroma</span>
+<span class="kn">from</span> <span class="n">langchain_core.tools</span> <span class="kn">import</span> <span class="n">tool</span>
+
+<span class="nf">load_dotenv</span><span class="p">()</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="nc">ChatOpenAI</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="sh">"</span><span class="s">gpt-4o</span><span class="sh">"</span><span class="p">,</span> <span class="n">temperature</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># I want to minimize hallucination - temperature = 0 makes the model output more deterministic 
+</span>
+<span class="c1"># Our Embedding Model - has to also be compatible with the LLM
+</span><span class="n">embeddings</span> <span class="o">=</span> <span class="nc">OpenAIEmbeddings</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="sh">"</span><span class="s">text-embedding-3-small</span><span class="sh">"</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">pdf_path</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Stock_Market_Performance_2024.pdf</span><span class="sh">"</span>
+
+
+<span class="c1"># Safety measure I have put for debugging purposes :)
+</span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="nc">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">PDF file not found: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">pdf_loader</span> <span class="o">=</span> <span class="nc">PyPDFLoader</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">)</span> <span class="c1"># This loads the PDF
+</span>
+<span class="c1"># Checks if the PDF is there
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="n">pages</span> <span class="o">=</span> <span class="n">pdf_loader</span><span class="p">.</span><span class="nf">load</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">PDF has been loaded and has </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span><span class="si">}</span><span class="s"> pages</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Error loading PDF: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">raise</span>
+
+<span class="c1"># Chunking Process
+</span><span class="n">text_splitter</span> <span class="o">=</span> <span class="nc">RecursiveCharacterTextSplitter</span><span class="p">(</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">200</span>
+<span class="p">)</span>
+
+
+<span class="n">pages_split</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="p">.</span><span class="nf">split_documents</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span> <span class="c1"># We now apply this to our pages
+</span>
+<span class="n">persist_directory</span> <span class="o">=</span> <span class="sa">r</span><span class="sh">"</span><span class="s">C:\Vaibhav\LangGraph_Book\LangGraphCourse\Agents</span><span class="sh">"</span>
+<span class="n">collection_name</span> <span class="o">=</span> <span class="sh">"</span><span class="s">stock_market</span><span class="sh">"</span>
+
+<span class="c1"># If our collection does not exist in the directory, we create using the os command
+</span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">persist_directory</span><span class="p">):</span>
+    <span class="n">os</span><span class="p">.</span><span class="nf">makedirs</span><span class="p">(</span><span class="n">persist_directory</span><span class="p">)</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Here, we actually create the chroma database using our embeddigns model
+</span>    <span class="n">vectorstore</span> <span class="o">=</span> <span class="n">Chroma</span><span class="p">.</span><span class="nf">from_documents</span><span class="p">(</span>
+        <span class="n">documents</span><span class="o">=</span><span class="n">pages_split</span><span class="p">,</span>
+        <span class="n">embedding</span><span class="o">=</span><span class="n">embeddings</span><span class="p">,</span>
+        <span class="n">persist_directory</span><span class="o">=</span><span class="n">persist_directory</span><span class="p">,</span>
+        <span class="n">collection_name</span><span class="o">=</span><span class="n">collection_name</span>
+    <span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Created ChromaDB vector store!</span><span class="sh">"</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Error setting up ChromaDB: </span><span class="si">{</span><span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">raise</span>
+
+
+<span class="c1"># Now we create our retriever 
+</span><span class="n">retriever</span> <span class="o">=</span> <span class="n">vectorstore</span><span class="p">.</span><span class="nf">as_retriever</span><span class="p">(</span>
+    <span class="n">search_type</span><span class="o">=</span><span class="sh">"</span><span class="s">similarity</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">search_kwargs</span><span class="o">=</span><span class="p">{</span><span class="sh">"</span><span class="s">k</span><span class="sh">"</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span> <span class="c1"># K is the amount of chunks to return
+</span><span class="p">)</span>
+
+<span class="nd">@tool</span>
+<span class="k">def</span> <span class="nf">retriever_tool</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    This tool searches and returns the information from the Stock Market Performance 2024 document.
+    </span><span class="sh">"""</span>
+
+    <span class="n">docs</span> <span class="o">=</span> <span class="n">retriever</span><span class="p">.</span><span class="nf">invoke</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">docs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">I found no relevant information in the Stock Market Performance 2024 document.</span><span class="sh">"</span>
+    
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">doc</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">docs</span><span class="p">):</span>
+        <span class="n">results</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Document </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">:</span><span class="se">\n</span><span class="si">{</span><span class="n">doc</span><span class="p">.</span><span class="n">page_content</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="sh">"</span><span class="se">\n\n</span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[</span><span class="n">retriever_tool</span><span class="p">]</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span><span class="p">.</span><span class="nf">bind_tools</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">AgentState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">BaseMessage</span><span class="p">],</span> <span class="n">add_messages</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">should_continue</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">AgentState</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Check if the last message contains tool calls.</span><span class="sh">"""</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="sh">'</span><span class="s">messages</span><span class="sh">'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nf">hasattr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="sh">'</span><span class="s">tool_calls</span><span class="sh">'</span><span class="p">)</span> <span class="ow">and</span> <span class="nf">len</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">tool_calls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+
+<span class="n">system_prompt</span> <span class="o">=</span> <span class="sh">"""</span><span class="s">
+You are an intelligent AI assistant who answers questions about Stock Market Performance in 2024 based on the PDF document loaded into your knowledge base.
+Use the retriever tool available to answer questions about the stock market performance data. You can make multiple calls if needed.
+If you need to look up some information before asking a follow up question, you are allowed to do that!
+Please always cite the specific parts of the documents you use in your answers.
+</span><span class="sh">"""</span>
+
+
+<span class="n">tools_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">our_tool</span><span class="p">.</span><span class="n">name</span><span class="p">:</span> <span class="n">our_tool</span> <span class="k">for</span> <span class="n">our_tool</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">}</span> <span class="c1"># Creating a dictionary of our tools
+</span>
+<span class="c1"># LLM Agent
+</span><span class="k">def</span> <span class="nf">call_llm</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">AgentState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentState</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Function to call the LLM with the current state.</span><span class="sh">"""</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="sh">'</span><span class="s">messages</span><span class="sh">'</span><span class="p">])</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="nc">SystemMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">system_prompt</span><span class="p">)]</span> <span class="o">+</span> <span class="n">messages</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">llm</span><span class="p">.</span><span class="nf">invoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="sh">'</span><span class="s">messages</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">message</span><span class="p">]}</span>
+
+
+<span class="c1"># Retriever Agent
+</span><span class="k">def</span> <span class="nf">take_action</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">AgentState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentState</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Execute tool calls from the LLM</span><span class="sh">'</span><span class="s">s response.</span><span class="sh">"""</span>
+
+    <span class="n">tool_calls</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="sh">'</span><span class="s">messages</span><span class="sh">'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">tool_calls</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tool_calls</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Calling Tool: </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">]</span><span class="si">}</span><span class="s"> with query: </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="sh">'</span><span class="s">args</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">query</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">No query provided</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">t</span><span class="p">[</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">]</span> <span class="ow">in</span> <span class="n">tools_dict</span><span class="p">:</span> <span class="c1"># Checks if a valid tool is present
+</span>            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Tool: </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">]</span><span class="si">}</span><span class="s"> does not exist.</span><span class="sh">"</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Incorrect Tool Name, Please Retry and Select tool from List of Available tools.</span><span class="sh">"</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">tools_dict</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">]].</span><span class="nf">invoke</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="sh">'</span><span class="s">args</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">query</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">))</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Result length: </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+            
+
+        <span class="c1"># Appends the Tool Message
+</span>        <span class="n">results</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nc">ToolMessage</span><span class="p">(</span><span class="n">tool_call_id</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">],</span> <span class="n">content</span><span class="o">=</span><span class="nf">str</span><span class="p">(</span><span class="n">result</span><span class="p">)))</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Tools Execution Complete. Back to the model!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="sh">'</span><span class="s">messages</span><span class="sh">'</span><span class="p">:</span> <span class="n">results</span><span class="p">}</span>
+
+
+<span class="n">graph</span> <span class="o">=</span> <span class="nc">StateGraph</span><span class="p">(</span><span class="n">AgentState</span><span class="p">)</span>
+<span class="n">graph</span><span class="p">.</span><span class="nf">add_node</span><span class="p">(</span><span class="sh">"</span><span class="s">llm</span><span class="sh">"</span><span class="p">,</span> <span class="n">call_llm</span><span class="p">)</span>
+<span class="n">graph</span><span class="p">.</span><span class="nf">add_node</span><span class="p">(</span><span class="sh">"</span><span class="s">retriever_agent</span><span class="sh">"</span><span class="p">,</span> <span class="n">take_action</span><span class="p">)</span>
+
+<span class="n">graph</span><span class="p">.</span><span class="nf">add_conditional_edges</span><span class="p">(</span>
+    <span class="sh">"</span><span class="s">llm</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">should_continue</span><span class="p">,</span>
+    <span class="p">{</span><span class="bp">True</span><span class="p">:</span> <span class="sh">"</span><span class="s">retriever_agent</span><span class="sh">"</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="n">END</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">graph</span><span class="p">.</span><span class="nf">add_edge</span><span class="p">(</span><span class="sh">"</span><span class="s">retriever_agent</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">llm</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">graph</span><span class="p">.</span><span class="nf">set_entry_point</span><span class="p">(</span><span class="sh">"</span><span class="s">llm</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">rag_agent</span> <span class="o">=</span> <span class="n">graph</span><span class="p">.</span><span class="nf">compile</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">running_agent</span><span class="p">():</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">=== RAG AGENT===</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">user_input</span> <span class="o">=</span> <span class="nf">input</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">What is your question: </span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user_input</span><span class="p">.</span><span class="nf">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="sh">'</span><span class="s">exit</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">quit</span><span class="sh">'</span><span class="p">]:</span>
+            <span class="k">break</span>
+            
+        <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="nc">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">user_input</span><span class="p">)]</span> <span class="c1"># converts back to a HumanMessage type
+</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">rag_agent</span><span class="p">.</span><span class="nf">invoke</span><span class="p">({</span><span class="sh">"</span><span class="s">messages</span><span class="sh">"</span><span class="p">:</span> <span class="n">messages</span><span class="p">})</span>
+        
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">=== ANSWER ===</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="sh">'</span><span class="s">messages</span><span class="sh">'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">content</span><span class="p">)</span>
+
+
+<span class="nf">running_agent</span><span class="p">()</span>
 </code></pre></div></div> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/genai-memory/">GenAI: Memory in AI Agents</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/genai-mcp/">GenAI: Model Context Protocol (MCP): From Fundamentals to Real‑World Applications</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/aihd-design-verification/">Design Verification — Introdution</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/genai-101/">GenAI: Agentic AI 101</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/mlops-model-serving/">MLOps: Model serving</a> </li> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Raghu V. Hemadri. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.5/dist/js/lightbox.min.js" integrity="sha256-A6jI5V9s1JznkWwsBaRK8kSeXLgIqQfxfnvdDOZEURY=" crossorigin="anonymous"></script> <script defer src="/assets/js/photoswipe-setup.js?ff2f76a5e4d60ef5998292f7b915a48b" type="module"></script> <script defer src="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/spotlight.bundle.min.js" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/venobox@2.1.8/dist/venobox.min.js" integrity="sha256-LsGXHsHMMmTcz3KqTaWvLv6ome+7pRiic2LPnzTfiSo=" crossorigin="anonymous"></script> <script defer src="/assets/js/venobox-setup.js?897c1d9c0b6fcf82b949511c1609d055" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
     addBackToTop();
   </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>
