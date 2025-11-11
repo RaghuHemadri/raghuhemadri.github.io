@@ -44,7 +44,40 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-langgraph-cheatsheet-fundamentals-and-implementation",
+        },{id: "post-ml-sys-design-youtube-recommendation-system",
+      
+        title: "ML Sys Design: YouTube Recommendation System",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/youtube-reco/";
+        
+      },
+    },{id: "post-ml-sys-design-ml-design-interview",
+      
+        title: "ML Sys Design: ML Design Interview",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/ml-sys-design/";
+        
+      },
+    },{id: "post-llm-cheatsheet",
+      
+        title: "Llm Cheatsheet",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/LLM-cheatsheet/";
+        
+      },
+    },{id: "post-langgraph-cheatsheet-fundamentals-and-implementation",
       
         title: "LangGraph Cheatsheet: Fundamentals and Implementation",
       
