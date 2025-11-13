@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ml-sys-design-decoding-the-app-store-recommendation-system",
+        },{id: "post-ml-sys-design-how-ai-tags-new-apps-before-anyone-installs-them",
+      
+        title: "ML Sys Design:  How AI Tags New Apps Before Anyone Installs Them",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/ml-sys-ai-tags/";
+        
+      },
+    },{id: "post-ml-sys-design-decoding-the-app-store-recommendation-system",
       
         title: "ML Sys Design: Decoding the App Store Recommendation System",
       
