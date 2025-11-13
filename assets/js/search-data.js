@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ml-sys-design-how-ai-tags-new-apps-before-anyone-installs-them",
+        },{id: "post-ml-sys-design-building-the-ultimate-privacy-first-multi-modal-retrieval-engine",
+      
+        title: "ML Sys Design: Building the Ultimate Privacy-First, Multi-Modal Retrieval Engine",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/ml-sys-privacy-ret/";
+        
+      },
+    },{id: "post-ml-sys-design-how-ai-tags-new-apps-before-anyone-installs-them",
       
         title: "ML Sys Design:  How AI Tags New Apps Before Anyone Installs Them",
       
