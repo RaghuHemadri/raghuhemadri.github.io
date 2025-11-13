@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ml-sys-design-youtube-recommendation-system",
+        },{id: "post-ml-sys-design-decoding-the-app-store-recommendation-system",
+      
+        title: "ML Sys Design: Decoding the App Store Recommendation System",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/app-store-reco/";
+        
+      },
+    },{id: "post-ml-sys-design-youtube-recommendation-system",
       
         title: "ML Sys Design: YouTube Recommendation System",
       
