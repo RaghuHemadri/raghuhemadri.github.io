@@ -44,7 +44,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ml-sys-design-building-the-ultimate-privacy-first-multi-modal-retrieval-engine",
+        },{id: "post-ml-sys-design-how-federated-learning-protects-your-privacy-while-improving-results",
+      
+        title: "ML Sys Design: How Federated Learning Protects Your Privacy While Improving Results",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/mlsys-fed-learning/";
+        
+      },
+    },{id: "post-ml-sys-design-how-hybrid-ai-delivers-speed-and-privacy",
+      
+        title: "ML Sys Design: How Hybrid AI Delivers Speed and Privacy",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/ml-sys-safari-ai/";
+        
+      },
+    },{id: "post-ml-sys-design-building-the-ultimate-privacy-first-multi-modal-retrieval-engine",
       
         title: "ML Sys Design: Building the Ultimate Privacy-First, Multi-Modal Retrieval Engine",
       
