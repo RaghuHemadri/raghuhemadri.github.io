@@ -44,18 +44,7 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ml-sys-design-how-federated-learning-protects-your-privacy-while-improving-results",
-      
-        title: "ML Sys Design: How Federated Learning Protects Your Privacy While Improving Results",
-      
-      description: "",
-      section: "Posts",
-      handler: () => {
-        
-          window.location.href = "/blog/2025/mlsys-fed-learning/";
-        
-      },
-    },{id: "post-ml-sys-design-how-hybrid-ai-delivers-speed-and-privacy",
+        },{id: "post-ml-sys-design-how-hybrid-ai-delivers-speed-and-privacy",
       
         title: "ML Sys Design: How Hybrid AI Delivers Speed and Privacy",
       
@@ -75,6 +64,17 @@ ninja.data = [{
       handler: () => {
         
           window.location.href = "/blog/2025/ml-sys-privacy-ret/";
+        
+      },
+    },{id: "post-ml-sys-design-how-federated-learning-protects-your-privacy-while-improving-results",
+      
+        title: "ML Sys Design: How Federated Learning Protects Your Privacy While Improving Results",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/ml-sys-fed-learning/";
         
       },
     },{id: "post-ml-sys-design-how-ai-tags-new-apps-before-anyone-installs-them",
