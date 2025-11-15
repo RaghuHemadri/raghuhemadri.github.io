@@ -121,9 +121,9 @@ ninja.data = [{
           window.location.href = "/blog/2025/ml-sys-design/";
         
       },
-    },{id: "post-llm-cheatsheet",
+    },{id: "post-llm-cheatsheet-fundamentals-and-implementation",
       
-        title: "Llm Cheatsheet",
+        title: "LLM Cheatsheet: Fundamentals and Implementation",
       
       description: "",
       section: "Posts",
