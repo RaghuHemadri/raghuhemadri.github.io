@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "LLM Cheatsheet: Fundamentals and Implementation"
+title: "LLM Interview: Fundamentals and Implementation"
 date: 2025-11-08 09:00:00
 description: 
 tags: genai generative-ai ml
@@ -12,6 +12,54 @@ images:
   spotlight: true
   venobox: true
 ---
+
+# Contents
+- [LLM Architectures, Training and Inference in PyTorch](#llm-architectures-training-and-inference-in-pytorch)
+- [1 LLM Tokenizers: concept + code](#1-llm-tokenizers-concept--code)
+- [2 Self-attention: concept + code](#2-self-attention-concept--code)
+- [3 Transformer: concept + code](#3-transformer-concept--code)
+- [4 LLM Decoder (response sampling): the main methods](#4-llm-decoder-response-sampling-the-main-methods)
+- [5 KV Cache: concept + code](#5-kv-cache-concept--code)
+- [6 Positional embeddings: concept (math-first, no code)](#6-positional-embeddings-concept-math-first-no-code)
+- [7 PEFT (Parameter-Efficient Fine-Tuning): concept + code](#7-peft-parameter-efficient-fine-tuning-concept--code)
+- [8 Quantization: concept + code](#8-quantization-concept--code)
+- [9 RLHF \& DPO: concept + code](#9-rlhf--dpo-concept--code)
+- [10 GRPO — Group Relative (Policy) Optimization](#10-grpo--group-relative-policy-optimization)
+- [11 Speculative decoding (mechanics, math, guarantees)](#11-speculative-decoding-mechanics-math-guarantees)
+- [12 Word embeddings (with tiny PyTorch snippets)](#12-word-embeddings-with-tiny-pytorch-snippets)
+- [13 LLM Context Length Extension (how to make models read longer)](#13-llm-context-length-extension-how-to-make-models-read-longer)
+- [14 FlashAttention (and a tiny PyTorch sketch)](#14-flashattention-and-a-tiny-pytorch-sketch)
+- [15 Multi-Query Attention (MQA) + tiny PyTorch](#15-multi-query-attention-mqa--tiny-pytorch)
+- [16 Rotary Positional Embedding (RoPE) + tiny PyTorch](#16-rotary-positional-embedding-rope--tiny-pytorch)
+- [17 Information Retrieval (IR) fundamentals](#17-information-retrieval-ir-fundamentals)
+- [18 Indexing (IR) + tiny PyTorch](#18-indexing-ir--tiny-pytorch)
+- [19 Query Understanding (IR)](#19-query-understanding-ir)
+- [20 Ranking \& Re-Ranking (IR)](#20-ranking--re-ranking-ir)
+- [21 A/B experimentation \& testing in **LLMs**](#21-ab-experimentation--testing-in-llms)
+- [22 LLM training regimes (the landscape)](#22-llm-training-regimes-the-landscape)
+- [23 Data preprocessing for LLMs (what actually matters)](#23-data-preprocessing-for-llms-what-actually-matters)
+- [24 Losses you’ll actually use (and why)](#24-losses-youll-actually-use-and-why)
+- [25 Evaluation metrics (make numbers honest)](#25-evaluation-metrics-make-numbers-honest)
+- [26 Putting it together (a minimal training recipe)](#26-putting-it-together-a-minimal-training-recipe)
+- [27 Distributed Training for ML/LLMs](#27-distributed-training-for-mlllms)
+- [28 ML/LLM **Inference Optimizations**](#28-mlllm-inference-optimizations)
+
+
+---
+
+# LLM Architectures, Training and Inference in PyTorch
+
+Repository: [LLM Architectures, Training and Inference in PyTorch](https://github.com/RaghuHemadri/LLMs-From-Scratch.git)
+
+Quick preview:
+- A from-scratch PyTorch walk-through covering tokenizers, attention, Transformer blocks, training recipes (pretrain / SFT / PEFT), decoding strategies, KV cache patterns, RoPE/positional schemes, and inference optimizations.
+- Includes didactic toy implementations, practical tips, and runnable snippets for experiments.
+- Good entry points: README, notebooks / demos, and minimal model examples for hands-on testing.
+
+Notes:
+- Intended as an educational, implementation-focused companion to the markdown cheatsheet.
+- Use the repo examples for experiment scaffolding and adapt tokenizer/model names when switching to HF models or quantized runtimes.
+- Check license/usage in the repo before reuse.
 
 # 1 LLM Tokenizers: concept + code
 
@@ -1357,8 +1405,8 @@ $$
 
 ---
 
-> **Quick check (one-liner): **
-Why does **per-channel** weight quantization usually outperform **per-tensor** for linear layers?
+> **Quick check (one-liner):**
+> Why does **per-channel** weight quantization usually outperform **per-tensor** for linear layers?
 
 ---
 
@@ -1384,8 +1432,8 @@ $$
 **Loss (cross-entropy):**
 
 $$
-\mathcal{L}_{\text{RM}}(\phi)
-= -\mathbb{E}_{x, (y^+,y^-)} \big[\log \sigma(r_\phi(x,y^+)-r_\phi(x,y^-))\big].
+\mathcal{L}*{\text{RM}}(\phi)
+= -\mathbb{E}*{x, (y^+,y^-)} \big[\log \sigma(r_\phi(x,y^+)-r_\phi(x,y^-))\big].
 $$
 
 At inference, the reward is used to score new samples.
@@ -1411,7 +1459,7 @@ class RewardModel(nn.Module):
 
 def pairwise_rm_loss(r_pos, r_neg):
     return F.binary_cross_entropy_with_logits(r_pos - r_neg, torch.ones_like(r_pos))
-````
+```
 
 ---
 
@@ -1446,14 +1494,14 @@ $$
 -\mathbb{E}\Big[
 \min\big(\rho_t A_t,\ \mathrm{clip}(\rho_t, 1-\epsilon, 1+\epsilon) A_t\big)
 
-* c_v (V_\psi - R_t)^2 + c_e \mathsf{H}[\pi_\theta(\cdot|s_t)]
+* c_v (V_\psi(s_t) - R_t)^2 + c_e \mathsf{H}[\pi_\theta(\cdot|s_t)]
   \Big],
   $$
 
 and we **add a KL penalty** to $\pi_{\text{ref}}$ either:
 
 * explicitly: $\mathcal{L} + \beta,\mathrm{KL}(\pi_\theta | \pi_{\text{ref}})$, or
-* implicitly in the reward: $r^\text{KL}*t = r_t - \beta \log \frac{\pi*\theta(y_t|s_t)}{\pi_{\text{ref}}(y_t|s_t)}$.
+* implicitly in the reward: $r_t^{\text{KL}} = r_t - \beta \log \frac{\pi_\theta(y_t|s_t)}{\pi_{\text{ref}}(y_t|s_t)}$.
 
 Advantage via GAE:
 
@@ -1505,7 +1553,7 @@ $$
 The optimal $\pi^\star$ has **Boltzmann** form:
 
 $$
-\pi^\star(y|x) \propto \pi_{\text{ref}}(y|x), e^{\beta, r(x,y)}.
+\pi^\star(y|x) \propto \pi_{\text{ref}}(y|x), e^{\beta r(x,y)}.
 $$
 
 With **pairwise** Bradley–Terry preference ($y^+ \succ y^-$ iff $r(x,y^+)>r(x,y^-)$), eliminate $r$ to get a discriminative objective in terms of **log-ratios**:
@@ -1519,7 +1567,7 @@ $$
 \underbrace{\log\pi_\theta(y^+|x)-\log\pi_\theta(y^-|x)}_{\text{policy preference}}
 -----------------------------------------------------------------------------------
 
-\underbrace{\log\pi_{\text{ref}}(y^+|x)+\log\pi_{\text{ref}}(y^-|x)}_{\text{reference correction}}
+\underbrace{\log\pi_{\text{ref}}(y^+|x)-\log\pi_{\text{ref}}(y^-|x)}_{\text{reference correction}}
 \big]\Big)
 \Big].
 $$
@@ -1584,10 +1632,9 @@ for batch in loader:
 ---
 
 > **Quick check (1–2 lines)**
-Why does DPO include the **reference log-prob terms** $\log\pi_{\text{ref}}(y^\pm|x)$ inside the sigmoid argument, and what would likely happen if you dropped them?
+> Why does DPO include the **reference log-prob terms** $\log\pi_{\text{ref}}(y^\pm|x)$ inside the sigmoid argument, and what would likely happen if you dropped them?
 
 ---
-
 
 # 10 GRPO — Group Relative (Policy) Optimization
 
@@ -1595,7 +1642,7 @@ Why does DPO include the **reference log-prob terms** $\log\pi_{\text{ref}}(y^\p
 
 GRPO optimizes a policy **without** a value function or explicit reward model by using **grouped rollouts per prompt** and a **relative baseline** inside the group. It’s essentially REINFORCE with a strong control variate and PPO-style KL control.
 
-Given a prompt $x$, sample a *group* $\{y^{(i)}\}_{i=1}^M \sim \pi_\theta(\cdot\mid x)$. Score each with a scalar reward $r^{(i)} = r(x,y^{(i)})$ (e.g., pass@k for code, unit tests, formatting/safety checks, length heuristics, or lightweight preference/rank).
+Given a prompt $x$, sample a *group* ${y^{(i)}}*{i=1}^M \sim \pi*\theta(\cdot\mid x)$. Score each with a scalar reward $r^{(i)} = r(x,y^{(i)})$ (e.g., pass@k for code, unit tests, formatting/safety checks, length heuristics, or lightweight preference/rank).
 
 ### Relative advantage inside the group
 
@@ -1611,16 +1658,17 @@ This yields **zero-mean**, scale-normalized advantages *per prompt*, removing th
 
 ### Objective with KL control (PPO-lite)
 
-Let $\rho^{(i)} = \exp\!\big(\log\pi_\theta(y^{(i)}\mid x)-\log\pi_{\theta_\text{old}}(y^{(i)}\mid x)\big)$ be the sequence-level ratio (or token-sum). A GRPO step minimizes
+Let $\rho^{(i)} = \exp!\big(\log\pi_\theta(y^{(i)}\mid x)-\log\pi_{\theta_\text{old}}(y^{(i)}\mid x)\big)$ be the sequence-level ratio (or token-sum). A GRPO step minimizes
 
 $$
-\mathcal{L}_{\text{GRPO}}(\theta)=
--\mathbb{E}_{x}\left[\frac{1}{M}\sum_{i=1}^M
+\mathcal{L}*{\text{GRPO}}(\theta)=
+-\mathbb{E}*{x}\left[\frac{1}{M}\sum_{i=1}^M
 \Big(
 \min\big(\rho^{(i)} A^{(i)},\ \mathrm{clip}(\rho^{(i)},1-\epsilon,1+\epsilon)A^{(i)}\big)
 \Big)\right]
-+ \beta\,\mathrm{KL}\!\left(\pi_\theta(\cdot|x)\,\|\,\pi_{\text{ref}}(\cdot|x)\right).
-$$
+
+* \beta,\mathrm{KL}!\left(\pi_\theta(\cdot|x),|,\pi_{\text{ref}}(\cdot|x)\right).
+  $$
 
 Notes:
 
@@ -1637,7 +1685,7 @@ Notes:
 
 * **Outcome-only:** pass/fail tests, exact-match, regex/JSON validity, safety rule satisfaction.
 * **Shaped:** add brevity/format bonuses, tool-use success, or light-weight model-based scores.
-* **Rank-from-rules:** rank the $M$ samples with deterministic criteria and map ranks to scores (e.g., $\{+1,0,-1\}$).
+* **Rank-from-rules:** rank the $M$ samples with deterministic criteria and map ranks to scores (e.g., ${+1,0,-1}$).
 
 ### Minimal loop (conceptual)
 
@@ -1670,8 +1718,8 @@ Notes:
 
 ## Math sidebar: variance reduction
 
-REINFORCE gradient for one sample:  
-$\nabla_\theta \log \pi_\theta(y|x)\,(r-\underbrace{b(x)}_{\text{baseline}})$.
+REINFORCE gradient for one sample:
+$\nabla_\theta \log \pi_\theta(y|x),(r-\underbrace{b(x)}_{\text{baseline}})$.
 
 Choosing $b(x)=\mathbb{E}[r|x]$ minimizes variance. GRPO’s $\bar r$ is an *unbiased* estimator of that baseline using the group, and dividing by $\sigma_r$ standardizes the scale across prompts, taming the PPO ratio dynamics.
 
@@ -1679,7 +1727,7 @@ Choosing $b(x)=\mathbb{E}[r|x]$ minimizes variance. GRPO’s $\bar r$ is an *unb
 
 ## Pitfalls & tips
 
-* **Group size $M$:** too small → high variance; too large → expensive. Common: $M=4\!\sim\!8$.
+* **Group size $M$:** too small → high variance; too large → expensive. Common: $M=4!\sim!8$.
 * **Reward saturation:** if most samples pass (or fail), add *soft* shaping terms or widen tests to keep variance.
 * **KL schedule:** start with higher $\beta$ to anchor style, then anneal.
 * **Clipping $\epsilon$:** 0.1–0.2 typical; larger when advantages are well-normalized.
@@ -1688,7 +1736,7 @@ Choosing $b(x)=\mathbb{E}[r|x]$ minimizes variance. GRPO’s $\bar r$ is an *unb
 ---
 
 > **Quick check (your turn, one line):**
-What’s the main **statistical benefit** of subtracting the **group mean reward** $\bar r$ in GRPO before applying PPO clipping and KL?
+> What’s the main **statistical benefit** of subtracting the **group mean reward** $\bar r$ in GRPO before applying PPO clipping and KL?
 
 ---
 
@@ -1870,5 +1918,2126 @@ So increase $m$ until the **verification cost grows** faster (KV, bandwidth); pi
 
 > **Quick check (your turn, one line):**
 If you increase the block size $m$ but your acceptance rate $\alpha$ drops, what *measurable* quantity should you track to decide whether the change actually improved throughput?
+
+---
+
+# 12 Word embeddings (with tiny PyTorch snippets)
+
+## What they are (and why)
+
+We map each token $w$ in a vocabulary of size $V$ to a vector $e_w \in \mathbb{R}^d$. Stack all vectors as rows of a matrix
+$$
+E \in \mathbb{R}^{V \times d}, \quad e_w = E[w,:].
+$$
+This turns discrete symbols into geometry, where dot products and angles carry meaning. Cosine similarity
+$$
+\cos(\theta)=\frac{e_u^\top e_v}{|e_u||e_v|}
+$$
+lets us talk about “closeness” of words.
+
+In most modern models, $E$ is just a learned parameter table—the first layer of the network. It’s optimized by backprop from whatever loss you use (LM loss, contrastive loss, etc.). “Distributional semantics” emerges: words that appear in similar contexts get similar vectors.
+
+## A minimal training view
+
+Suppose we try to predict a context token $c$ from a center token $w$ (a toy skip-gram). Let $E$ be the input embeddings and $U \in \mathbb{R}^{V\times d}$ be “output” embeddings. The model score is
+$$
+s(c \mid w) = U_c^\top E_w,
+$$
+and the probability is softmax over all $c$:
+$$
+p(c\mid w) = \frac{\exp(U_c^\top E_w)}{\sum_{c'} \exp(U_{c'}^\top E_w)}.
+$$
+The loss for a training pair $(w,c)$ is $-\log p(c\mid w)$. Gradient pushes $E_w$ toward $U_c$ and away from other $U_{c'}$.
+
+In large corpora we often use negative sampling instead of full softmax: maximize  
+$$\log \sigma(U_c^\top E_w) + \sum_{j=1}^k \log \sigma(-U_{n_j}^\top E_w).$$
+
+## Minimal PyTorch: lookup + one training step
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+V, d = 10_000, 128
+E  = nn.Embedding(V, d)      # input embeddings
+U  = nn.Embedding(V, d)      # output embeddings (for skip-gram-like training)
+opt = torch.optim.Adam(list(E.parameters()) + list(U.parameters()), lr=1e-3)
+
+# toy batch of center/context word ids
+center = torch.tensor([12, 35, 999])          # [B]
+context = torch.tensor([77,  5,  42])         # [B]
+
+e = E(center)                 # [B, d]
+u = U(context)                # [B, d]
+scores = e @ U.weight.T       # [B, V] (naive full softmax; fine for tiny V)
+loss = F.cross_entropy(scores, context)
+opt.zero_grad()
+loss.backward()
+opt.step()
+````
+
+## Minimal cosine-similarity search
+
+```python
+# get top-5 neighbors for token t by cosine similarity
+def topk_neighbors(t, k=5):
+    W = E.weight / E.weight.norm(dim=1, keepdim=True)  # [V, d], L2-normalized
+    v = W[t]                                           # [d]
+    sims = (W @ v)                                     # [V]
+    vals, idx = sims.topk(k+1)                         # +1 to skip itself
+    return [(int(i), float(s)) for s, i in zip(vals[1:], idx[1:])]
+
+print(topk_neighbors(12))
+```
+
+## Practical notes (quick, but meaningful)
+
+* **Tokenization matters.** Subword tokenizers (BPE/WordPiece/Unigram) reduce OOV and let rare words share pieces; embeddings attach to subwords.
+* **Regularization.** Norm clipping or weight decay can prevent runaway norms; sometimes we L2-normalize embeddings to focus on angles.
+* **Tying weights.** In LMs, tie the input and output embeddings ($E \equiv U$) to save params and often help generalization.
+* **Bias in geometry.** Embeddings reflect corpus statistics; measure and mitigate (e.g., projection away from bias subspaces) if needed.
+
+---
+
+> **Quick check (your turn):**
+When training with the softmax loss above, what geometric pressure is applied to $E_w$ relative to $U_c$ and the other $U_{c'}$? Say it in one sentence.
+
+---
+
+# 13 LLM Context Length Extension (how to make models read longer)
+
+## The core tension
+
+Transformers learn a *positional geometry* during training. If you push them to longer sequences than they saw, the geometry (angles/frequencies of positions) drifts, so attention scores become miscalibrated. Extending context is about **keeping the learned geometry stable** while letting absolute positions grow.
+
+We’ll focus on three practical levers:
+
+1. **Scale positions at inference** (no extra training)
+2. **Adjust the positional basis** (slightly change RoPE frequencies)
+3. **Continue pretraining on long sequences** (teach the model the new regime)
+
+---
+
+## A. Position Interpolation (PI): compress positions to what the model knows
+
+With Rotary Positional Embeddings (RoPE), each head/channel pair gets a frequency $ \omega_m $ and position $ p $ injects a rotation $ R(\omega_m p) $. If training max length is $ L_{\text{train}} $ and you want $ L_{\text{new}} $, define a scale
+
+$$
+s = \frac{L_{\text{train}}}{L_{\text{new}}} \in (0,1).
+$$
+
+Then **pretend** position $ p $ is $ p' = s p $ whenever you apply RoPE. You keep the relative phases similar to the training regime, so the attention kernel stays familiar.
+
+* Upside: zero-shot, no retraining.
+* Downside: very long ranges compress a lot; fine-grained local distinctions can blur.
+
+### Tiny PyTorch (drop-in scale for RoPE)
+
+```python
+import torch
+
+def rope_rotate(x, cos, sin):
+    # x: [B, H, T, D]; cos/sin: [T, D/2]
+    x1, x2 = x[..., ::2], x[..., 1::2]
+    cos = cos.unsqueeze(0).unsqueeze(0)  # [1,1,T,D/2]
+    sin = sin.unsqueeze(0).unsqueeze(0)
+    y1 = x1 * cos - x2 * sin
+    y2 = x1 * sin + x2 * cos
+    y = torch.stack((y1, y2), dim=-1).flatten(-2)
+    return y
+
+def rope_cache(T, D, base=10_000.0, scale=1.0, device="cpu"):
+    # scale<1 compresses positions: use p' = scale * p
+    pos = torch.arange(T, device=device) * scale           # [T]
+    half = D // 2
+    freqs = base ** (-torch.arange(0, half, device=device) / half)  # [D/2]
+    angles = pos[:, None] * freqs[None, :]                 # [T, D/2]
+    return torch.cos(angles), torch.sin(angles)
+````
+
+Use:
+
+```python
+cos, sin = rope_cache(T=8192, D=head_dim, base=10_000.0, scale=4096/8192)
+q = rope_rotate(q, cos, sin)
+k = rope_rotate(k, cos, sin)
+```
+
+---
+
+## B. Frequency (base) adjustment: keep local detail while growing range
+
+RoPE uses a geometric bank of frequencies $ \omega_m = \text{base}^{-m/(D/2)} $. Larger **base** → **slower** frequencies → can represent longer periods. Instead of compressing positions, you can **lower frequencies** by increasing the base (or equivalently, multiply the angles by a factor $ < 1 $). Intuition: preserve local angles while making rotations change more slowly over distance.
+
+A simple, safe recipe:
+
+* Choose a target scale $ s = L_{\text{train}}/L_{\text{new}} $.
+* **Either** scale positions ($ p' = s p $, as above), **or** scale angles ($ \theta' = s\theta $). Scaling angles is equivalent to increasing the base so that $ \omega'_m = s \omega_m $.
+
+Pros/cons mirror PI: better large-range behavior with less local compression if you carefully tune $ s $; still zero-shot and simple.
+
+> Practical tip: Combine *light* angle scaling with *light* position scaling to trade off local fidelity and global reach.
+
+---
+
+## C. Continued pretraining on long sequences (“teach the model the new world”)
+
+Zero-shot tricks plateau. The robust path is: resume training with long sequences and a **length curriculum** (e.g., 2k → 8k → 32k). Two key details:
+
+1. **Mixture of lengths.** Keep a fraction of short sequences so the model doesn’t forget fine local structure.
+2. **Document packing with natural boundaries.** Long batches should maintain document coherence (avoid random concatenations that create “fake” long-range dependencies).
+
+Loss stays standard LM cross-entropy:
+
+$$
+\mathcal{L} = -\sum_{t} \log p_\theta(x_t \mid x_{<t}),
+$$
+
+but the **data loader** ensures long contexts are frequent enough to shift the inductive bias.
+
+### Microscopic loader sketch
+
+```python
+# Pseudocode: sample length buckets and pack without crossing doc boundaries
+def sample_batch(docs, target_len):
+    batch = []
+    while len(batch_tokens(batch)) < B * target_len:
+        doc = pick_doc_with_len>=target_len()
+        batch.append(doc[:target_len])
+    return pad_stack(batch)
+```
+
+---
+
+## D. Architectural helps (to go *really* long)
+
+* **Sliding-window (local) attention**: each token attends only to a band of width $ W $; complexity $ O(TW) $. Add **dilated**/**global** tokens to keep long-distance routes.
+* **Attention sinks / global anchors**: dedicate a few positions with global receptive field; others attend locally plus these sinks, creating sparse long-range highways.
+* **Segmented caching**: keep KV states for segments; bridge with sparse cross-segment attention.
+
+### Minimal sliding mask
+
+```python
+def band_mask(T, W, device="cpu"):
+    i = torch.arange(T, device=device)[:, None]
+    j = torch.arange(T, device=device)[None, :]
+    M = (j <= i) & (j >= i - W)  # causal + window W
+    return (~M).float().masked_fill(~M, float('-inf'))  # add to attention logits
+```
+
+---
+
+## E. Sanity checks (you *must* measure)
+
+* **Local faithfulness**: perplexity on short sequences should not degrade.
+* **Long-range retrieval**: needle-in-a-haystack/Passkey tasks at multiple offsets (e.g., positions 1k, 8k, 32k).
+* **Temporal drift**: plot cosine similarity of RoPE phases before/after scaling for the frequency bands—large band distortions predict failures.
+
+---
+
+## Mental model (one-liner)
+
+RoPE gives each channel a rotating phasor; long-context tricks keep the *relative rotation* between any two positions close to what the model learned, either by **compressing positions**, **slowing rotations**, or **retraining** to accept new rotations.
+
+---
+
+> **Your turn (quick check):**
+If you scale positions by $ s = L_{\text{train}}/L_{\text{new}} $, what happens to the *relative* angle between two positions $ p $ and $ q $ under RoPE, and why does that help zero-shot extrapolation?
+
+---
+
+# 14 FlashAttention (and a tiny PyTorch sketch)
+
+## What problem it solves
+
+Vanilla attention forms $A=\mathrm{softmax}(QK^\top/\sqrt{d})$ then multiplies $(AV)$. Materializing $A\in\mathbb{R}^{T\times T}$ costs $O(T^2)$ memory and bandwidth. **FlashAttention** avoids ever forming $A$. It streams over blocks of keys/values, doing the softmax **online** with exact math (not an approximation), maximizing use of on-chip SRAM and minimizing HBM traffic.
+
+## The key math trick: online softmax
+
+For a query row $i$, let logits over a block $B$ be $z_j = (q_i^\top k_j)/\sqrt{d}$.
+Maintain per-row running statistics across blocks:
+
+* running max $m = \max_j z_j$
+* running normalizer $l = \sum_j e^{z_j - m}$
+* running weighted sum $u = \sum_j e^{z_j - m} v_j$
+
+When a new block arrives with block-max $m_b$ and block-sum $l_b=\sum_{j\in B} e^{z_j-m_b}$ and block-weighted $u_b=\sum_{j\in B} e^{z_j-m_b} v_j$,  
+update **exactly**:
+$$
+m'=\max(m, m_b),\quad
+l' = e^{m - m'}\,l + e^{m_b - m'}\,l_b,\quad
+u' = e^{m - m'}\,u + e^{m_b - m'}\,u_b.
+$$
+After all blocks, the output row is $o_i = u'/l'$. This equals the full softmax result but never stores $T\times T$.
+
+Causal masks are handled by restricting each block to keys $j\le i$.
+
+## Minimal PyTorch: use fused op (best) or a tiny streamed sketch
+
+### (A) Use PyTorch’s fused attention (fastest, minimal)
+
+```python
+import torch
+import torch.nn.functional as F
+
+B, H, T, D = 2, 8, 4096, 64
+q = torch.randn(B, H, T, D, device="cuda")
+k = torch.randn(B, H, T, D, device="cuda")
+v = torch.randn(B, H, T, D, device="cuda")
+
+# PyTorch will dispatch to a FlashAttention-style kernel on supported GPUs
+o = F.scaled_dot_product_attention(q, k, v, attn_mask=None, is_causal=True)  # [B,H,T,D]
+````
+
+### (B) Educational micro-stream (CPU, tiny T) — shows the online softmax idea
+
+```python
+import torch
+def flashlike_row(q_i, K, V, block=128, causal_end=None):
+    # q_i: [D], K,V: [T,D]
+    T = K.size(0)
+    if causal_end is None: causal_end = T
+    m = torch.tensor(-float('inf'))
+    l = torch.tensor(0.0)
+    u = torch.zeros_like(V[0])
+    for s in range(0, causal_end, block):
+        e = min(causal_end, s+block)
+        z = (K[s:e] @ q_i) / (q_i.numel()**0.5)              # [e-s]
+        m_b = z.max()
+        l_b = torch.exp(z - m_b).sum()
+        u_b = (torch.exp(z - m_b).unsqueeze(1) * V[s:e]).sum(0)
+        m_new = torch.max(m, m_b)
+        l = torch.exp(m - m_new)*l + torch.exp(m_b - m_new)*l_b
+        u = torch.exp(m - m_new)*u + torch.exp(m_b - m_new)*u_b
+        m = m_new
+    return u / l
+
+# tiny demo
+T, D = 256, 32
+q = torch.randn(T, D)
+k = torch.randn(T, D)
+v = torch.randn(T, D)
+i = 200
+out_i = flashlike_row(q[i], k, v, block=64, causal_end=i+1)  # causal
+```
+
+## Why it’s faster
+
+* **I/O awareness:** fewer reads/writes to HBM; work is organized in tiles that fit SRAM.
+* **Exactness:** it’s not a low-rank approximation; numerically identical (modulo fp errors) to full softmax attention.
+* **Kernel fusion:** softmax, scaling, dropout, and matmuls are fused to reduce memory traffic.
+
+## Shapes & complexity
+
+Time remains $O(T^2 d)$ like standard attention, but **memory traffic** drops from $O(T^2)$ to $O(Td)$, which is the bottleneck on GPUs—hence big speedups and the ability to run long sequences.
+
+---
+
+> **Quick check (your turn):**
+In the online softmax update, why do we keep a running **max** $m$ and rescale old/new sums by $e^{m - m'}$ and $e^{m_b - m'}$? State the reason in one sentence.
+
+---
+
+# 15 Multi-Query Attention (MQA) + tiny PyTorch
+
+## Why MQA exists
+
+At **decode time**, we cache keys/values for all past tokens. In standard multi-head attention (MHA) we have $H$ separate $(K,V)$ sets—so KV cache scales like $O(H,T,d_h)$. **MQA** keeps **per-head queries** but uses a **single shared** $(K,V)$ (or a few groups → **GQA**). Cache then scales like $O(T,d_k)$ (or $O(G,T,d_k)$ for $G$ groups), slashing memory and bandwidth.
+
+## The math in one place
+
+Given input $X\in\mathbb{R}^{T\times d_{\text{model}}}$:
+
+* Queries remain per-head:
+  $$
+  Q_h = X W^Q_h,\quad Q_h\in\mathbb{R}^{T\times d_h},\quad h=1..H.
+  $$
+* **Shared** keys/values:
+  $$
+  K = X W^K,\quad V = X W^V,\quad K,V\in\mathbb{R}^{T\times d_h}.
+  $$
+  Attention per head:
+  $$
+  \text{Attn}_h=\mathrm{softmax}\!\left(\frac{Q_h K^\top}{\sqrt{d_h}} + M\right)V.
+  $$
+  Then concatenate $[\text{Attn}_1|\cdots|\text{Attn}_H]W^O$.
+
+GQA is the middle ground: partition heads into $G$ groups; each group shares its own $(K,V)$.
+
+## What changes (and what might you lose)
+
+* **Big win:** KV cache and memory traffic shrink by $\approx H\times$ (MQA) or $\approx H/G$ (GQA). This is crucial for long contexts and fast serving.
+* **Trade-off:** With shared $(K,V)$, heads can’t specialize via different key/value subspaces. In practice, GQA (e.g., 8–16 groups) often preserves quality while still saving a lot.
+
+## KV cache scale (decode)
+
+* MHA: cache $\approx 2 \cdot T \cdot H \cdot d_h$ floats (keys + values).
+* MQA: cache $\approx 2 \cdot T \cdot d_h$ (independent of $H$).
+* GQA: $\approx 2 \cdot T \cdot G \cdot d_h$.
+
+## Minimal PyTorch module (MQA block only)
+
+```python
+import torch, torch.nn as nn
+import torch.nn.functional as F
+
+class MultiQueryAttention(nn.Module):
+    def __init__(self, d_model=512, n_heads=8):
+        super().__init__()
+        self.d = d_model
+        self.h = n_heads
+        self.dh = d_model // n_heads
+
+        # Per-head Q: implement as single linear then reshape
+        self.Wq = nn.Linear(d_model, d_model, bias=False)
+        # Shared K,V (single head dims)
+        self.Wk = nn.Linear(d_model, self.dh, bias=False)
+        self.Wv = nn.Linear(d_model, self.dh, bias=False)
+        self.Wo = nn.Linear(d_model, d_model, bias=False)
+
+    def forward(self, x, attn_mask=None, kv_cache=None):
+        # x: [B,T,d_model]
+        B, T, _ = x.shape
+        q = self.Wq(x).view(B, T, self.h, self.dh).transpose(1, 2)   # [B,H,T,Dh]
+        # Shared K,V
+        k = self.Wk(x)                                               # [B,T,Dh]
+        v = self.Wv(x)                                               # [B,T,Dh]
+
+        # For decoding with cache:
+        if kv_cache is not None:
+            # kv_cache: dict with 'k','v' of shape [B, Tc, Dh]
+            k = torch.cat([kv_cache['k'], k], dim=1)
+            v = torch.cat([kv_cache['v'], v], dim=1)
+            kv_cache['k'], kv_cache['v'] = k, v  # updated in-place
+
+        # Expand shared K,V across heads *without* copying data (broadcast)
+        k_exp = k.unsqueeze(1)                                       # [B,1, T',Dh]
+        v_exp = v.unsqueeze(1)                                       # [B,1, T',Dh]
+
+        # Scaled dot-product attention (causal mask optional)
+        # scores: [B,H,T,T'] using broadcasted K
+        scores = torch.matmul(q, k_exp.transpose(-2, -1)) / (self.dh ** 0.5)
+        if attn_mask is not None:
+            scores = scores + attn_mask  # e.g., causal: -inf above diagonal
+        p = F.softmax(scores, dim=-1)
+        o = torch.matmul(p, v_exp)                                   # [B,H,T,Dh]
+
+        o = o.transpose(1, 2).contiguous().view(B, T, self.d)        # [B,T,d_model]
+        return self.Wo(o), {'k': k, 'v': v}
+````
+
+**Notes**
+
+* The broadcasted $(K,V)$ avoid per-head duplication.
+* To make it **GQA**, create $G$ sets of $(W^K_g, W^V_g)$, assign $H/G$ heads per group, and broadcast within each group.
+
+## Where MQA shines
+
+* **Throughput & latency at inference** (fewer bytes moved for KV).
+* **Long context** (KV cache fits memory).
+* **Speculative/streaming decoding** benefits compound due to less KV traffic.
+
+## When to prefer GQA
+
+If you observe small quality drops with full MQA on difficult tasks (e.g., multi-hop reasoning), try $G\in{4,8,16}$. It often recovers quality while keeping big savings.
+
+---
+
+> **Quick check (your turn):**
+Suppose $H=16$, $d_h=64$, context length $T$. Roughly how many floats are in the KV cache for MHA vs. MQA vs. GQA with $G=8$? Give the expressions (ignore batch/blocks), then say in a phrase which saves the most and why.
+
+---
+
+# 16 Rotary Positional Embedding (RoPE) + tiny PyTorch
+
+## Idea in one line
+
+Instead of adding a position vector, **rotate** each query/key channel pair by a position-dependent angle. This bakes **relative** offsets into the dot product, so attention inherently knows “how far apart” two tokens are.
+
+## The math (compact but clear)
+
+Split each head vector into even–odd pairs: for $x\in\mathbb{R}^{d}$,
+$$
+x = \big[(x^{(1)}_1,x^{(2)}_1),\dots,(x^{(1)}_{d/2},x^{(2)}_{d/2})\big].
+$$
+
+For position $p$ and frequency bank $\{\omega_m\}_{m=1}^{d/2}$,  
+rotate each 2D pair by angle $\theta_m(p)=\omega_m p$:
+$$
+\mathrm{RoPE}_p(x)_m =
+\begin{bmatrix}
+\cos\theta_m(p) & -\sin\theta_m(p)\\
+\sin\theta_m(p) & \ \cos\theta_m(p)
+\end{bmatrix}
+\begin{bmatrix}
+x^{(1)}_m\\ x^{(2)}_m
+\end{bmatrix}.
+$$
+
+Apply to **Q and K**:
+$$
+\tilde q_p=\mathrm{RoPE}_p(q),\quad \tilde k_t=\mathrm{RoPE}_t(k).
+$$
+
+Key property (why it encodes relative positions):
+$$
+\tilde q_p^\top \tilde k_t
+= q^\top R(\theta(p))^\top R(\theta(t))\,k
+= q^\top R\big(\theta(t)-\theta(p)\big)k,
+$$
+so scores depend on **$(t-p)$** (relative), not absolute positions. (Here $R$ is the block-diagonal rotation.)
+
+Frequency schedule (geometric):
+$$
+\omega_m = \text{base}^{-\frac{m-1}{d/2}},\quad \text{base}\approx 10{,}000.
+$$
+
+High-index pairs rotate slowly → capture long-range; low-index rotate fast → capture local detail.
+
+## Minimal PyTorch (drop-in for a head)
+
+```python
+import torch
+
+def rope_cache(T, Dh, base=10_000.0, device="cpu", scale=1.0):
+    # scale<1.0 can be used for context extension (position interpolation)
+    pos = torch.arange(T, device=device) * scale              # [T]
+    half = Dh // 2
+    freqs = base ** (-torch.arange(0, half, device=device) / half)  # [Dh/2]
+    angles = pos[:, None] * freqs[None, :]                    # [T, Dh/2]
+    return torch.cos(angles), torch.sin(angles)               # [T, Dh/2] each
+
+def apply_rope(x, cos, sin):
+    # x: [B, H, T, Dh]; cos/sin: [T, Dh/2]
+    x1, x2 = x[..., ::2], x[..., 1::2]                        # pair channels
+    cos = cos[None, None, ...]                                 # [1,1,T,Dh/2]
+    sin = sin[None, None, ...]
+    y1 = x1 * cos - x2 * sin
+    y2 = x1 * sin + x2 * cos
+    y = torch.stack((y1, y2), dim=-1).flatten(-2)             # interleave back
+    return y
+
+# usage inside attention
+# q,k: [B,H,T,Dh]
+cos, sin = rope_cache(T=q.size(2), Dh=q.size(-1), base=10_000.0)
+q = apply_rope(q, cos, sin)
+k = apply_rope(k, cos, sin)
+````
+
+## Practical notes that matter
+
+* **Q/K only.** Do not rotate $V$; the relative-position effect lives in $(qk^\top)$.
+* **Causal attention unchanged.** RoPE is orthogonal to masking; combine as usual.
+* **Context extension hooks.** To run beyond training length $L$, use `scale = L/L_new` in `rope_cache` (compress positions) or scale angles—both keep relative geometry stable for zero-shot extrapolation.
+* **Numerics.** FP16 works; BF16 preferred for very long sequences due to angle precision.
+
+## Intuition (narrative)
+
+Think of each even–odd channel as a tiny complex number. RoPE multiplies it by $e^{i\omega_m p}$. When Q at position $p$ meets K at position $t$, their phases subtract like $e^{i\omega_m (t-p)}$. The model can thus “feel” how far a key is from its query across multiple frequency bands, the way music hears both bass (slow rotations) and treble (fast rotations).
+
+---
+
+> **Quick check (your turn):**
+Why does applying the *same* rotation bank to Q and K yield relative-position awareness in the dot product, whereas adding positional vectors would mostly encode absolute positions?
+
+---
+
+# 17 Information Retrieval (IR) fundamentals
+
+## The retrieval loop (bird’s-eye)
+
+Query in → represent query & corpus → score each candidate → rank → evaluate. Most of IR is about *representations* and *scoring functions* that trade speed vs. relevance.
+
+---
+
+## Classic lexical IR (exact/weighted matches)
+
+### Bag-of-words weighting
+
+Let $tf_{t,d}$ be term $t$’s count in doc $d$, $df_t$ its document frequency, and $N$ corpus size.
+
+* **tf-idf (cosine):**
+  $$
+  w_{t,d} = (1+\log tf_{t,d})\cdot \log\frac{N}{df_t+1},\quad
+  \text{score}(q,d) = \frac{\sum_{t\in q} w_{t,q}w_{t,d}}{|w_q|\,|w_d|}.
+  $$
+
+* **BM25 (strong lexical baseline):**
+  $$
+  \mathrm{BM25}(q,d)=\sum_{t\in q} idf(t)\cdot
+  \frac{tf_{t,d}(k_1+1)}{tf_{t,d}+k_1\!\left(1-b+b\frac{|d|}{\text{avgdl}}\right)},
+  \quad
+  idf(t)=\log\frac{N-df_t+0.5}{df_t+0.5}.
+  $$
+  Typical $k_1\in[1.2,2.0]$, $b\in[0.6,0.8]$.
+  Narrative: BM25 rewards repeated on-topic terms but saturates; normalizes by doc length so long docs don’t dominate.
+
+Strengths: fast inverted indexes, exact term control, interpretable.  
+Limitations: struggles with synonyms/paraphrases (“car” vs “automobile”).
+
+---
+
+## Neural IR (semantic matches)
+
+### Dual-encoder (bi-encoder)
+
+Encode query and doc separately:
+$$
+\mathbf{q}=f_\theta(q),\quad \mathbf{d}=g_\theta(d),\quad
+\text{score}(q,d)=\mathbf{q}^\top \mathbf{d}\ \ \text{(often cosine)}.
+$$
+Train with in-batch negatives / hard negatives, loss:
+$$
+\mathcal{L}=-\log\frac{\exp(\mathbf{q}^\top \mathbf{d}^+/\tau)}{\sum_{d^-}\exp(\mathbf{q}^\top \mathbf{d}^-/\tau)}.
+$$
+Narrative: fast ANN search at scale; meaning-based matches emerge.
+
+### Cross-encoder (re-ranker)
+
+Concatenate “[CLS] q [SEP] d” and score with a transformer; highest accuracy, but $O(k)$ forward passes for top-$k$ candidates. Use after a fast first stage (lexical or dual-encoder).
+
+### Hybrid
+
+$\text{score}=\alpha\,\text{BM25}+(1-\alpha)\,\mathbf{q}^\top\mathbf{d}$. Often wins in practice: lexical precision + semantic recall.
+
+---
+
+## Indexing & search at scale (conceptual preview)
+
+* **Inverted index** (lexical): term → postings list of (docID, freq, positions). Supports BM25 in sub-linear time.
+* **Vector index** (ANN): product quantization, IVF, HNSW graphs to approximate nearest neighbors in $O(\log N)$ or $O(N^\rho)$ with tiny $\rho$.
+* **Two-stage retrieval**: (1) retrieve $k\!\sim\!1000$ fast; (2) re-rank $k$ with cross-encoder or task-specific scorer.
+* **Sharding & caching**: shard by docID or semantic partition; cache hot queries and neighbors.
+
+(We’ll implement a minimal PyTorch vector index in Section 8.)
+
+---
+
+## Query understanding (bridge to Section 9)
+
+* **Normalization:** tokenization, case-folding, stopword handling, stemming/lemmatization (for lexical pipelines).
+* **Expansion/rewrite:** pseudo-relevance feedback (Rocchio), thesaurus/embedding synonyms, intent classification.
+* **Disambiguation:** entity linking (“Apple”→company vs fruit) improves retrieval precision.
+
+---
+
+## Evaluation (don’t skip!)
+
+Let $R_q$ be relevant set for query $q$, and $\pi_q@k$ the top-$k$ ranked list.
+
+* **Precision@k:** $\lvert\pi_q@k \cap R_q\rvert/k$.
+* **Recall@k:** $\lvert\pi_q@k \cap R_q\rvert/\lvert R_q\rvert$.
+* **MRR:** $\frac{1}{|Q|}\sum_q 1/\text{rank}_q(\text{first relevant})$.
+* **nDCG@k:** discounted gain with graded relevance:
+  $$
+  \mathrm{DCG}@k=\sum_{i=1}^k \frac{2^{rel_i}-1}{\log_2(i+1)},\quad
+  \mathrm{nDCG}@k=\frac{\mathrm{DCG}@k}{\mathrm{IDCG}@k}.
+  $$
+  Narrative: use recall@k for first-stage retrievers (coverage), nDCG/MRR for ranking quality.
+
+**Stat testing:** paired randomization/bootstrap across queries; report confidence intervals, not just means.
+
+---
+
+## Failure modes & fixes
+
+* **Lexical miss (synonyms):** add neural/hybrid, query expansion.
+* **Semantic drift (off-topic but similar):** add lexical filters or exact-match constraints.
+* **Shortcut bias in training:** mine *hard negatives* (BM25-high but irrelevant) to sharpen the dual-encoder.
+* **Long docs overwhelm:** split into passages; aggregate scores by max/mean.
+
+---
+
+## Mental model
+
+Start **broad** with a fast, recall-oriented retriever (BM25 or dual-encoder + ANN). Then **focus** with a precise re-ranker (cross-encoder) and task constraints. Evaluate with query-level stats and proper tests.
+
+---
+
+> **Quick check (your turn):***  
+You’re designing a two-stage retriever for technical Q&A. Name a **lexical** first stage and a **neural** second stage you’d pick, and in one sentence explain why that pairing balances recall and precision.
+
+---
+
+# 18 Indexing (IR) + tiny PyTorch
+
+## Why indexing?
+
+Retrieval = scoring many items quickly. Indexes trade a bit of *precompute + structure* for large *query-time* speedups.
+
+We’ll do two minimal paths:
+
+1. a **lexical inverted index** for BM25, and
+2. a **vector (ANN-ish) index** in PyTorch: flat IP + a tiny IVF sketch.
+
+---
+
+## A) Lexical inverted index (BM25-ready)
+
+### Idea (narrative)
+
+Token → a **postings list** of documents (and term frequencies, maybe positions). At query time, touch only postings for query terms, accumulate BM25 scores.
+
+### Math (BM25 recap)
+
+$$
+\text{BM25}(q,d)
+= \sum_{t\in q}
+\underbrace{\log\frac{N-df_t+0.5}{df_t+0.5}}_{idf(t)}
+\cdot
+\frac{tf_{t,d}(k_1+1)}{tf_{t,d}+k_1\!\left(1-b+b\frac{|d|}{\text{avgdl}}\right)}.
+$$
+
+### Minimal code (pure Python; tiny & readable)
+
+```python
+from collections import defaultdict, Counter
+import math
+
+class InvertedIndex:
+    def __init__(self, k1=1.5, b=0.75):
+        self.postings = defaultdict(list)  # term -> [(docid, tf)]
+        self.doclen = {}                   # docid -> |d|
+        self.N = 0
+        self.k1, self.b = k1, b
+        self.df = defaultdict(int)
+        self.avgdl = 0.0
+
+    def add(self, docid, tokens):
+        tf = Counter(tokens)
+        L = sum(tf.values())
+        self.doclen[docid] = L
+        for t, c in tf.items():
+            self.postings[t].append((docid, c))
+        self.N += 1
+
+    def finalize(self):
+        self.df = {t: len(self.postings[t]) for t in self.postings}
+        self.avgdl = sum(self.doclen.values()) / max(1, self.N)
+
+    def bm25(self, query_tokens, topk=10):
+        scores = defaultdict(float)
+        for t in query_tokens:
+            if t not in self.postings: 
+                continue
+            df = self.df[t]
+            idf = math.log((self.N - df + 0.5) / (df + 0.5) + 1e-12)
+            for docid, tf in self.postings[t]:
+                L = self.doclen[docid]
+                denom = tf + self.k1 * (1 - self.b + self.b * L / self.avgdl)
+                scores[docid] += idf * (tf * (self.k1 + 1)) / denom
+        # rank
+        return sorted(scores.items(), key=lambda x: x[1], reverse=True)[:topk]
+
+# tiny demo
+docs = {
+  0: "fast exact attention kernel",
+  1: "approximate nearest neighbor search",
+  2: "attention is all you need transformer",
+}
+tok = lambda s: s.lower().split()
+
+idx = InvertedIndex()
+for i, d in docs.items(): idx.add(i, tok(d))
+idx.finalize()
+print(idx.bm25(tok("attention kernel"), topk=5))
+````
+
+**Why this works:** Scoring touches only the postings of the query terms → sub-linear in corpus size for sparse queries.
+
+---
+
+## B) Vector indexing (semantic retrieval)
+
+### Idea (narrative)
+
+Encode docs to vectors $\mathbf{d}\in\mathbb{R}^D$, encode query to $\mathbf{q}$, use **inner product** (or cosine) and return top-$k$.
+
+* **Flat** (exact): one matrix multiply $\mathbf{Q}\mathbf{D}^\top$.
+* **ANN**: first route the query to a handful of **coarse clusters** (IVF), then search only those lists.
+
+### Flat (exact) PyTorch index
+
+```python
+import torch
+
+class FlatIPIndex:
+    def __init__(self, dim, device="cpu", normalize=False):
+        self.D = torch.empty(0, dim, device=device)
+        self.normalize = normalize
+
+    def add(self, X):
+        X = X if not self.normalize else X / (X.norm(dim=1, keepdim=True) + 1e-12)
+        self.D = torch.cat([self.D, X], dim=0)
+
+    def search(self, q, k=10):
+        q = q if not self.normalize else q / (q.norm(dim=1, keepdim=True) + 1e-12)
+        scores = q @ self.D.T                      # [B, N]
+        vals, idx = torch.topk(scores, k, dim=1)   # exact top-k
+        return vals, idx
+
+# tiny demo
+torch.manual_seed(0)
+dim = 64
+index = FlatIPIndex(dim, device="cpu", normalize=True)
+docs = torch.randn(1000, dim)
+index.add(docs)
+q = torch.randn(2, dim)
+vals, idx = index.search(q, k=5)
+print(idx)
+```
+
+**Notes**
+
+* If you L2-normalize both sides, inner product = cosine similarity.
+* Complexity: one GEMM, good on GPU for tens of thousands to millions (with batching).
+
+---
+
+### Tiny IVF (coarse quantizer) in pure PyTorch
+
+**Goal:** reduce search to a few lists. We’ll:
+
+1. learn $C$ coarse centroids by k-means (few iters),
+2. assign each doc to its nearest centroid (build lists),
+3. at query time, probe the top $n_{\text{probe}}$ centroids and search only those docs (flat within lists).
+
+```python
+import torch
+
+def kmeans(X, C=64, iters=10):
+    # X: [N, D]
+    N, D = X.shape
+    cent = X[torch.randperm(N)[:C]].clone()            # init by sampling
+    for _ in range(iters):
+        # assign
+        dist = torch.cdist(X, cent)                    # [N, C]
+        assign = dist.argmin(dim=1)                    # [N]
+        # update
+        for c in range(C):
+            mask = (assign == c)
+            if mask.any():
+                cent[c] = X[mask].mean(dim=0)
+    return cent, assign
+
+class IVFIndex:
+    def __init__(self, dim, C=64, device="cpu", normalize=True):
+        self.dim, self.C, self.device = dim, C, device
+        self.normalize = normalize
+        self.centroids = None
+        self.lists = [[] for _ in range(C)]
+        self.store = []  # raw vectors (torch tensors)
+
+    def build(self, X, iters=10):
+        X = X.to(self.device)
+        if self.normalize:
+            X = X / (X.norm(dim=1, keepdim=True) + 1e-12)
+        self.centroids, assign = kmeans(X, C=self.C, iters=iters)
+        self.store = [None] * len(X)
+        for i in range(self.C): self.lists[i] = []
+        for i, c in enumerate(assign.tolist()):
+            self.lists[c].append(i)
+            self.store[i] = X[i]
+
+    def search(self, q, k=10, nprobe=8):
+        if self.normalize:
+            q = q / (q.norm(dim=1, keepdim=True) + 1e-12)
+        # 1) choose nprobe centroids
+        d2c = torch.cdist(q, self.centroids)                # [B, C]
+        probes = d2c.topk(nprobe, largest=False).indices    # [B, nprobe]
+        all_scores, all_ids = [], []
+        for b in range(q.size(0)):
+            cand_ids = sum([self.lists[c] for c in probes[b].tolist()], [])
+            if len(cand_ids) == 0:
+                all_scores.append(torch.empty(0))
+                all_ids.append(torch.empty(0, dtype=torch.long))
+                continue
+            Xcand = torch.stack([self.store[i] for i in cand_ids], dim=0)  # [M,D]
+            s = q[b:b+1] @ Xcand.T                                         # [1,M]
+            vals, idx = torch.topk(s, min(k, s.size(1)), dim=1)
+            all_scores.append(vals.squeeze(0))
+            all_ids.append(torch.tensor([cand_ids[j] for j in idx.squeeze(0)], dtype=torch.long))
+        return all_scores, all_ids
+
+# tiny demo
+torch.manual_seed(0)
+X = torch.randn(5000, 64)
+idx = IVFIndex(64, C=64, device="cpu", normalize=True)
+idx.build(X, iters=8)
+q = torch.randn(2, 64)
+scores, ids = idx.search(q, k=5, nprobe=8)
+print(ids[0])
+```
+
+**Why this helps:** most of the corpus sits in **non-probed** lists, so each query scores only a small subset. Quality ↑ with larger `nprobe`, speed ↑ with smaller.
+
+**Caveats**
+
+* This IVF is intentionally minimal: no residuals (IVF-PQ), no re-ranking buffer, no GPU tiling—use Faiss for production.
+* Rebuild/merge logic omitted; in practice you support incremental adds by assigning new vectors to nearest centroid on the fly.
+
+---
+
+## Practical glue
+
+* **Chunking docs:** long docs → fixed-size passages (e.g., 256–512 tokens) with overlap; index passages; aggregate at doc level on output.
+* **Metadata filters:** keep small inverted maps (e.g., year → docIDs) to quickly prune candidates *before* vector search.
+* **Hybrid search:** compute BM25@K and ANN@K, take union, re-rank with a cross-encoder (Section 7).
+* **Caching:** cache top-k for frequent queries and nearest centroid probes.
+
+---
+
+## Debugging & evaluation
+
+* **Recall@k vs. exact flat:** compare IVF to FlatIP on a held-out set to choose `C` and `nprobe`.
+* **Latency budget:** measure breakdown (encode q, route, score, Python overhead). Batch queries to amortize matmuls.
+* **Drift checks:** if encoders update, **reindex** or store the projection epoch with vectors.
+
+---
+
+## Mental model
+
+Lexical inverted indexes excel at precision with exact terms. Vector indexes give semantic reach. IVF says: “route first, then score locally,” making semantic search scale.
+
+---
+
+> **Quick check (your turn):**
+If your flat index returns perfect top-k but is too slow, how would you tune an IVF index (which knobs, and in which direction) to approach the same recall while meeting a 5× latency target?
+
+---
+
+# 19 Query Understanding (IR)
+
+## What “query understanding” really means
+
+Turn a user’s raw string into a **search intent** and a **machine-usable query** that retrieves the right evidence. It’s a pipeline of light NLP + IR math + a bit of semantics:
+
+1. **Normalize** the surface form.
+2. **Interpret** structure (entities, operators, time, units, negation).
+3. **Expand/clarify** to bridge vocab gaps.
+4. **Rewrite** into the retrieval system’s dialect (BM25 terms, ANN vector, graph/Cypher, SQL).
+5. **Disambiguate** when the query is underspecified (possibly interactively).
+
+---
+
+## 1) Normalization (make tokens comparable)
+
+* **Case folding, Unicode normalize (NFKC).**
+* **De-noise:** strip punctuation where safe, collapse whitespace; keep symbols (e.g., “C++”) if your domain needs them.
+* **Stemming/lemmatization:** helps lexical recall; lemmatization is gentler for technical text.
+* **Stopwords:** drop for BM25; keep for phrase/proximity models.
+
+> Narrative: we reduce avoidable lexical variance without hurting meaning.
+
+---
+
+## 2) Structural interpretation (turn words into *meaning*)
+
+* **Entities & types:** link “AlphaChip”, “Siddharth Garg” to canonical IDs; attach types (Paper, Person). Precision here massively helps ranking.
+* **Operators:** detect explicit Boolean (`AND/OR/NOT`), **negation** (“not tensorflow”), **proximity** (`"flash attention"~3`), **field restrictors** (`title:`, `author:`).
+* **Temporal intent:** “since 2023”, “last quarter” → explicit ranges.
+* **Quantities & units:** “< 10 ms latency” → normalize numbers and convert units.
+* **Comparatives/superlatives:** “best”, “cheapest” → rewrite as sorts/filters.
+* **Task intent classification:** navigational (homepage?), informational, transactional; routes to different retrieval stacks or verticals.
+
+---
+
+## 3) Expansion (bridge vocabulary gaps—carefully)
+
+### A) Pseudo-relevance feedback (Rocchio, vector-space view)
+
+Start from initial retrieval, take top $D$ docs, compute their centroid, and move the query toward it:
+
+$$
+\vec q' = \alpha \vec q + \frac{\beta}{|D|}\sum_{d\in D}\vec d - \frac{\gamma}{|N|}\sum_{n\in N}\vec n.
+$$
+
+In bag-of-words, this becomes new term weights; keep top $K$ added terms to avoid drift.
+
+### B) RM3 (query likelihood view)
+
+Estimate a relevance model $p(t\mid R)$ from top docs, then interpolate:
+
+$$
+p(t\mid q') = (1-\lambda)\,p(t\mid q) + \lambda\,p(t\mid R).
+$$
+
+Great lexical gains; control $\lambda$ and prune to high-IDF terms.
+
+### C) Embedding/synonym expansion
+
+Nearest neighbors in embedding space (or WordNet/thesauri). Use **constrained** expansion: keep terms sharing entity/type or appearing in same field.
+
+> Guardrail: expansion boosts recall but can drift off-topic—pair with **field filters** or **phrase constraints**.
+
+---
+
+## 4) Rewriting to your backends
+
+### For BM25 / lexical
+
+* Build a Boolean query: required terms (`+term`), optional boosts (`term^w`), phrases (`"flash attention"`), fields (`title:flash`), filters (year:2023-2025).
+
+### For ANN / dual-encoder
+
+* Create **one or more** semantic queries:
+
+  * **Original** text.
+  * **Clarified paraphrase** (expand acronyms, resolve pronouns).
+  * **Entity-only** variant (drop function words).
+
+* Search each; fuse by max or learned weights.
+
+### For KG/SQL
+
+* Semantic parse → typed slots (author, work, date).
+* Emit a **safe** query (constrained grammar), e.g., Cypher or SQL with whitelisted predicates.
+
+---
+
+## 5) Disambiguation & interaction
+
+* **Multi-intent detection:** short queries often bundle senses (“apple developer conference videos”). Branch into verticals; rank fusions.
+* **Ask minimal clarifying Qs** when ambiguity is catastrophic (“Do you mean AlphaChip the 2021 paper or the 2023 system?”).
+* **Session context:** inherit entities/time from conversation turns; decay context if the user pivots.
+
+---
+
+## 6) Language-modeling view of retrieval (useful lens)
+
+Classic **Query Likelihood Model** with Dirichlet smoothing:
+
+$$
+\log p(q\mid d) = \sum_{t\in q} \log \frac{tf_{t,d} + \mu\, p(t\mid C)}{|d| + \mu},
+$$
+
+where $p(t\mid C)$ is corpus probability and $\mu$ (e.g., 1000–3000) controls smoothing.
+
+Narrative: documents that could have *generated* the query get higher scores. This ties neatly into RM3 and also guides what expansions are probabilistically sensible.
+
+---
+
+## 7) Phrases, proximity, and structure matter
+
+* **Exact phrases** (`"rotary positional embedding"`) fight semantic drift.
+* **Proximity scoring**: add gains when query terms occur within window $w$.
+* **Field boosts**: titles/abstracts carry stronger evidence than body text in scientific IR.
+
+---
+
+## 8) Robustness tricks you’ll actually use
+
+* **Misspellings:** character n-grams or edit-distance candidates → then rank normally.
+* **Acronyms:** learn bi-directional expansions from corpora (“HPWL” ↔ “half-perimeter wirelength”).
+* **Negation handling:** rewrite `-tensorflow` as a **filter** in lexical; in neural, post-filter candidates containing negated terms.
+* **Numeric ranges:** detect comparators ($<,>,=,\approx$) and units; normalize to canonical fields.
+
+---
+
+## 9) Evaluation & ablations (don’t skip)
+
+* **Query-level** metrics: nDCG@k, MRR, Recall@k; report **paired** significance tests (bootstrap or randomization).
+* **Ablate**: +entities, +phrases, +PRF, +embedding-expansion; measure drift errors.
+* **Stratify** by query length and head/tail frequency—expansion often helps the tail.
+
+---
+
+## Failure modes → fixes
+
+* **Over-expansion drift:** cap added terms $K$, raise IDF threshold, add phrase anchors.
+* **Entity confusion:** require type agreement; use canonical IDs everywhere.
+* **Neural off-topic:** hybrid filter: must match at least one high-IDF query term or entity.
+* **Underspecified time/units:** ask a one-line clarification; default to conservative ranges with an explainable assumption.
+
+---
+
+## Mental model
+
+Start from a **clean, typed** understanding of the query. Use **minimal expansion** to bridge vocabulary, but keep retrieval grounded with **phrases, fields, and entities**. Always rewrite into the concrete operators your backend understands.
+
+---
+
+> **Quick check (your turn):**
+You run BM25 first, then a dual-encoder. For a short, ambiguous query like “flash attention speed,” name **one normalization**, **one structural interpretation**, and **one expansion** you’d apply before retrieval—and say in a phrase how each reduces error.
+
+---
+
+# 20 Ranking & Re-Ranking (IR)
+
+## What “ranking” is really doing
+
+You’re learning a scoring function $s_\theta(q,d)$ so that, **for a given query $q$**, relevant documents appear before non-relevant ones. Because users only see the **top of the list**, the objective should reflect **list quality**, not just individual scores.
+
+Three lenses help:
+
+1. **Pointwise:** regress $y_{qd}$ (click/relevance) from $s_\theta(q,d)$. Simple, but misaligned with ranks.
+2. **Pairwise:** prefer $d^+$ over $d^-$: $s(q,d^+) > s(q,d^-)$.
+3. **Listwise:** optimize a surrogate to list metrics like nDCG.
+
+We’ll build intuition from pairwise → listwise → practical re-ranking.
+
+---
+
+## Pairwise view (clean geometry)
+
+For a query $q$, sample a positive $d^+$ and a negative $d^-$. Train with a **margin** (hinge) or **logistic** loss:
+$$
+\mathcal{L}_{\text{hinge}}=\max\!\big(0,\ 1 - (s(q,d^+)-s(q,d^-))\big),\qquad
+\mathcal{L}_{\text{logit}}=\log\!\big(1+\exp(-(s^+ - s^-))\big).
+$$
+Narrative: every update pushes $d^+$ up and $d^-$ down **relative to each other**, matching “who beats whom.”
+
+**Tiny PyTorch (pairwise logistic)**
+
+```python
+import torch, torch.nn as nn, torch.nn.functional as F
+
+class BiEncoder(nn.Module):
+    def __init__(self, d=384):
+        super().__init__()
+        self.q = nn.Linear(d, d, bias=False)
+        self.d = nn.Linear(d, d, bias=False)
+    def encode_q(self, x): return self.q(x)
+    def encode_d(self, x): return self.d(x)
+
+def pairwise_loss(qe, de_pos, de_neg, tau=1.0):
+    s_pos = (qe * de_pos).sum(-1) / tau
+    s_neg = (qe * de_neg).sum(-1) / tau
+    return F.softplus(-(s_pos - s_neg)).mean()  # log(1+e^{-(Δ)})
+
+# toy step
+model = BiEncoder(128)
+opt = torch.optim.Adam(model.parameters(), 1e-3)
+q = torch.randn(32,128); dpos = torch.randn(32,128); dneg = torch.randn(32,128)
+loss = pairwise_loss(model.encode_q(q), model.encode_d(dpos), model.encode_d(dneg))
+opt.zero_grad(); loss.backward(); opt.step()
+````
+
+---
+
+## Listwise view (optimize the **list**, not pairs)
+
+### nDCG (what we care about)
+
+With graded relevance $\text{rel}*i \in {0,1,2,\dots}$ at rank $i$:
+$$
+\mathrm{DCG}@k = \sum*{i=1}^{k} \frac{2^{\text{rel}_i}-1}{\log_2(i+1)},\qquad
+\mathrm{nDCG}@k = \frac{\mathrm{DCG}@k}{\mathrm{IDCG}@k}.
+$$
+Non-differentiable in ranks, so we use **smooth surrogates** or **LambdaRank**.
+
+### ListNet / ListMLE (probability over permutations)
+
+Turn scores $s_i$ into a **Plackett–Luce** distribution over permutations $\pi$:
+$$
+P(\pi\mid s) = \prod_{i=1}^{n} \frac{\exp(s_{\pi_i})}{\sum_{j=i}^{n} \exp(s_{\pi_j})}.
+$$
+Fit $P(\pi \mid s)$ to a **target** induced by relevance labels (e.g., ListMLE uses the single permutation sorted by labels). Loss = $-\log P(\pi^\star\mid s)$.
+
+**Tiny PyTorch (ListMLE for one query)**
+
+```python
+def listmle_loss(scores, rel):
+    # scores: [n], rel: [n] (higher is better)
+    order = torch.argsort(rel, descending=True)
+    s = scores[order]
+    # -log Plackett–Luce likelihood
+    # sum_i [ log(sum_{j>=i} exp(s_j)) - s_i ]
+    logcumexp = torch.logcumsumexp(s.flip(0), dim=0).flip(0)
+    return (logcumexp - s).sum()
+
+# example for a batch of queries with padding would loop queries separately
+```
+
+### LambdaRank intuition (nDCG-aware gradients)
+
+Compute pairwise gradients $\lambda_{ij}$ proportional to the **change in nDCG** if $i$ and $j$ swap:
+$$
+\lambda_{ij} = -\sigma\cdot \frac{1}{1+\exp(s_i - s_j)} \cdot \big|\Delta\mathrm{nDCG}_{ij}\big| \cdot \operatorname{sign}(\text{rel}_i-\text{rel}*j).
+$$
+Then update scores with $\partial \mathcal{L}/\partial s_i = \sum_j \lambda*{ij}$.
+Narrative: bigger rank mistakes near the top (large $\Delta$ nDCG) get bigger gradients.
+
+---
+
+## Re-ranking in practice (two-stage)
+
+1. **Retriever** produces a candidate set $C_q$ (e.g., 200–1000 docs).
+2. **Re-ranker** (more expressive, slower) scores only $C_q$ and returns top-$k$.
+
+### Neural re-rankers
+
+* **Cross-encoder:** encode concatenated $[q; d]$ and regress a relevance score; highest quality.
+* **Interaction models:** kernel pooling / ColBERT (late interaction) balance speed vs fidelity.
+
+**Tiny PyTorch (cross-encoder skeleton)**
+
+```python
+import torch, torch.nn as nn, torch.nn.functional as F
+# stand-in MLP; plug in a transformer encoder in practice
+class CrossEncoder(nn.Module):
+    def __init__(self, d_in=768):
+        super().__init__()
+        self.mlp = nn.Sequential(nn.Linear(d_in, 256), nn.ReLU(), nn.Linear(256,1))
+    def forward(self, x):  # x: [B, L, d] pooled -> [B, d_in]
+        pooled = x.mean(1)
+        return self.mlp(pooled).squeeze(-1)  # [B]
+
+# pairwise training on candidate pairs
+def ce_pairwise_step(model, qd_pos, qd_neg):
+    s_pos, s_neg = model(qd_pos), model(qd_neg)
+    return F.softplus(-(s_pos - s_neg)).mean()
+```
+
+**Blending lexical + neural (hybrid re-rank)**
+$$
+\text{score} = \alpha\cdot \mathrm{BM25}(q,d) + (1-\alpha)\cdot s_\theta(q,d),
+$$
+tune $\alpha$ on a validation set; often improves robustness.
+
+---
+
+## Diversity & redundancy (not just the best one)
+
+Users want a **useful slate**, not clones. A simple, effective approach is **MMR (Maximal Marginal Relevance)**:
+$$
+\text{MMR}(d) = \lambda,\text{rel}(d) - (1-\lambda)\max_{d'\in S}\ \text{sim}(d,d'),
+$$
+greedily build $S$ by picking the max MMR at each step.
+
+**Tiny PyTorch (MMR with dot-product sim)**
+
+```python
+def mmr_select(scores, doc_embs, k=10, lam=0.7):
+    # scores: [N], doc_embs: [N, D] (L2-normalized)
+    selected, mask = [], torch.zeros_like(scores, dtype=torch.bool)
+    for _ in range(k):
+        if len(selected)==0:
+            i = scores.argmax().item()
+        else:
+            S = torch.stack(selected)
+            sim = doc_embs @ doc_embs[S].T             # [N, |S|]
+            maxsim = sim.max(dim=1).values
+            mmr = lam * scores - (1-lam) * maxsim
+            mmr[mask] = -1e9
+            i = mmr.argmax().item()
+        selected.append(torch.tensor(i))
+        mask[i]=True
+    return torch.stack(selected).tolist()
+```
+
+---
+
+## Counterfactual learning-to-rank (click bias is not labels)
+
+Clicks are biased by position and presentation. Use **inverse propensity weighting** (IPW) or randomized interventions.
+
+* **Position propensities** $p_k = \Pr(\text{examine rank }k)$ from randomized swaps.
+* **Unbiased pairwise loss:**
+  $$
+  \mathcal{L} = \mathbb{E}\Big[ w_{i},w_{j},\log(1+\exp(-(s_i-s_j))) \Big],
+  \quad w_i=\frac{\mathbf{1}*{\text{clicked }i}}{p*{\text{rank}(i)}}.
+  $$
+* **Self-normalized** variants (SNIPS) tame variance.
+
+---
+
+## Calibration, ties, and cutoffs
+
+* **Score calibration:** map scores to probabilities via Platt scaling or isotonic regression on a labeled dev set—useful for thresholding and fusion.
+* **Early cutoff:** if only top-10 matter, train with **top-k** objectives (e.g., weight pairs by whether either sits in top-k).
+* **Ties:** break deterministically (docID) to get stable offline metrics.
+
+---
+
+## Evaluating re-rankers (what to actually report)
+
+* First-stage **Recall@k** (coverage).
+* Re-rank **MRR/nDCG@k** on a held-out labeled set.
+* **Ablations:** pairwise vs listwise loss, +hybrid score, +MMR.
+* **Latency budget:** report milliseconds per 1k candidates; ensure re-rank fits the p95 SLA.
+
+---
+
+## Mental model
+
+Use a **fast, recall-oriented retriever** to form a candidate set; train a **pairwise/listwise re-ranker** whose gradients emphasize **top-positions**. Add **diversity (MMR)** to avoid redundancy, and de-bias with **propensity weighting** when training from clicks. Evaluate with **list metrics** and respect **latency**.
+
+---
+
+> **Quick check (your turn):**
+You have a candidate set of 500 docs per query. You care about nDCG@10 and observe many near-duplicate answers at the top. In one or two sentences, which loss (pairwise or listwise) would you train your re-ranker with, and how would you incorporate diversity at inference without hurting relevance?
+
+---
+
+# 21 A/B experimentation & testing in **LLMs**
+
+## What’s special vs generic ML A/B
+
+LLMs are **stochastic generators** whose quality is judged **pairwise** and **subjectively**. That changes units, metrics, and stats:
+
+* **Unit of randomization:** user, session, or **prompt** (task). Make it **sticky** per unit to avoid cross-contamination (memory, caches, learning).
+* **Determinism:** fix decoding (e.g., `temperature=0.2`, `top_p=0.95`, seeded), or treat randomness as part of the policy and average over repeats.
+* **Caching:** prompts and KV caches can leak speed advantages; measure **latency** and **token-cost** as guardrails.
+
+---
+
+## Core online designs
+
+### A/B with blinded pairwise evaluation (gold standard)
+
+For a sampled prompt \(x\), show users **one** variant (A or B) for impact metrics (engagement, task success). Separately, to estimate *quality*, run **blind side-by-side (SxS)** on a holdout audience or annotators:
+
+* Present \((y_A, y_B)\) in **random order**; collect preference \(r \in \{-1,0,+1\}\).
+* Estimate **win-rate** \(p = \Pr[B \succ A]\).
+
+**Power (back-of-envelope):** with variance \(p(1-p)\), to detect \(\Delta = p-0.5\):
+
+$$
+n \approx \frac{(z_{1-\alpha/2}+z_{1-\beta})^2\, p(1-p)}{\Delta^2}.
+$$
+
+### Interleaving / dueling bandits (fast feedback)
+
+For ranking/search/chat-suggestion, **interleave** items from A and B into one slate so each user interaction compares policies. Use team-draft interleaving; outcome = which policy’s items receive more credit. This reduces variance and speeds decisions.
+
+### Multi-armed bandits for prompts/params
+
+When exploring many prompts or decoding settings, use **Top-Two Thompson Sampling** or **Successive Halving** with *pairwise* rewards to prune quickly, then confirm with a locked A/B.
+
+---
+
+## Metrics that actually work
+
+### Pairwise Bradley–Terry (BT) skill
+
+Model preference of \(i\) over \(j\):
+
+$$
+\Pr[i \succ j] = \frac{e^{\beta_i}}{e^{\beta_i} + e^{\beta_j}}.
+$$
+
+Fit \(\beta\) by logistic regression on pairwise outcomes; report \(\beta_B - \beta_A\) with CI. Handles ties by splitting or by Davidson extension.
+
+### Judge reliability & bias
+
+* **Blind** the variants and **shuffle** order.
+* Track **inter-rater agreement** (Cohen’s \(\kappa\) / Krippendorff’s \(\alpha\)).
+* Calibrate **LLM-as-judge** with a golden set; periodically **AA tests** to detect drift.
+
+### Task KPIs
+
+* **Exact/substring match**, **pass@k**, rubric scores (structured), **toxicity/safety** rates, **latency** (p95), **cost** (tokens). Treat safety as a **hard guardrail**.
+
+---
+
+## Offline evaluation before online
+
+### Log-replay with counterfactuals
+
+Given logged \((x_i, a_i, r_i)\) under policy \(b\), and candidate policy \(\pi\):
+
+* **IPS:** \(\hat V = \frac1n \sum \frac{\pi(a_i \mid x_i)}{b(a_i \mid x_i)} r_i\).
+* **Self-normalized IPS** for stability.
+* **Doubly Robust**: add reward model \(\hat q(x,a)\) for lower variance.
+
+For **ranking/slates**, use **slate IPS** (propensities for the whole slate, or position-wise with independence assumptions). Clip weights to control variance, then validate with small online canaries.
+
+---
+
+## Prompt & system evaluation pitfalls → fixes
+
+* **Prompt leakage / contamination:** randomize *instructions* and *few-shot exemplars* across arms, or share a frozen template.
+* **Context effects:** prior turns change difficulty; bucket by **conversation state**.
+* **Length confound:** longer answers can look “better.” Normalize by length or include a **verbosity penalty** in the rubric.
+* **Diversity:** ensure prompt sets cover skills (coding, reasoning, safety, multilingual); stratify analysis.
+
+---
+
+## Minimal, practical snippets
+
+### (1) Bradley–Terry in PyTorch (two variants A,B; extendable)
+
+```python
+import torch, torch.nn.functional as F
+
+# outcomes: +1 if B wins, 0 tie, -1 if A wins
+y = torch.tensor([+1, -1, +1, 0, +1], dtype=torch.float32)
+w_tie = 0.5  # split ties
+
+beta = torch.nn.Parameter(torch.zeros(2))  # beta[0]=A, beta[1]=B
+opt = torch.optim.LBFGS([beta], max_iter=100)
+
+def closure():
+    opt.zero_grad()
+    pB = torch.sigmoid(beta[1]-beta[0])          # P(B beats A)
+    # log-likelihood with tie-splitting
+    logp = (y==+1)*torch.log(pB+1e-9) + (y==-1)*torch.log(1-pB+1e-9) + (y==0)*torch.log(w_tie*pB + w_tie*(1-pB)+1e-9)
+    loss = -logp.mean()
+    loss.backward()
+    return loss
+
+opt.step(closure)
+delta = (beta[1]-beta[0]).item()
+````
+
+### (2) Win-rate & bootstrap CI
+
+```python
+import torch
+def winrate_ci(labels, B=2000, alpha=0.05):  # labels in {-1,0,+1}
+    x = torch.tensor(labels)
+    w = (x==+1).float(); l=(x==-1).float(); t=(x==0).float()*0.5
+    p = (w + t).mean()
+    boots = []
+    n = len(x)
+    for _ in range(B):
+        s = x[torch.randint(0, n, (n,))]
+        w = (s==+1).float(); l=(s==-1).float(); t=(s==0).float()*0.5
+        boots.append((w+t).mean())
+    boots = torch.stack(boots)
+    lo, hi = boots.quantile(alpha/2).item(), boots.quantile(1-alpha/2).item()
+    return float(p), lo, hi
+```
+
+### (3) Self-normalized IPS for log-replay
+
+```python
+def snips(actions, rewards, pi_probs, b_probs):
+    # actions: indices of taken actions under logging policy
+    w = pi_probs.gather(1, actions[:,None]).squeeze(1) / (b_probs.gather(1, actions[:,None]).squeeze(1)+1e-9)
+    w = torch.clamp(w, max=50.0)
+    num = (w * rewards).sum()
+    den = w.sum() + 1e-9
+    return (num / den).item()
+```
+
+---
+
+## Sequential testing & guardrails for LLMs
+
+* Use **alpha-spending** or **always-valid p-values** (e.g., e-processes) when peeking.
+* Hard **safety guardrails**: disallowed content rate must **not** increase (non-inferiority).
+* **Cost/latency** as constraints; declare **efficient dominance** if quality ↑ and cost ↓.
+
+---
+
+## Reporting that convinces skeptics
+
+* Primary: **win-rate** (BT delta with CI) on a **pre-registered prompt set**.
+* Secondaries: pass@k (code), exact-match (QA), rubric scores, latency/cost.
+* AA checks (A vs A) to calibrate false positives.
+* Stratified effects by prompt type; *one* exploratory page, clearly labeled.
+
+---
+
+## Mental model
+
+Treat an LLM configuration (weights + prompts + decoding) as a **policy**. Measure **pairwise quality** with blinded comparisons, keep **safety/cost** as guardrails, stabilize decisions with **variance reduction** and **sequential control**, and use **counterfactual replay** to de-risk before going live.
+
+---
+
+> **Quick check (your turn):**
+You’re launching a new prompt for code generation. In one or two sentences, describe the **online design** (unit, metric, and blinding) and the **offline check** (counterfactual or test set) you’d run before rollout.
+
+---
+
+# 22 LLM training regimes (the landscape)
+
+## A. Pretraining (next-token prediction)
+
+Train on mixed-domain text with the **autoregressive** loss  
+$$
+\mathcal{L}_{\text{LM}}(\theta)=-\sum_{t}\log p_\theta(x_t\mid x_{<t}),
+$$
+optionally with **packing** (multiple docs per sequence, causal separators) and **curricula** (short→long).
+
+Minimal loop (teacher forcing):
+
+```python
+logits = model(input_ids)                 # [B,T,V]
+loss = F.cross_entropy(logits[:,:-1].flatten(0,1),
+                       input_ids[:,1:].flatten(0,1))
+loss.backward()
+````
+
+## B. Supervised finetuning (SFT) / Instruction tuning
+
+Curate prompt→completion pairs. Same LM loss but on *instruction-shaped* data (templates, roles, system prompts). Add **formatting guards** (e.g., JSON schema). Often mix in safety exemplars.
+
+## C. Preference learning (aligning behavior)
+
+Two families:
+
+* **RLHF (RM + PPO):** learn reward (r_\phi(x,y)) from pairwise prefs, then optimize policy (\pi_\theta) with a KL-regularized RL objective
+  $$
+  \max_\theta ;\mathbb{E}*{y\sim \pi*\theta}!\big[r_\phi(x,y)\big]-\beta,\mathrm{KL}(\pi_\theta\mid\mid\pi_0).
+  $$
+
+* **Direct Preference Optimization (DPO):** fit (\pi_\theta) **directly** to preferences vs a reference (\pi_0) without an explicit RM:
+  $$
+  \mathcal{L}*{\text{DPO}}
+  = -\mathbb{E}\Big[\log\sigma!\Big(\beta\big[\log \tfrac{\pi*\theta(y^+\mid x)}{\pi_0(y^+\mid x)}-\log \tfrac{\pi_\theta(y^-\mid x)}{\pi_0(y^-\mid x)}\big]\Big)\Big].
+  $$
+  Narrative: DPO says “make the chosen response more likely than the rejected one, relative to a reference,” achieving alignment with pure supervised updates.
+
+Tiny DPO step:
+
+```python
+def dpo_loss(logp_pos, logp_neg, logp0_pos, logp0_neg, beta=0.1):
+    z = beta * ((logp_pos - logp0_pos) - (logp_neg - logp0_neg))
+    return F.softplus(-z).mean()          # -log σ(z)
+```
+
+Related: **IPO/ORPO/KTO/GRPO** variants tweak the margin, temperature, or regularizer; **AWR/AWAC-style** do advantage-weighted MLE.
+
+## D. Parameter-efficient finetuning (PEFT)
+
+Freeze base weights, train **adapters** or low-rank deltas (LoRA: (W \leftarrow W + A B^\top) with small rank). Big wins when data is small or you must host many personas.
+
+## E. Continual & domain adaptation
+
+Mix a **small % of general data** (to prevent forgetting) with domain text; optionally **regularize** toward the old model (Fisher/LLR penalties) or distill from it.
+
+---
+
+# 23 Data preprocessing for LLMs (what actually matters)
+
+## A. Quality filtering
+
+* **Deduplication:** near-dup removal (MinHash/LSH, SimHash on 3–5-grams).
+* **Boilerplate/markup stripping; language ID; profanity/safety filters.**
+* **Heuristic quality models:** small classifier scoring perplexity bands, formatting, symbol ratios.
+
+## B. Tokenization & packing
+
+* Choose subword (BPE/WordPiece/Unigram). Track **bytes-per-token** (efficiency).
+* **Packing:** concatenate docs with separators to reduce padding; preserve **doc boundaries** for loss masking.
+
+Packing mask sketch:
+
+```python
+# attn_mask zeros across boundaries so tokens don't attend across docs
+attn_mask = torch.ones(T,T, dtype=torch.bool)
+attn_mask[boundary_positions[:,None] <= torch.arange(T)] = 0  # conceptually
+```
+
+## C. Document mixing & curricula
+
+Balance domains with **mixture weights** (e.g., code/wiki/books/web). Use **length curricula** for long-context stability (Section 2).
+
+## D. Decontamination
+
+For eval sets (e.g., GSM8K, HumanEval), **hash** canonical problems and remove matches/near-matches from training to avoid leakage.
+
+## E. SFT & preference data hygiene
+
+* Normalize prompts (roles, tool-call format), redact secrets.
+* Balance tasks; **swap positive/negative** orders to avoid position bias.
+* For pairwise prefs, ensure **hard negatives** (close but wrong) and **inter-annotator checks**.
+
+---
+
+# 24 Losses you’ll actually use (and why)
+
+## A. Cross-entropy (autoregressive)
+
+As above; sometimes with **label smoothing** (\epsilon) to soften targets:
+$$
+\mathcal{L} = -(1-\epsilon)\log p_\theta(x_t) - \epsilon \sum_v \tfrac{1}{V}\log p_\theta(v).
+$$
+
+## B. Span corruption / denoising (T5/UL2)
+
+Sample spans; replace with sentinels; predict the spans:
+$$
+\mathcal{L}=-\sum \log p_\theta(\text{span}\mid \text{masked input}).
+$$
+Narrative: better sample-efficiency for seq2seq tasks; less ideal for pure decoder-only unless adapted (prefix-LM).
+
+## C. KL-regularized objectives (alignment)
+
+During RLHF-style updates, include
+$$
+\mathcal{L}*{\text{KL}}=\beta,\mathrm{KL}(\pi*\theta(\cdot\mid x)\mid\mid\pi_0(\cdot\mid x))
+$$
+to keep outputs near a safe/reference policy (controls drift/verbosity).
+
+## D. Contrastive / response ranking
+
+Given ((y^+,y^-)) for prompt (x),
+$$
+\mathcal{L}=-\log \frac{\exp(s_\theta(x,y^+)/\tau)}{\exp(s_\theta(x,y^+)/\tau)+\exp(s_\theta(x,y^-)/\tau)},
+$$
+where (s_\theta) can be sequence logprob, a small judge head, or pooled repr.
+
+## E. Auxiliary stability losses
+
+* **Entropy bonus** to avoid collapse in RLHF.
+* **Speculative/distillation**: match teacher tokens (q) (KL) while keeping base LM loss.
+
+---
+
+# 25 Evaluation metrics (make numbers honest)
+
+## A. Intrinsic model quality
+
+* **Perplexity / BPC:** ( \mathrm{PPL}=\exp(\tfrac{1}{N}\sum -\log p) ). Useful for pretraining, weakly correlated with task utility.
+* **Next-token accuracy** on controlled corpora (sanity checks).
+* **Calibration:** ECE / Brier; does the model’s confidence match reality?
+
+## B. Task metrics (deterministic)
+
+* **Exact match / F1** (QA), **ROUGE** (summarization), **BLEU** (MT; with caveats).
+* **Code:** pass@k with unbiased estimator:
+  $$
+  \widehat{\text{pass@k}} = \mathbb{E}\Big[1-\frac{\binom{n-c}{k}}{\binom{n}{k}}\Big],
+  $$
+  where (n) samples, (c) correct; estimate via bootstrap over problems.
+* **Math/Reasoning:** GSM8K/MathQA exact, **step-faithfulness** (chain-of-thought judged to match reasoning).
+
+## C. Preference / human metrics
+
+* **Win-rate / BT-skill** from blinded pairwise judgments (Section 11).
+* **Rubric scoring:** structured multi-axis (helpful, harmless, honest), often LLM-as-judge **calibrated** on human gold.
+
+## D. Safety, toxicity, bias
+
+* Trigger rates on curated safety suites; **non-inferiority** vs baseline.
+* **Leakage** (PII/tool abuse) rates on red-team prompts.
+
+## E. Systems metrics (don’t bury these)
+
+* **Latency** (p50/p95), **throughput** (tok/s), **cost** (prompt+completion tokens), **context hit-rate** with retrieval, **KV-cache** memory.
+
+**Report with rigor:** stratify by task type, include **CIs** (bootstrap), and show **AA tests** to calibrate false positives.
+
+---
+
+# 26 Putting it together (a minimal training recipe)
+
+1. **Curate & clean** mixed-domain corpus → dedup → tokenize → pack.
+2. **Pretrain** with LM loss; monitor PPL + few task probes.
+3. **Instruction-tune** on high-quality SFT; format-checkers in the loop.
+4. **Align with preferences** (DPO if simple; RLHF if you need fine control of behaviors/cost).
+5. **PEFT** per domain/product; keep a small mix of general data to avoid forgetting.
+6. **Evaluate** with: task scores, win-rate, safety guardrails, and latency/cost.
+7. **A/B** (Section 11) with blinded SxS and pre-registered OEC.
+
+---
+
+> **Quick check (your turn):**
+If you switch from RLHF (PPO) to DPO for alignment, what *regularizer or reference* keeps the policy from drifting, and how does that show up in the DPO objective you’d implement?
+
+---
+
+# 27 Distributed Training for ML/LLMs
+
+## Mental model
+
+You want maximum **throughput** (tokens/sec) at a given **cost** (GPU-hours) without exploding **memory**. You get there by (i) splitting work across devices, (ii) minimizing/overlapping communication, and (iii) taming memory with sharding & recomputation.
+
+We’ll climb from **data parallel** → **optimizer/state sharding** → **tensor & pipeline parallel** → **3D parallel**. Along the way: comms math, memory math, and micro-optimizations.
+
+---
+
+## A) Communication, at a glance (why the network matters)
+
+Collectives on $p$ workers dominate scaling.
+
+* **All-Reduce** (sum gradients across $p$ ranks): ring all-reduce cost (bytes $S$)
+
+$$
+T_{\text{allred}} \approx 
+\underbrace{\frac{2(p-1)}{p}\frac{S}{\text{BW}}}_{\text{bandwidth term}}
+\;+\;
+\underbrace{(p-1)\cdot \alpha}_{\text{latency term}},
+$$
+
+with link bandwidth BW and per-hop latency $\alpha$.
+
+* Rule of thumb: keep your **compute time per step** $\gg T_{\text{allred}}$, or **overlap** comm with compute (bucketed gradients, reduce-scatter in backprop).
+
+Mixed precision (BF16/FP16) halves gradient bytes; gradient compression is rare for LLMs due to instability.
+
+---
+
+## B) Data Parallel (DP) = many copies, split the batch
+
+Every rank holds full model; each sees a **different micro-batch**; gradients summed via all-reduce.
+
+* **Throughput** roughly scales $\propto p$ until comms bite.
+* **Memory**: full params + optimizer states + activations per rank.
+
+**Minimal PyTorch (DDP)**
+
+```python
+# torchrun --nproc_per_node=8 train.py
+import torch, torch.distributed as dist
+from torch.nn.parallel import DistributedDataParallel as DDP
+
+dist.init_process_group("nccl")
+local_rank = int(os.environ["LOCAL_RANK"])
+torch.cuda.set_device(local_rank)
+
+model = YourModel().cuda()
+model = DDP(model, device_ids=[local_rank], broadcast_buffers=False)
+opt = torch.optim.AdamW(model.parameters(), lr=3e-4)
+
+for xb, yb in loader:              # loader uses DistributedSampler
+    xb, yb = xb.cuda(), yb.cuda()
+    loss = model(xb, yb)           # backward inside
+    opt.zero_grad(set_to_none=True)
+    loss.backward()
+    opt.step()
+````
+
+**Tricks that matter**
+
+* **Gradient accumulation**: emulate large global batch without expanding per-GPU activations.
+* **Bucketed all-reduce**: smaller buckets overlap better; too small increases latency hits.
+* **Determinism**: set seeds & use DistributedSampler with fixed epoch; watch async ops.
+
+---
+
+## C) Memory bloat & Optimizer State Sharding (ZeRO/FSDP)
+
+A big LLM spends most memory in **optimizer states** (Adam has $(m,v)$ plus params & grads). For parameters $P$ floats:
+
+* Params: $P$
+* Grads: $P$
+* Adam states: $2P$
+
+→ **~4×** model-size footprint per rank (in FP32 terms; BF16 reduces params/grads, not always optimizer states).
+
+**ZeRO stages (intuition)**
+
+* **Stage 1:** shard optimizer states across $p$ → each rank stores $\approx 2P/p$.
+* **Stage 2:** shard grads too → each rank grads $\approx P/p$.
+* **Stage 3:** shard **params** as well → each rank holds only its shard during fwd/bwd; do **gather/scatter** on the fly.
+
+**FSDP (PyTorch)** ~ ZeRO-3 style with **per-module** sharding & prefetch. It *reshards* params between layers to keep peak memory low; overlaps all-gathers with compute.
+
+**Minimal FSDP**
+
+```python
+from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
+from torch.distributed.fsdp import ShardingStrategy, MixedPrecision
+
+mp = MixedPrecision(param_dtype=torch.bfloat16, reduce_dtype=torch.bfloat16, buffer_dtype=torch.bfloat16)
+model = FSDP(YourModel().cuda(),
+             sharding_strategy=ShardingStrategy.FULL_SHARD,  # ZeRO-3-like
+             mixed_precision=mp,
+             device_id=local_rank)
+```
+
+**Activation checkpointing** (recompute instead of storing):
+
+```python
+from torch.utils.checkpoint import checkpoint
+
+def block(x):
+    # heavy layer stack
+    return sublayers(x)
+
+y = checkpoint(block, x)  # drop activations, recompute in backward
+```
+
+**TL;DR**: ZeRO-3/FSDP let you fit bigger models by sharding **everything** and paying comms during forward/backward.
+
+---
+
+## D) Model Parallel: **Tensor** & **Sequence** splitting
+
+When a **single layer** doesn’t fit, split its math.
+
+### Tensor Parallel (TP, Megatron-style)
+
+Split large matmuls across devices.
+
+* **Column parallel** ($Y = X W$), with $W=[W_1; W_2 \dots W_t]$.
+  Each rank computes $Y_i = X W_i$; concatenate or all-reduce as needed.
+
+* **Row parallel** ($Z = Y V$), with $V^\top=[V_1^\top; \dots; V_t^\top]$.
+  Each rank computes partial $Z_i = Y_i V_i$; sum-reduce across ranks.
+
+**Attention TP**: QKV projections and output projection split similarly; softmax stays local if sequence is not split.
+
+**Sequence Parallel (SP)**: split **sequence length** $T$ across ranks; reduce activations that need global (layernorm stats, attention softmax if needed) with small collectives. Cuts activation memory without changing math.
+
+**Costs**: TP adds **intra-layer** all-reduces; place TP groups **within the same node** (NVLink/NVSwitch) to avoid NIC bottlenecks.
+
+---
+
+## E) Pipeline Parallel (PP): cut the network into stages
+
+Divide layers into $p$ **stages**; stream **micro-batches** through like an assembly line.
+
+* **Bubble** (idle time) fraction for GPipe schedule:
+
+$$
+\text{bubble} \approx \frac{p-1}{m},
+$$
+
+with $m$ micro-batches per global batch. Increase $m$ to shrink bubbles (up to memory/network limits).
+
+* **Schedules**:
+
+  * **GPipe**: all forward then all backward per micro-batch; simple, bigger bubbles.
+  * **1F1B (PipeDream-Flush)**: interleave fwd/back to reduce activation staleness and memory.
+
+**Inter-stage traffic**: activations only (not params). Balance stage compute or you’ll bottleneck on the slowest stage.
+
+---
+
+## F) 3D Parallel (DP × TP × PP) for very large LLMs
+
+Combine:
+
+* **DP** across nodes (data shards),
+* **TP** within node (NVSwitch),
+* **PP** across nodes (stage the stack).
+
+Add **ZeRO-1/2/3 or FSDP** on top to shard states. Real deployments pick a decomposition that matches **hardware topology**:
+
+* TP size = GPUs per NVSwitch island,
+* PP depth = layer count / (TPed layer size),
+* DP = remainder.
+
+**Throughput per step (back-of-envelope)**:
+
+$$
+T_{\text{step}} \approx
+\max\Big(
+\underbrace{T_{\text{compute}}}*{\text{per stage}},\
+\underbrace{T*{\text{intra-TP comm}}}*{\text{NVLink}},\
+\underbrace{T*{\text{inter-PP comm}}}_{\text{NIC}}
+\Big)
+\times \text{pipeline factor},
+$$
+
+with pipeline factor $\approx 1/(1-\text{bubble})$. Aim to keep inter-stage payloads within NIC budgets.
+
+---
+
+## G) Overlap & scheduling (turn red bars green)
+
+* **Comm–comp overlap**: start **reduce-scatter** when a gradient bucket is ready; **all-gather** next layer’s params while computing the current one (FSDP prefetch).
+* **CUDA graphs**: capture step to cut CPU launch overhead on small kernels.
+* **Fused kernels**: FlashAttention, fused optimizers (FusedAdam), RMSNorm kernels reduce HBM trips.
+
+---
+
+## H) The data path (starve the GPU → lose)
+
+* **Sharded dataloaders** (DistributedSampler), large **prefetch** queue.
+* **Pinned memory** + non-blocking `to(device, non_blocking=True)`.
+* **On-the-fly tokenize/pack** on CPU threads; avoid Python GIL hotspots (multiprocessing, compiled ops).
+
+---
+
+## I) Fault tolerance & elasticity
+
+* **Periodic checkpoints**: shard-aware (FSDP/ZeRO) checkpoints with state dict consolidation.
+* **Elastic training**: Randezvous on restarts, be careful—changing DP world size changes effective batch & LR; use **linear LR scaling** or warm restart.
+* **Determinism**: fixed seeds, no async AMP cast races, consistent bucket ordering.
+
+---
+
+## J) Minimal configs that work
+
+**(a) Fit bigger on the same GPUs:** FSDP FULL_SHARD + BF16 + activation checkpointing; grad-accumulate to reach target global batch.
+
+**(b) Go faster across a node:** DDP + FlashAttention + fused optim + good bucket size; keep batch large enough to hide all-reduce.
+
+**(c) Very large model across nodes:** TP within node, PP across nodes, DP across node groups; ZeRO-1/2 or FSDP for optimizer sharding; micro-batch count tuned to kill pipeline bubbles.
+
+---
+
+## K) What to measure (and fix first)
+
+* **Utilization**: SM occupancy, **MFU** (model FLOP utilization). If low → kernel fusion, larger batch, fewer small ops.
+* **Overlap**: timeline shows comm bars overlapping compute? If not, tune bucket sizes, enable reduce-scatter/backward overlap.
+* **Imbalance** (PP): stage times; rebalance layers or interleave assignments.
+* **Network**: NCCL BW vs theoretical; ensure correct topology env vars; isolate traffic (no PCIe oversub).
+
+---
+
+## L) Microscopic examples
+
+**Bucketed gradient overlap (conceptual)**
+
+```python
+# set TORCH_DISTRIBUTED_DEBUG=DETAIL to verify buckets
+torch.distributed.algorithms.ddp_comm_hooks.default_hooks.default as hook
+# or register a fp16 compression hook for small gains:
+ddp.register_comm_hook(state=None, hook=torch.distributed.algorithms.ddp_comm_hooks.default.fp16_compress_hook)
+```
+
+**Gradient accumulation (simulate big batch)**
+
+```python
+acc_steps = 8
+for i, (xb, yb) in enumerate(loader):
+    with torch.autocast("cuda", dtype=torch.bfloat16):
+        loss = model(xb.cuda(), yb.cuda()) / acc_steps
+    loss.backward()
+    if (i+1) % acc_steps == 0:
+        opt.step(); opt.zero_grad(set_to_none=True)
+```
+
+**Pipeline sketch (2 stages, pseudo)**
+
+```python
+# stage0_on_gpu0, stage1_on_gpu1; micro-batches mb[0..m-1]
+# fwd 0..m-1 on stage0; stream to stage1; then 1F1B backward—use torch.distributed.pipelining in practice.
+```
+
+---
+
+## M) Rules of thumb (kept short)
+
+* Keep TP within NVLink islands; use PP for cross-node splits.
+* Use FSDP/ZeRO-3 when memory-bound; DDP when compute-bound.
+* Choose micro-batches to (i) fit memory, (ii) kill pipeline bubbles, (iii) keep GEMMs large.
+* Overlap everything: reduce-scatter in backward, all-gather in forward.
+* Profile before guessing; the timeline tells the truth.
+
+---
+
+> **Quick check (your turn):**
+Suppose you move from pure DDP to FSDP (FULL_SHARD) on the same 8-GPU node to fit a $2\times$ larger model. In one or two sentences, explain **what gets sharded**, **what extra communication you now pay**, and **how you’d hide that cost** during forward/backward.
+
+---
+
+# 28 ML/LLM **Inference Optimizations**
+
+## Mental model
+
+Latency and cost come from three levers: **math**, **memory traffic**, and **machinery** (framework/serving). Good inference trims all three:
+
+* shrink math (fewer FLOPs, fewer tokens),
+* move fewer bytes (KV/state, activations),
+* remove software overhead (launches, Python, RPC).
+
+We’ll walk from model graph → kernels & numerics → attention/decoding tricks → serving system. Tiny code blocks are anchors; concepts are the priority.
+
+---
+
+## A) Graph-level: make the network easy to run
+
+**Fuse and eliminate.** Export a static-ish graph, fold constants, and fuse patterns (bias+matmul+gelu, layernorm+pointwise).
+
+```python
+# PyTorch 2.x: ahead-of-time edges for stable shapes
+import torch
+m = MyDecoder().eval().to('cuda')
+m = torch.compile(m, mode="max-autotune")   # gives graph capture + kernel fusion
+````
+
+* **Operator choice matters.** Use native fused kernels: `torch.nn.functional.scaled_dot_product_attention` (FlashAttention-style), `fused_adam` (server warmup/preload), fused RMSNorm/GELU if available.
+* **CUDA Graphs**: capture one warm path to kill kernel-launch overhead in low-latency settings (steady shapes/batch sizes).
+
+```python
+static_in = torch.zeros((B,T,D), device='cuda')
+g = torch.cuda.CUDAGraph()
+with torch.cuda.graph(g):
+    out = m(static_in)  # graph-captured steady path
+# later:
+static_in.copy_(live_in); g.replay(); use(out)
+```
+
+**Pitfall**: dynamic control flow and ragged shapes fight capture; bucket requests by shape.
+
+---
+
+## B) Numerics & compression: keep accuracy, drop bytes
+
+### Quantization
+
+* **Weight-only INT8/INT4** for matmuls (LLM.int8/int4 kernels) → big memory savings with tiny perplexity hit if outlier handling is used.
+* **SmoothQuant/AWQ** style: shift activation range into weights pre-quantization for stable INT8 activation quant.
+* **KV-cache quant** (e.g., NF4/FP8) often works with minimal degradation; keep QK scores in higher precision.
+
+Minimal weight-only example (conceptual):
+
+```python
+# Pseudocode: pack weight into int8 and dequantize on-the-fly
+W_fp = lin.weight.data
+scale = W_fp.abs().amax(dim=1, keepdim=True) / 127
+W_i8  = torch.clamp((W_fp/scale).round(), -127, 127).to(torch.int8)
+# Kernel: y = x @ dequant(W_i8, scale)   # custom fused GEMM
+```
+
+### Low-rank adapters at serve time
+
+If you host many personas, **merge LoRA** into base weights offline (“merge-and-run”), or keep them separate with **adapter caches** (trade latency vs memory).
+
+---
+
+## C) Kernel-level: stop moving memory
+
+### SDPA / FlashAttention
+
+Always route attention through fused, IO-aware kernels:
+
+```python
+o = torch.nn.functional.scaled_dot_product_attention(q, k, v,
+                                                     attn_mask=mask,
+                                                     is_causal=True)
+```
+
+These avoid the $T \times T$ allocation and stream blocks with **online softmax** (Section 3).
+
+### Layouts & tiling
+
+* Keep contiguous $[B,H,T,D]$ for attention; avoid repeated transposes.
+* Pre-transpose weights to match GEMM preferences (column-major for cuBLASLt plans).
+
+### Memory planning
+
+* Pre-allocate KV buffers (paged, see below).
+* Reuse activation buffers across layers (frameworks do this; exporting helps).
+
+---
+
+## D) Attention & KV: where most LLM bytes live
+
+### KV cache discipline
+
+* **Multi-Query / Grouped-Query Attention**: share K/V across heads or groups → KV memory $\downarrow$ and bandwidth $\downarrow$.
+* **Paged attention**: store KV in fixed-size pages; avoid giant contiguous buffers and enable **context windowing** & **eviction**.
+* **Segmented/rolling caches**: keep recent tokens at high resolution; down-sample or drop distant ones for ultra-long sessions.
+
+### Long-context tricks at inference
+
+* **RoPE scaling** (Section 2): small angle/position scaling to extend length zero-shot.
+* **Local + global tokens**: banded attention plus a few global “sink” tokens creates sparse highways at negligible cost.
+
+---
+
+## E) Decoding strategies: fewer useless tokens, fewer passes
+
+### Speculative decoding (draft-then-verify)
+
+Use a cheap **draft model** (or low-precision pass) to propose $k$ tokens; verify with the target model in one forward. If prefixes agree, you *skip* target-model steps.
+
+Skeleton:
+
+```python
+# 1) Draft k tokens with small model D
+draft_ids = D.generate_stepwise(prompt_ids, k)
+
+# 2) Verify in one pass on target T
+logits_T = T.forward(prompt_ids + draft_ids[:-1])  # overlaps
+# 3) Accept longest matching prefix; continue
+```
+
+Works best when the draft is accurate and much cheaper.
+
+### Early exit / confidence halting
+
+Attach a small **exit head** to some layers; if token distribution is peaky (entropy below threshold), stop early for that token. Useful in constrained tasks or copy-heavy regimes.
+
+### Constrained decoding
+
+Regex/CFG/JSON constraints prune branches; fewer logits considered, fewer backtracks.
+
+### Temperature & top-p
+
+For latency-critical tasks, lower temperature and narrower $p$ reduce tail work (and can improve judge scores if verbosity hurts).
+
+---
+
+## F) Batching & scheduling: the serving superpower
+
+### Continuous dynamic batching
+
+Aggregate tokens across many requests **each step**. The scheduler builds a micro-batch of active sequences at the same decode step; KV paging makes joining/leaving cheap.
+
+* **Prefill vs decode**: separate lanes. Prefill (first pass) is heavy but parallel; decode is light per step. Keep both pipelines saturated.
+* **Bucketing by shape**: group by (dtype, head_dim, seq_bucket) for CUDA Graphs.
+
+### Admission control
+
+Protect **p95 latency** by capping batch or queue depth during spikes; defer long prompts to a prefill-only pool.
+
+---
+
+## G) System-level optimizations
+
+* **Transport**: use **server-side streaming**; start emitting tokens as soon as logits stabilize.
+* **RPC/runtime**: keep hot path in C++ where possible; avoid Python GIL on schedulers.
+* **NUMA & pinning**: pin NIC/CPU threads to local NUMA nodes; avoid cross-socket jitter.
+* **Cache the prompt**: if many users share a long system prompt/tools, precompute and reuse the **prefill KV**.
+
+---
+
+## H) Retrieval-augmented serving (RAG) that doesn’t thrash
+
+* **Light retriever** (ANN) in-process; cache embeddings for frequent queries.
+* **Slim contexts**: feed only the **answerable** passages (e.g., 2–6), not the union of everything relevant.
+* **Grounding validators**: short re-ranker or string-match filter post-generation to avoid verbose detours.
+
+---
+
+## I) Measure → iterate (what to plot)
+
+* **Token throughput**: prefill tok/s and decode tok/s (they bottleneck differently).
+* **KV bytes moved** per token (before/after MQA/GQA).
+* **SM utilization vs memory BW**: if BW-bound, prioritize IO-aware kernels and quantization; if SM-underutilized, fuse or increase batch.
+* **p50/p95 latency** by prompt/response length buckets; watch long-tail.
+* **Degradation vs savings**: for each quantization/speculative setup, run a **quality smoke suite** (win-rate or exact metrics); only keep Pareto-efficient points.
+
+---
+
+## J) A compact “cookbook”
+
+* **Small model, strict latency (chat/agent):** SDPA + CUDA Graphs, continuous batching, MQA/GQA, KV-NF4, prompt-KV cache, constrained decoding.
+* **Large model, high throughput (batch jobs):** weight-only INT4/INT8, aggressive batching, speculative decoding, prefill–decode split pools, adapter-merge offline.
+* **Ultra-long context:** RoPE scaling + local/global sparse attention + paged KV; consider summarizing distant context into learned “memory tokens.”
+
+---
+
+## K) Tiny end-to-end sketch (PyTorch, conceptual)
+
+```python
+class FastLLM(torch.nn.Module):
+    def __init__(self, ...):
+        super().__init__()
+        self.blocks = torch.nn.ModuleList([...])  # use fused RMSNorm/GELU
+    @torch.inference_mode()
+    def forward(self, x, kv_cache=None):
+        # x: [B,T], run prefill or decode step; use SDPA and MQA
+        for blk in self.blocks:
+            x, kv_cache = blk(x, kv_cache=kv_cache, use_sdpa=True, mqa=True)
+        return x, kv_cache
+
+model = torch.compile(FastLLM().eval().to('cuda'), mode="max-autotune")
+
+# serving loop (pseudo): dynamic batching with paged KV
+while True:
+    batch = scheduler.form_decode_batch()        # active seqs
+    ids, kv_pages = batch.tokens, batch.kv_pages
+    with torch.autocast('cuda', dtype=torch.bfloat16):
+        logits, kv_pages = model(ids, kv_cache=kv_pages)
+    next_ids = sample(logits, top_p=0.9, temp=0.2, constrained=True)
+    scheduler.commit(next_ids, kv_pages)
+```
+
+---
+
+## L) What usually breaks first (and how to fix it)
+
+* **Jittery latency despite high GPU util** → queueing/scheduler imbalance; separate prefill and decode lanes.
+* **Out-of-memory spikes** → fragmented KV; adopt paged KV and hard caps on max tokens per request.
+* **Quality drop after quantization** → try weight-only first; calibrate per-channel scales; leave QK matmuls in higher precision.
+* **Speculative decoding underperforms** → draft model too weak or misaligned; share tokenizer/positional scheme and retune accept length ($k$).
+
+---
+
+> **Quick check (your turn)**
+You need to cut **p95 latency by ~30%** for a 7B chat model without changing responses much. In one or two sentences, name **two** complementary tactics you’d try first (one kernel/numerics level, one serving/system level), and briefly why they’re likely to help.
 
 ---
