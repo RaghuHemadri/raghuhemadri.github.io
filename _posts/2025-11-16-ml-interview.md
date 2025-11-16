@@ -1150,7 +1150,7 @@ Clustering partitions data into groups such that points in the same group are mo
 Goal: Given $K$ clusters, find centroids $\{\mu_1, \dots, \mu_K\}$ minimizing within-cluster squared distances:
 
 $$
-\min_{{c_i},{\mu_k}} \sum_{i=1}^n \lVert x_i - \mu_{c_i} \rVert^2.
+\min_{c_i,{\mu_k}} \sum_{i=1}^n \lVert x_i - \mu_{c_i} \rVert^2.
 $$
 
 where $c_i \in \{1, \dots, K\}$ is the cluster assignment for $x_i$.
