@@ -44,7 +44,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ml-sys-design-how-hybrid-ai-delivers-speed-and-privacy",
+        },{id: "post-ml-interview-fundamentals-and-implementation",
+      
+        title: "ML Interview: Fundamentals and Implementation",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/ml-interview/";
+        
+      },
+    },{id: "post-dl-interview-fundamentals-and-implementation",
+      
+        title: "DL Interview: Fundamentals and Implementation",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/dl-interview/";
+        
+      },
+    },{id: "post-ml-sys-design-how-hybrid-ai-delivers-speed-and-privacy",
       
         title: "ML Sys Design: How Hybrid AI Delivers Speed and Privacy",
       
