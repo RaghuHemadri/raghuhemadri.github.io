@@ -211,7 +211,7 @@ Unsupervised grouping: assign each point $(x_i)$ a cluster label $(c_i \in {1, \
 Typical objective (k-means):
 
 $$
-\min_{{c_i}, {\mu_k}} \sum_{i=1}^n \left\lVert x_i - \mu_{c_i} \right\rVert^2.
+\min_{c_i, {\mu_k}} \sum_{i=1}^n \left\lVert x_i - \mu_{c_i} \right\rVert^2.
 $$
 
 Here, $(\mu_k)$ are cluster centroids; the algorithm alternates between:
