@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ml-interview-fundamentals-and-implementation",
+        },{id: "post-ml-sys-design-inside-apple-39-s-ai-generated-app-store-review-summaries",
+      
+        title: "ML Sys Design: Inside Apple&#39;s AI-Generated App Store Review Summaries",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/ml-sys-llm-summary/";
+        
+      },
+    },{id: "post-ml-interview-fundamentals-and-implementation",
       
         title: "ML Interview: Fundamentals and Implementation",
       
