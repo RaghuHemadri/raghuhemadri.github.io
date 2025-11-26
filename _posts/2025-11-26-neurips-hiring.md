@@ -20,13 +20,13 @@ images:
 
 If you're hiring for **Machine Learning** roles — let’s talk!
 
-[**Bio - About Me**](https://raghuhemadri.github.io/) 
+#### 👉 🧠 [Bio - About Me](https://raghuhemadri.github.io/) 
 
 ---
 
 ### ⚡ Quick Snapshot
 - **MS by Research @ NYU** — *4.0/4.0 GPA*  
-- **9 publications** — NeurIPS, AAAI, IEEE TPAMI, and more  
+- **9 papers** — NeurIPS, AAAI, IEEE TPAMI, and more  
 - **Research areas:** LLMs, RL, Multimodality, ML for Systems  
 - **Industry:** 3+ years building production ML systems  
 - Previously: **Oracle** (ML), **Synopsys** (ML Research)
