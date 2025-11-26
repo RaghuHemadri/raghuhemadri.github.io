@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ml-sys-design-inside-apple-39-s-ai-generated-app-store-review-summaries",
+        },{id: "post-actively-looking-for-2026-full-time-ml-roles",
+      
+        title: "Actively looking for 2026 full-time ML roles",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/neurips-hiring/";
+        
+      },
+    },{id: "post-ml-sys-design-inside-apple-39-s-ai-generated-app-store-review-summaries",
       
         title: "ML Sys Design: Inside Apple&#39;s AI-Generated App Store Review Summaries",
       
