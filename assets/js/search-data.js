@@ -44,9 +44,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-actively-looking-for-2026-full-time-ml-roles",
+        },{id: "post-actively-looking-for-full-time-ml-roles",
       
-        title: "Actively looking for 2026 full-time ML roles",
+        title: "Actively looking for full-time ML roles",
       
       description: "",
       section: "Posts",
