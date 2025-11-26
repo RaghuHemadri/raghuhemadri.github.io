@@ -718,7 +718,7 @@ $$
 \min_{w}\;\frac{1}{2n}\lVert Xw-y\rVert_2^2+\lambda\lVert w\rVert_1.
 $$
 
-Here $\lVert w\rVert_1=\sum_j|w_j|$. No closed form; solved via coordinate descent, proximal gradient, etc.
+Here $\lVert w\rVert_1=\sum_j\mid w_j\mid$. No closed form; solved via coordinate descent, proximal gradient, etc.
 
 Effect:
 
@@ -1725,7 +1725,7 @@ More robust to outliers; corresponds to median estimator under Laplace noise.
   \text{MAPE}=\frac{100}{n}\sum_{i=1}^n\left|\frac{y_i-\hat{y}_i}{y_i}\right|.
   $$
 
-Interpretable as average percentage error, but undefined when $y_i=0$ and unstable for small $|y_i|$.
+Interpretable as average percentage error, but undefined when $y_i=0$ and unstable for small $\mid y_i \mid$.
 
 Choice in practice:
 
@@ -2381,7 +2381,7 @@ Identification:
   * IQR = $Q_3 - Q_1$.
   * Flag as outlier if $x < Q_1 - k \cdot \text{IQR}$ or $x > Q_3 + k \cdot \text{IQR}$ (commonly $k = 1.5$ or $3$).
 
-* Z-score: values with $|z| > k$ (e.g., 3) may be considered outliers.
+* Z-score: values with $\mid z \mid > k$ (e.g., 3) may be considered outliers.
 
 Handling:
 
@@ -3224,7 +3224,7 @@ $$
 where:
 
 * $f(t,d)$ = term frequency.
-* $|d|$ = document length, $\text{avgdl}$ = average document length.
+* $\mid d \mid$ = document length, $\text{avgdl}$ = average document length.
 * $k_1$ and $b$ are hyperparameters.
 * IDF is inverse document frequency.
 
